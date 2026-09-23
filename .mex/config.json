@@ -1,0 +1,10 @@
+{
+  "setupMode": "code-repo",
+  "aiTools": [
+    "codex"
+  ],
+  "scaffold_id": "f2c9f806-6958-465e-98b3-d4a641017e23",
+  "scaffold_name": "skockaj-front",
+  "origin": null,
+  "upstream": null
+}
