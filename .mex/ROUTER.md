@@ -14,7 +14,7 @@ edges:
     condition: when setting up the dev environment or running the project for the first time
   - target: patterns/INDEX.md
     condition: when starting a task — check the pattern index for a matching pattern file
-last_updated: [YYYY-MM-DD]
+last_updated: 2026-09-23
 ---
 
 # Session Bootstrap
@@ -24,21 +24,20 @@ If you haven't already read `AGENTS.md`, read it now — it contains the project
 Then read this file fully before doing anything else in this session.
 
 ## Current Project State
-<!-- What is working. What is not yet built. Known issues.
-     Update this section whenever significant work is completed.
-     This is the primary drift prevention mechanism — it re-grounds the agent every session.
-     Length: 3 sections (Working / Not Built / Known Issues), 3-7 items each.
-     Example:
-     **Working:**
-     - User authentication and session management
-     - Core CRUD operations for all main entities
+**Working:**
+- Dark gaming-PC UI (teal LED), Serbian Latin copy (ekavica), category cards + collapsible filter lists
+- Shareable URL state (category, sort, q, stanje, cena_od/do, attribute filters)
+- Typewriter hero (two-line, accent word green), SEO footer + `/prodavnice` shop logos, cookies policy
+- Shop logos on product rows and offer deals; skeletons + empty states; AA contrast palette
+- Proof: `npm run test:unit` (sr plurals), `npm run test:e2e` (Playwright smoke), pre-push gate
 
-     **Not yet built:**
-     - Email notification system
-     - Admin dashboard
+**Not yet built:**
+- Dedicated SEO landing pages per category (footer links use query URLs)
+- Admin match-queue UI
 
-     **Known issues:**
-     - Pagination breaks on filtered queries with more than 1000 results -->
+**Known issues:**
+- Tailwind v4 can bury global CSS hover; prefer `btn-*` / `card-hover` / `chip-btn` classes
+- Next.js `router.replace` URL updates can lag ~1s in dev (tests should poll)
 
 ## Routing Table
 

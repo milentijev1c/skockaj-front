@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { apiFetch } from "@/lib/api";
 import type { Component, CompatibilityResult, Build } from "@/lib/types";
-import { CATEGORIES, CATEGORY_ICONS } from "@/lib/types";
+import { CATEGORIES, CATEGORY_ICONS, srKomponente } from "@/lib/types";
 
 export default function BuilderPage() {
   const [selected, setSelected] = useState<number[]>([]);
@@ -75,7 +75,7 @@ export default function BuilderPage() {
           Konfigurator
         </h1>
         <p className="text-sm mt-1" style={{ color: "var(--text-muted)", fontFamily: "var(--font-geist-mono)" }}>
-          {components.length} {components.length === 1 ? "komponenta" : "komponenti"} izabrano
+          {components.length} {srKomponente(components.length)} izabrano
         </p>
       </div>
 

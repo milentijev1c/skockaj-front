@@ -1,14 +1,37 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
+import SiteFooter from "./site-footer";
 import "./globals.css";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "skockaj.rs",
-  description: "Uporedi cene računarskih komponenti u Srbiji. Bez registracije.",
+  title: {
+    default: "skockaj.rs — uporedi cene komponenti u Srbiji",
+    template: "%s | skockaj.rs",
+  },
+  description:
+    "Uporedi cene procesora, grafičkih kartica, RAM-a, matičnih ploča i ostalih računarskih komponenti iz domaćih prodavnica. Skockaj svoj računar bez registracije.",
+  keywords: [
+    "cene komponenti",
+    "procesori",
+    "grafičke kartice",
+    "RAM memorija",
+    "matične ploče",
+    "konfigurator računara",
+    "Srbija",
+    "skockaj",
+  ],
+  openGraph: {
+    title: "skockaj.rs — uporedi cene komponenti u Srbiji",
+    description:
+      "Uporedi cene procesora, grafičkih kartica, RAM-a i ostalih komponenti iz domaćih prodavnica.",
+    locale: "sr_RS",
+    type: "website",
+    siteName: "skockaj.rs",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -38,17 +61,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         </main>
 
         {/* Footer */}
-        <footer style={{ borderTop: "1px solid var(--edge)", color: "var(--text-muted)" }}>
-          <div className="mx-auto px-6 py-4 text-xs flex items-center justify-between flex-wrap gap-2" style={{ maxWidth: 1100, fontFamily: "var(--font-geist-mono)" }}>
-            <div className="flex items-center gap-4">
-              <span>skockaj.rs — upoređivač cena, nije prodavnica</span>
-              <span style={{ color: "var(--edge)" }}>|</span>
-              <Link href="/uslovi-koriscenja" className="hover-underline" style={{ color: "var(--text-muted)" }}>Uslovi korišćenja</Link>
-              <Link href="/pravila-privatnosti" className="hover-underline" style={{ color: "var(--text-muted)" }}>Pravila privatnosti</Link>
-            </div>
-            <span style={{ color: "var(--glow)" }}>v0.1.0</span>
-          </div>
-        </footer>
+        <SiteFooter />
       </body>
     </html>
   );

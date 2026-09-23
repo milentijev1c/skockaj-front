@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# pre-push for skockaj-front: typecheck + unit + Playwright smoke.
+# Install: git config core.hooksPath scripts/githooks
+set -euo pipefail
+
+if [[ "${SKIP_PROOF:-}" == "1" ]]; then
+  echo "pre-push: SKIP_PROOF=1 — skipping proof suite"
+  exit 0
+fi
+
+ROOT="$(git rev-parse --show-toplevel)"
+cd "$ROOT"
+echo "pre-push: frontend proof (typecheck + unit + e2e)"
+
+# Self-heal hook installation
+sh "$ROOT/scripts/install-hooks.sh" >/dev/null 2>&1 || true
+
+npm run typecheck
+npm run test:unit
+npm run test:e2e
+
+echo "PROOF PASS (frontend)"

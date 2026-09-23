@@ -20,7 +20,7 @@ export default function PravilaPrivatnosti() {
         <section>
           <h2 className="font-bold text-base mb-2" style={{ color: "var(--glow)" }}>2. Kolačići (Cookies)</h2>
           <p>
-            Sajt može koristiti tehničke kolačiće potrebne za funkcionisanje (npr. čuvanje konfiguracija u pregledaču).
+            Sajt može koristiti tehničke kolačiće potrebne za funkcionisanje (npr. čuvanje konfiguracija u pretraživaču).
             Ne koristimo kolačiće za praćenje niti reklamne kolačiće.
           </p>
         </section>
@@ -28,7 +28,7 @@ export default function PravilaPrivatnosti() {
         <section>
           <h2 className="font-bold text-base mb-2" style={{ color: "var(--glow)" }}>3. Lokalno skladištenje</h2>
           <p>
-            Konfiguracije koje kreirate čuvaju se u lokalnom skladištu vašeg pregledača (localStorage).
+            Konfiguracije koje kreirate čuvaju se u lokalnom skladištu vašeg pretraživača (localStorage).
             Ovi podaci se ne šalju na naše servere osim kada eksplicitno zatražite čuvanje (deljenje linka).
           </p>
         </section>
@@ -53,7 +53,7 @@ export default function PravilaPrivatnosti() {
           <h2 className="font-bold text-base mb-2" style={{ color: "var(--glow)" }}>6. Treće strane</h2>
           <p>
             Klikom na linkove ka prodavnicama prelazite na sajte trećih lica koji imaju svoju politiku privatnosti.
-            skockaj.rs ne kontroliše niti odgovora za prakse privatnosti tih sajtova.
+            skockaj.rs ne kontroliše niti odgovara za prakse privatnosti tih sajtova.
           </p>
         </section>
 

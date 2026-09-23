@@ -1,15 +1,23 @@
 @import "tailwindcss";
 
 :root {
+  /* Surfaces */
   --void: #0B0E14;
   --panel: #141820;
-  --edge: #1E2430;
+  --edge: #2A3140;          /* borders / dividers — never for body text */
+  --edge-soft: #1E2430;
+
+  /* Accents */
   --glow: #00D4AA;
   --glow-dim: #00D4AA33;
   --amber: #FFAA00;
-  --coral: #FF5C5C;
-  --text: #D0D4DC;
-  --text-muted: #6B7280;
+  --coral: #FF6B6B;
+
+  /* Text — AA contrast on --void / --panel */
+  --text: #E4E8EF;
+  --text-muted: #A7B0C0;    /* secondary copy, readable at 11px+ */
+  --text-dim: #8B94A6;      /* decorative labels only */
+
   --background: var(--void);
   --foreground: var(--text);
 }
@@ -32,12 +40,74 @@ body {
   color: var(--void);
 }
 
+/* ── Clickable affordance (site-wide) ────────────── */
+
+:where(a[href], button, select, summary, label[for], [role="button"], [role="link"], [tabindex]:not([tabindex="-1"])) {
+  cursor: pointer !important;
+}
+
+:where(button, a[href], select, input, textarea, summary):disabled,
+:where([aria-disabled="true"]) {
+  cursor: not-allowed !important;
+  opacity: 0.55;
+}
+
+:where(a[href], button, select, input, textarea, summary):focus-visible {
+  outline: 1px solid var(--glow);
+  outline-offset: 2px;
+}
+
+/* Inputs & selects */
+:where(input, select, textarea) {
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+:where(input, select, textarea):hover {
+  border-color: var(--text-dim) !important;
+}
+:where(input, select, textarea):focus {
+  border-color: var(--glow) !important;
+  box-shadow: 0 0 0 1px var(--glow-dim), 0 0 12px var(--glow-dim);
+  outline: none;
+}
+
+/* Native select arrow visibility on dark UI */
+select {
+  color-scheme: dark;
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, var(--text-muted) 50%),
+    linear-gradient(135deg, var(--text-muted) 50%, transparent 50%);
+  background-position: calc(100% - 14px) calc(50% + 2px), calc(100% - 9px) calc(50% + 2px);
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+  padding-right: 28px !important;
+}
+select:hover {
+  background-image: linear-gradient(45deg, transparent 50%, var(--glow) 50%),
+    linear-gradient(135deg, var(--glow) 50%, transparent 50%);
+}
+
+/* Generic press feedback */
+:where(button:not(:disabled), a[href], [role="button"]) {
+  transition: color 0.15s ease, background 0.2s ease, border-color 0.2s ease,
+    box-shadow 0.25s ease, transform 0.15s ease, opacity 0.15s ease;
+}
+:where(button:not(:disabled), a[href], [role="button"]):active {
+  transform: translateY(1px) scale(0.98);
+}
+
 /* ── Nav hover ──────────────────────────────────── */
 
 .nav-links a {
   transition: color 0.2s ease;
 }
 .nav-links a:hover {
+  color: var(--glow) !important;
+}
+
+.footer-link {
+  transition: color 0.15s ease;
+}
+.footer-link:hover {
   color: var(--glow) !important;
 }
 
@@ -57,6 +127,32 @@ body {
   border-color: var(--glow) !important;
   box-shadow: 0 0 20px var(--glow-dim);
   transform: translateY(-2px);
+}
+.card-hover:hover .category-icon,
+.card-hover:hover span {
+  filter: brightness(1.15);
+}
+
+/* ── Table row / list hover ─────────────────────── */
+
+.row-hover {
+  transition: background 0.15s ease, box-shadow 0.2s ease;
+}
+.row-hover:hover {
+  background: rgba(0, 212, 170, 0.04) !important;
+}
+
+/* ── Filter chip / sort pill ────────────────────── */
+
+.chip-btn {
+  transition: color 0.15s ease, background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+}
+.chip-btn:hover {
+  color: var(--text) !important;
+  border-color: var(--text-dim);
+}
+.chip-btn:active {
+  transform: scale(0.97);
 }
 
 /* ── Slot hover ─────────────────────────────────── */
@@ -97,6 +193,18 @@ body {
   border-color: var(--glow) !important;
   color: var(--glow) !important;
   box-shadow: 0 0 15px var(--glow-dim);
+  background: var(--glow-dim);
+}
+.btn-ghost:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.btn-danger {
+  transition: all 0.2s ease;
+}
+.btn-danger:hover {
+  background: rgba(255, 107, 107, 0.12) !important;
+  box-shadow: 0 0 12px rgba(255, 107, 107, 0.2);
 }
 
 /* ── Back button / inline link ────────────────────── */
@@ -121,6 +229,42 @@ body {
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(12px); }
   to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Skeletons ─────────────────────────────────── */
+
+.skeleton-bar,
+.skeleton-card {
+  position: relative;
+  overflow: hidden;
+  background: var(--edge-soft);
+  border-radius: 3px;
+}
+.skeleton-card {
+  border-radius: 0;
+}
+.skeleton-bar::after,
+.skeleton-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 212, 170, 0.06),
+    transparent
+  );
+  animation: shimmer 1.4s ease-in-out infinite;
+}
+.skeleton-card::after {
+  animation-duration: 1.8s;
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
 }
 
 /* ── Skeleton pulse ─────────────────────────────── */

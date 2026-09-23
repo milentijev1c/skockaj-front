@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Typewriter from "./typewriter";
 import "./page.css";
 
 export default function Home() {
@@ -24,9 +25,11 @@ export default function Home() {
           Skockaj &bull; Uporedi &bull; Uštedi
         </div>
 
-        <h1 className="text-5xl md:text-7xl font-black tracking-tight mb-6 leading-none" style={{ fontFamily: "var(--font-geist-sans)", color: "var(--text)" }}>
-          Skockaj svoj<br/>
-          <span className="glow-pulse" style={{ color: "var(--glow)" }}>računar</span>
+        <h1
+          className="text-5xl md:text-7xl font-black tracking-tight mb-6 leading-none min-h-[2.4em]"
+          style={{ fontFamily: "var(--font-geist-sans)" }}
+        >
+          <Typewriter />
         </h1>
 
         <p className="text-lg mb-10 max-w-lg mx-auto leading-relaxed" style={{ color: "var(--text-muted)" }}>
@@ -55,7 +58,7 @@ export default function Home() {
         {/* Stats strip */}
         <div className="mt-16 flex gap-12 justify-center fade-up-delay" style={{ fontFamily: "var(--font-geist-mono)" }}>
           {[
-            { value: "5+", label: "prodavnica" },
+            { value: "6", label: "prodavnica" },
             { value: "24h", label: "ažuriranje" },
             { value: "Bez", label: "naloga" },
           ].map((s) => (

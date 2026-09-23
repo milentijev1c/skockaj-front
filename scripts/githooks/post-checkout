@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+exec "$(git rev-parse --show-toplevel)/scripts/install-hooks.sh" >/dev/null 2>&1 || true
