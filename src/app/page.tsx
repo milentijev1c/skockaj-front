@@ -1,69 +1,71 @@
-import Image from "next/image";
+import Link from "next/link";
+import "./page.css";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className="flex flex-col items-center justify-center py-16 text-center">
+      {/* Circuit-board trace background */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none" style={{ opacity: 0.04 }}>
+        <svg width="100%" height="100%" viewBox="0 0 800 600">
+          <defs>
+            <pattern id="traces" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
+              <path d="M0 50h40l10-10h10l10 10h30" stroke="var(--glow)" fill="none" strokeWidth="1"/>
+              <path d="M50 0v30l-10 10v10l10 10v30" stroke="var(--glow)" fill="none" strokeWidth="1"/>
+              <circle cx="50" cy="50" r="3" fill="var(--glow)"/>
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#traces)"/>
+        </svg>
+      </div>
+
+      {/* Hero */}
+      <div className="relative z-10 fade-up">
+        <div className="mb-6 text-xs tracking-widest uppercase" style={{ color: "var(--text-muted)", fontFamily: "var(--font-geist-mono)" }}>
+          Skockaj &bull; Uporedi &bull; Uštedi
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+
+        <h1 className="text-5xl md:text-7xl font-black tracking-tight mb-6 leading-none" style={{ fontFamily: "var(--font-geist-sans)", color: "var(--text)" }}>
+          Skockaj svoj<br/>
+          <span className="glow-pulse" style={{ color: "var(--glow)" }}>računar</span>
+        </h1>
+
+        <p className="text-lg mb-10 max-w-lg mx-auto leading-relaxed" style={{ color: "var(--text-muted)" }}>
+          Uporedi cene komponenti iz svih domaćih prodavnica.<br/>
+          Bez registracije. Bez skrivenih troškova.
+        </p>
+
+        <div className="flex gap-4 justify-center flex-wrap">
+          <Link
+            href="/konfigurator"
+            className="hero-primary-btn inline-flex items-center gap-2 px-8 py-3.5 text-sm font-bold tracking-wide uppercase"
+            style={{ background: "var(--glow)", color: "var(--void)", fontFamily: "var(--font-geist-mono)" }}
           >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" stroke="currentColor" strokeWidth="1.5"/><rect x="9" y="1" width="6" height="6" stroke="currentColor" strokeWidth="1.5"/><rect x="1" y="9" width="6" height="6" stroke="currentColor" strokeWidth="1.5"/><rect x="9" y="9" width="6" height="6" stroke="currentColor" strokeWidth="1.5"/></svg>
+            Pokreni konfigurator
+          </Link>
+          <Link
+            href="/komponente"
+            className="home-ghost-btn inline-flex items-center gap-2 px-8 py-3.5 text-sm font-medium tracking-wide"
+            style={{ border: "1px solid var(--edge)", color: "var(--text-muted)", fontFamily: "var(--font-geist-mono)" }}
           >
-            Documentation
-          </a>
+            Pregledaj komponente
+          </Link>
         </div>
-      </main>
+
+        {/* Stats strip */}
+        <div className="mt-16 flex gap-12 justify-center fade-up-delay" style={{ fontFamily: "var(--font-geist-mono)" }}>
+          {[
+            { value: "5+", label: "prodavnica" },
+            { value: "24h", label: "ažuriranje" },
+            { value: "Bez", label: "naloga" },
+          ].map((s) => (
+            <div key={s.label} className="text-center stat-item">
+              <div className="text-2xl font-bold" style={{ color: "var(--glow)" }}>{s.value}</div>
+              <div className="text-xs mt-1" style={{ color: "var(--text-muted)" }}>{s.label}</div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
