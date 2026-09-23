@@ -1,8 +1,11 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import type { Build, Component } from "@/lib/types";
-import { CATEGORIES, CATEGORY_ICONS, STORE_NAMES, srProdavnice } from "@/lib/types";
+import { CATEGORIES, CATEGORY_ICONS, STORE_NAMES, srCount, srProdavnice } from "@/lib/types";
 import { STORE_ID_TO_SLUG } from "../../shop-logo";
+import { apiFetch } from "@/lib/api";
+import { getVisitorId } from "@/lib/visitor";
 import Link from "next/link";
 
 function getStoreSlug(storeId: number): string {
@@ -32,6 +35,14 @@ function CategoryIcon({ value, size = 18, color }: { value: string; size?: numbe
   );
 }
 
+type BuildAnalytics = {
+  hash_id: string;
+  unique_views: number;
+  first_at: string | null;
+  last_at: string | null;
+  by_day: { date: string; count: number }[];
+};
+
 function cheapestOffer(c: Component) {
   const priced = c.prices.filter((p) => p.price_rsd > 0);
   if (priced.length === 0) return null;
@@ -43,6 +54,23 @@ function cheapestOf(c: Component): number | null {
 }
 
 export default function BuildView({ build, components }: { build: Build; components: Component[] }) {
+  const [viewCount, setViewCount] = useState(build.view_count);
+  const [analytics, setAnalytics] = useState<BuildAnalytics | null>(null);
+
+  useEffect(() => {
+    const visitor_id = getVisitorId();
+    if (!visitor_id) return;
+    apiFetch<Build>(`/builds/${build.hash_id}/view`, {
+      method: "POST",
+      body: JSON.stringify({ visitor_id }),
+    })
+      .then((b) => setViewCount(b.view_count))
+      .catch(() => {});
+    apiFetch<BuildAnalytics>(`/builds/${build.hash_id}/analytics`)
+      .then(setAnalytics)
+      .catch(() => {});
+  }, [build.hash_id]);
+
   const totalPrice = components.reduce((sum, c) => sum + (cheapestOf(c) ?? 0), 0);
   const totalTdp = components.reduce((sum, c) => sum + c.tdp_w, 0);
   const shopCount = new Set(
@@ -70,7 +98,10 @@ export default function BuildView({ build, components }: { build: Build; compone
           className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs"
           style={{ color: "var(--text-muted)", fontFamily: "var(--font-geist-mono)" }}
         >
-          <span>{build.view_count} {build.view_count === 1 ? "pregled" : "pregleda"}</span>
+          <span>
+            {viewCount}{" "}
+            {srCount(viewCount, "jedinstveni pregled", "jedinstvena pregleda", "jedinstvenih pregleda")}
+          </span>
           <span style={{ color: "var(--edge)" }}>|</span>
           <span>{new Date(build.created_at).toLocaleDateString("sr")}</span>
           {shopCount > 0 && (
@@ -240,6 +271,78 @@ export default function BuildView({ build, components }: { build: Build; compone
       <p className="text-center text-[11px] mt-4" style={{ color: "var(--text-muted)", fontFamily: "var(--font-geist-mono)" }}>
         {shareUrl} — cene su informativne i menjaju se u prodavnicama
       </p>
+
+      {/* View analytics */}
+      {analytics && (
+        <section
+          className="mt-8 p-5 fade-in"
+          style={{ background: "var(--panel)", border: "1px solid var(--edge)" }}
+          aria-label="Analitika pregleda"
+        >
+          <div
+            className="text-[10px] uppercase tracking-widest mb-3"
+            style={{ color: "var(--text-muted)", fontFamily: "var(--font-geist-mono)" }}
+          >
+            Analitika pregleda
+          </div>
+          <div className="flex flex-wrap gap-6 mb-4 text-xs" style={{ fontFamily: "var(--font-geist-mono)" }}>
+            <div>
+              <div style={{ color: "var(--text-muted)", marginBottom: 4 }}>Jedinstveni pregledi</div>
+              <div style={{ color: "var(--glow)", fontWeight: 700, fontSize: 16 }}>
+                {analytics.unique_views}
+              </div>
+            </div>
+            <div>
+              <div style={{ color: "var(--text-muted)", marginBottom: 4 }}>Prvi pregled</div>
+              <div style={{ color: "var(--text)" }}>
+                {analytics.first_at
+                  ? new Date(analytics.first_at).toLocaleDateString("sr")
+                  : "—"}
+              </div>
+            </div>
+            <div>
+              <div style={{ color: "var(--text-muted)", marginBottom: 4 }}>Poslednji pregled</div>
+              <div style={{ color: "var(--text)" }}>
+                {analytics.last_at
+                  ? new Date(analytics.last_at).toLocaleDateString("sr")
+                  : "—"}
+              </div>
+            </div>
+          </div>
+
+          {analytics.by_day.length > 0 && (
+            <div>
+              <div
+                className="text-[10px] uppercase tracking-widest mb-2"
+                style={{ color: "var(--text-muted)", fontFamily: "var(--font-geist-mono)" }}
+              >
+                Po danu
+              </div>
+              <ul className="space-y-1">
+                {analytics.by_day.map((d) => {
+                  const max = Math.max(...analytics.by_day.map((x) => x.count), 1);
+                  return (
+                    <li key={d.date} className="flex items-center gap-3 text-xs" style={{ fontFamily: "var(--font-geist-mono)" }}>
+                      <span style={{ color: "var(--text-muted)", width: 88 }}>{d.date}</span>
+                      <span
+                        style={{
+                          display: "block",
+                          height: 8,
+                          width: `${Math.max(8, Math.round((d.count / max) * 120))}px`,
+                          background: "var(--glow)",
+                          opacity: 0.75,
+                          borderRadius: 2,
+                        }}
+                      />
+                      <span style={{ color: "var(--text)" }}>{d.count}</span>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          )}
+        </section>
+      )}
     </div>
   );
 }

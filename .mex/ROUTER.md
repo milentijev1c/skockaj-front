@@ -25,22 +25,23 @@ Then read this file fully before doing anything else in this session.
 
 ## Current Project State
 **Working:**
-- Dark gaming-PC UI (teal LED), Serbian Latin (ekavica), shared `Brand` wordmark (header/footer/legal)
-- Collapsible filter lists + sort/stock/price; shareable URL state
-- Typewriter hero; `/prodavnice` with local shop logos; shop logos on offer deals
-- Konfigurator: whole-slot click, centered cards, CSS-mask icons, redirect after Dodaj
-- Saved build `/k/[hash]`: edge category/price, centered name, cheapest shop deep-link
-- Legal pages finalized (Uslovi / Privatnost / Kolačići) + `LegalShell`/`Brand`
-- Skeletons, empty states, AA contrast palette; Playwright + `sr` unit smoke on pre-push
+- Dark UI + shared `Brand` wordmark (header/footer/legal); AA contrast palette
+- Filters: collapsible lists + sort/stock/price in URL (shareable)
+- Konfigurator: whole-slot click, centered cards, mask icons, redirect after Dodaj
+- `/k/[hash]`: unique views + public analytics panel; shop deep-links on cheapest prices
+- `/prodavnice` + local logos; skeletons/empty states; typewriter hero
+- Cookie toast (U redu / Odbij) + `cookie_consent` localStorage
+- Legal: Uslovi · **Politika privatnosti** (`/pravila-privatnosti` 308 redirect) · Politika kolačića
+- Pre-push: typecheck + sr unit + Playwright smoke
 
 **Not yet built:**
-- Dedicated SEO landing pages per category
-- Admin match-queue UI
+- Category SEO landing pages
+- Owner-only stats
 
 **Known issues:**
-- Tailwind v4 can bury global CSS hover — use `btn-*` / `card-hover` / `chip-btn` / `slot-hover`
-- Next.js `router.replace` URL updates can lag ~1s in dev (poll in e2e)
-- Footer no longer shows app version (keep version in git tags only)
+- Tailwind v4 may bury global hover CSS — use `btn-*` / `card-hover` / `chip-btn` / `slot-hover`
+- Next `router.replace` can lag ~1s in dev (poll in e2e)
+- Footer has no app version (git tags only)
 
 ## Routing Table
 

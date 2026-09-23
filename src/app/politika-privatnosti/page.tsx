@@ -3,18 +3,18 @@ import Link from "next/link";
 import { Brand, LegalShell, LegalSection, LegalList } from "../legal-shell";
 
 export const metadata: Metadata = {
-  title: "Pravila privatnosti",
+  title: "Politika privatnosti",
   description:
-    "Pravila privatnosti skockaj.rs — bez naloga, bez ličnih podataka. Kako čuvamo konfiguracije i šta prikupljamo.",
+    "Politika privatnosti skockaj.rs — bez naloga, bez ličnih podataka. Kako čuvamo konfiguracije i šta prikupljamo.",
 };
 
-export default function PravilaPrivatnosti() {
+export default function PolitikaPrivatnosti() {
   return (
     <LegalShell
-      title="Pravila privatnosti"
+      title="Politika privatnosti"
       intro={
         <p>
-          Ova pravila objašnjavaju šta <Brand /> radi sa podacima kada koristite sajt.
+          Ova politika objašnjava šta <Brand /> radi sa podacima kada koristite sajt.
           Kratko: <strong>ne tražimo nalog i ne prikupljamo tipične lične podatke</strong> (ime,
           e-pošta, adresa, telefon, broj kartice).
         </p>
@@ -51,6 +51,11 @@ export default function PravilaPrivatnosti() {
           servere dok sami ne sačuvate / podelite konfiguraciju.
         </p>
         <p>
+          Radi brojanja <strong>jedinstvenih</strong> pregleda deljenih konfiguracija čuva se i anoniman
+          identifikator uređaja (<code>vid</code>) u localStorage. Na server se šalje samo hash tog
+          identifikatora uz ID konfiguracije — bez IP-a, imena ili drugih ličnih podataka.
+        </p>
+        <p>
           Brisanjem lokalnog skladišta u pretraživaču brišete i sačuvanu konfiguraciju.
         </p>
       </LegalSection>
@@ -63,7 +68,9 @@ export default function PravilaPrivatnosti() {
         </p>
         <p>
           Takva konfiguracija je <strong>javna</strong> svakome ko ima link (može je videti i
-          indeksirati pretraživači). Nemojte uz konfiguraciju objavljivati lične podatke.
+          indeksirati pretraživači). Uz link se prikazuju i <strong>javni</strong> brojač
+          jedinstvenih pregleda i kada je konfiguracija otvarana. Nemojte uz konfiguraciju
+          objavljivati lične podatke.
         </p>
       </LegalSection>
 

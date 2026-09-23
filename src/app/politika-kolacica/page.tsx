@@ -58,6 +58,8 @@ export default function PolitikaKolacica() {
           </div>
           {[
             ["builder", "localStorage — izabrane komponente", "do brisanja u pretraživaču"],
+            ["vid", "localStorage — anoniman id za jedinstvene preglede", "do brisanja u pretraživaču"],
+            ["cookie_consent", "localStorage — da li ste zatvorili banner", "do brisanja u pretraživaču"],
             ["tehnička sesija", "kolačić sesije / bezbednost (ako postoji)", "sesija ili kraći rok"],
           ].map(([name, purpose, duration]) => (
             <div
@@ -95,11 +97,20 @@ export default function PolitikaKolacica() {
         </p>
       </LegalSection>
 
-      <LegalSection n={6} title="Izmene i povezani dokumenti">
+      <LegalSection n={6} title="Saglasnost (banner)">
+        <p>
+          Pri prvom otvaranju prikazujemo mali banner sa ovim informacijama. Dugme{" "}
+          <strong>U redu</strong> ili <strong>Odbij</strong> pamti se u lokalnom skladištu
+          (<code>cookie_consent</code>) da vas ne uznemiravamo ponovo. Izbrišite taj zapis u
+          pretraživaču ako želite ponovo da vidite banner.
+        </p>
+      </LegalSection>
+
+      <LegalSection n={7} title="Izmene i povezani dokumenti">
         <p>
           Svaku izmenu objavljujemo na ovoj stranici. Više o obradi podataka potražite u{" "}
-          <Link href="/pravila-privatnosti" className="hover-link" style={{ color: "var(--glow)" }}>
-            Pravilima privatnosti
+          <Link href="/politika-privatnosti" className="hover-link" style={{ color: "var(--glow)" }}>
+            Politici privatnosti
           </Link>{" "}
           i{" "}
           <Link href="/uslovi-koriscenja" className="hover-link" style={{ color: "var(--glow)" }}>

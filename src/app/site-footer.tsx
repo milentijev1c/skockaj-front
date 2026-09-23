@@ -4,7 +4,7 @@ import { Brand } from "./brand";
 
 const LEGAL_LINKS = [
   { href: "/uslovi-koriscenja", label: "Uslovi korišćenja" },
-  { href: "/pravila-privatnosti", label: "Pravila privatnosti" },
+  { href: "/politika-privatnosti", label: "Politika privatnosti" },
   { href: "/politika-kolacica", label: "Politika kolačića" },
 ];
 
