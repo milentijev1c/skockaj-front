@@ -1,69 +1,112 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { Brand, LegalShell, LegalSection, LegalList } from "../legal-shell";
+
+export const metadata: Metadata = {
+  title: "Politika kolačića",
+  description:
+    "Politika kolačića skockaj.rs — tehnički kolačići i localStorage za konfigurator, bez reklamnog praćenja.",
+};
+
 export default function PolitikaKolacica() {
   return (
-    <div className="fade-in max-w-3xl mx-auto">
-      <h1 className="text-3xl font-black tracking-tight mb-2" style={{ fontFamily: "var(--font-geist-sans)" }}>
-        Politika kolačića
-      </h1>
-      <p className="text-xs mb-8" style={{ color: "var(--text-muted)", fontFamily: "var(--font-geist-mono)" }}>
-        Poslednje ažuriranje: septembar 2026.
-      </p>
+    <LegalShell
+      title="Politika kolačića"
+      intro={
+        <p>
+          <Brand /> koristi <strong>samo tehnički neophodne</strong> kolačiće i lokalno skladištenje
+          pretraživača. Ne koristimo kolačiće za reklame, retargeting niti profilisanje radi marketinga.
+        </p>
+      }
+    >
+      <LegalSection n={1} title="Šta su kolačići">
+        <p>
+          Kolačići (cookies) su male tekstualne datoteke koje sajt ostavlja u vašem pretraživaču
+          radi pamćenja podešavanja i ispravnog rada. Slične tehnike su i <strong>localStorage</strong> i{" "}
+          <strong>sessionStorage</strong> (podaci čuvani u pretraživaču bez slanja kolačića).
+        </p>
+      </LegalSection>
 
-      <div className="space-y-6 text-sm leading-relaxed" style={{ color: "var(--text)" }}>
-        <section>
-          <h2 className="font-bold text-base mb-2" style={{ color: "var(--glow)" }}>
-            1. Šta su kolačići
-          </h2>
-          <p>
-            Kolačići (cookies) su male tekstualne datoteke koje pretraživač čuva na vašem uređaju
-            radi ispravnog funkcionisanja sajta.
-          </p>
-        </section>
+      <LegalSection n={2} title="Kako ih koristimo">
+        <LegalList
+          items={[
+            <>
+              <strong>Funkcionalnost konfiguratora</strong> — lokalno pamćenje izabranih komponenti
+              (localStorage, npr. ključ <code>builder</code>).
+            </>,
+            <>
+              <strong>Rad i bezbednost sajta</strong> — eventualni tehnički kolačići sesije, CSRF /
+              zaštita od zloupotrebe, uravnoteženje opterećenja.
+            </>,
+            <>
+              <strong>Bez marketing kolačića</strong> — ne učitavamo tagove oglasnih mreža niti
+              alate koji vas prate radi reklama.
+            </>,
+          ]}
+        />
+      </LegalSection>
 
-        <section>
-          <h2 className="font-bold text-base mb-2" style={{ color: "var(--glow)" }}>
-            2. Kako ih koristimo
-          </h2>
-          <p>
-            skockaj.rs koristi samo tehnički neophodne kolačiće i lokalno skladištenje (localStorage)
-            za čuvanje konfiguracije računara u vašem pretraživaču. Ne koristimo kolačiće za praćenje,
-            analitiku treće strane niti reklamne kolačiće.
-          </p>
-        </section>
+      <LegalSection n={3} title="Pregled zapisa">
+        <div style={{ background: "var(--panel)", border: "1px solid var(--edge)" }}>
+          <div
+            className="grid grid-cols-3 gap-2 px-4 py-3 text-[10px] font-bold tracking-widest uppercase"
+            style={{ borderBottom: "1px solid var(--edge)", color: "var(--text-muted)", fontFamily: "var(--font-geist-mono)" }}
+          >
+            <span>Naziv</span>
+            <span>Tip / svrha</span>
+            <span>Trajanje</span>
+          </div>
+          {[
+            ["builder", "localStorage — izabrane komponente", "do brisanja u pretraživaču"],
+            ["tehnička sesija", "kolačić sesije / bezbednost (ako postoji)", "sesija ili kraći rok"],
+          ].map(([name, purpose, duration]) => (
+            <div
+              key={name}
+              className="grid grid-cols-3 gap-2 px-4 py-3 text-xs row-hover"
+              style={{ borderBottom: "1px solid var(--edge)" }}
+            >
+              <span style={{ fontFamily: "var(--font-geist-mono)", color: "var(--text)" }}>{name}</span>
+              <span style={{ color: "var(--text-muted)" }}>{purpose}</span>
+              <span style={{ color: "var(--text-muted)" }}>{duration}</span>
+            </div>
+          ))}
+        </div>
+        <p className="text-xs" style={{ color: "var(--text-muted)" }}>
+          Spisak je informativan i može se dopuniti tehničkim zapisima neophodnim za stabilan rad.
+        </p>
+      </LegalSection>
 
-        <section>
-          <h2 className="font-bold text-base mb-2" style={{ color: "var(--glow)" }}>
-            3. Vrste zapisa
-          </h2>
-          <ul className="list-disc pl-5 space-y-1">
-            <li>
-              <strong>localStorage</strong> — lista komponenti u konfiguratoru (npr. <code>builder</code>)
-            </li>
-            <li>
-              <strong>Neophodni kolačići</strong> — eventualno za rad sesije i bezbednost, bez profila korisnika
-            </li>
-          </ul>
-        </section>
+      <LegalSection n={4} title="Šta nije predmet ove politike">
+        <p>
+          Klikom na link ka prodavnici prelazite na drugi sajt. Tamo mogu postojati{" "}
+          <strong>sopstveni kolačići</strong> prodavnice, platnih sistema ili analitike koje oni
+          koriste. Za njih važi politika kolačića te prodavnice.
+        </p>
+      </LegalSection>
 
-        <section>
-          <h2 className="font-bold text-base mb-2" style={{ color: "var(--glow)" }}>
-            4. Upravljanje kolačićima
-          </h2>
-          <p>
-            Kolačiće i lokalno skladištenje možete obrisati u podešavanjima svog pretraživača
-            (Chrome, Firefox, Safari, Edge). Brisanjem se uklanja i sačuvana konfiguracija računara.
-          </p>
-        </section>
+      <LegalSection n={5} title="Upravljanje i brisanje">
+        <p>
+          U podešavanjima pretraživača (Chrome, Firefox, Safari, Edge) možete videti, blokirati ili
+          obrisati kolačiće i lokalno skladištenje. Ako obrišete localStorage, uklanja se i sačuvana
+          konfiguracija računara u konfiguratoru.
+        </p>
+        <p>
+          Blokiranje tehničkih zapisa može dovesti do toga da konfigurator ne pamti izbor delova.
+        </p>
+      </LegalSection>
 
-        <section>
-          <h2 className="font-bold text-base mb-2" style={{ color: "var(--glow)" }}>
-            5. Izmene ove politike
-          </h2>
-          <p>
-            Svaku izmenu objavićemo na ovoj stranici. Nastavkom korišćenja sajta prihvatate
-            važeću politiku kolačića.
-          </p>
-        </section>
-      </div>
-    </div>
+      <LegalSection n={6} title="Izmene i povezani dokumenti">
+        <p>
+          Svaku izmenu objavljujemo na ovoj stranici. Više o obradi podataka potražite u{" "}
+          <Link href="/pravila-privatnosti" className="hover-link" style={{ color: "var(--glow)" }}>
+            Pravilima privatnosti
+          </Link>{" "}
+          i{" "}
+          <Link href="/uslovi-koriscenja" className="hover-link" style={{ color: "var(--glow)" }}>
+            Uslovima korišćenja
+          </Link>.
+        </p>
+      </LegalSection>
+    </LegalShell>
   );
 }

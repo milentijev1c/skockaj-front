@@ -1,77 +1,137 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { Brand, LegalShell, LegalSection, LegalList } from "../legal-shell";
+
+export const metadata: Metadata = {
+  title: "Pravila privatnosti",
+  description:
+    "Pravila privatnosti skockaj.rs — bez naloga, bez ličnih podataka. Kako čuvamo konfiguracije i šta prikupljamo.",
+};
+
 export default function PravilaPrivatnosti() {
   return (
-    <div className="fade-in max-w-3xl mx-auto">
-      <h1 className="text-3xl font-black tracking-tight mb-2" style={{ fontFamily: "var(--font-geist-sans)" }}>
-        Pravila privatnosti
-      </h1>
-      <p className="text-xs mb-8" style={{ color: "var(--text-muted)", fontFamily: "var(--font-geist-mono)" }}>
-        Poslednje ažuriranje: septembar 2026.
-      </p>
+    <LegalShell
+      title="Pravila privatnosti"
+      intro={
+        <p>
+          Ova pravila objašnjavaju šta <Brand /> radi sa podacima kada koristite sajt.
+          Kratko: <strong>ne tražimo nalog i ne prikupljamo tipične lične podatke</strong> (ime,
+          e-pošta, adresa, telefon, broj kartice).
+        </p>
+      }
+    >
+      <LegalSection n={1} title="Ko je rukovalac">
+        <p>
+          Rukovalac obrade podataka u vezi sa sajtom <Brand /> je vlasnik domena, fizičko lice sa
+          prebivalištem u Republici Srbiji.
+        </p>
+      </LegalSection>
 
-      <div className="space-y-6 text-sm leading-relaxed" style={{ color: "var(--text)" }}>
-        <section>
-          <h2 className="font-bold text-base mb-2" style={{ color: "var(--glow)" }}>1. Prikupljanje podataka</h2>
-          <p>
-            skockaj.rs ne zahteva registraciju niti prikuplja lične podatke korisnika (ime, email, adresa, telefon).
-            Konfiguracije se čuvaju kao anonimni hash-ovi bez veze sa identitetom korisnika.
-          </p>
-        </section>
+      <LegalSection n={2} title="Šta prikupljamo — i šta ne">
+        <p>
+          <strong>Ne prikupljamo:</strong> ime i prezime, e-poštu, adresu, telefon, podatke o
+          platnim karticama, niti naloge korisnika.
+        </p>
+        <p>
+          <strong>Možemo tehnički obraditi:</strong>
+        </p>
+        <LegalList
+          items={[
+            "IP adresu i tehničke zapise servera (vreme pristupa, stranica, korisnički agent) radi bezbednosti i rada servisa",
+            "anonimne agregatne statistike korišćenja (npr. broj pregleda konfiguracije) bez ličnih identifikatora",
+            "podatke koje sami pošaljete kada sačuvate konfiguraciju za deljenje (samo ID-jevi komponenti)",
+          ]}
+        />
+      </LegalSection>
 
-        <section>
-          <h2 className="font-bold text-base mb-2" style={{ color: "var(--glow)" }}>2. Kolačići (Cookies)</h2>
-          <p>
-            Sajt može koristiti tehničke kolačiće potrebne za funkcionisanje (npr. čuvanje konfiguracija u pretraživaču).
-            Ne koristimo kolačiće za praćenje niti reklamne kolačiće.
-          </p>
-        </section>
+      <LegalSection n={3} title="Lokalno skladištenje (localStorage)">
+        <p>
+          Konfigurator čuva spisak izabranih komponenti u <strong>lokalnom skladištu pretraživača</strong>{" "}
+          (npr. ključ <code>builder</code>). Ti podaci ostaju na vašem uređaju i ne šalju se na naše
+          servere dok sami ne sačuvate / podelite konfiguraciju.
+        </p>
+        <p>
+          Brisanjem lokalnog skladišta u pretraživaču brišete i sačuvanu konfiguraciju.
+        </p>
+      </LegalSection>
 
-        <section>
-          <h2 className="font-bold text-base mb-2" style={{ color: "var(--glow)" }}>3. Lokalno skladištenje</h2>
-          <p>
-            Konfiguracije koje kreirate čuvaju se u lokalnom skladištu vašeg pretraživača (localStorage).
-            Ovi podaci se ne šalju na naše servere osim kada eksplicitno zatražite čuvanje (deljenje linka).
-          </p>
-        </section>
+      <LegalSection n={4} title="Deljene konfiguracije">
+        <p>
+          Kada izaberete čuvanje konfiguracije, na server se šalje samo spisak identifikatora
+          komponenti. Čuva se anoniman zapis povezan sa kratkim hash identifikatorom (link oblika{" "}
+          <code>skockaj.rs/k/…</code>). U zapisu <strong>nema naloga, e-pošte ni imena</strong>.
+        </p>
+        <p>
+          Takva konfiguracija je <strong>javna</strong> svakome ko ima link (može je videti i
+          indeksirati pretraživači). Nemojte uz konfiguraciju objavljivati lične podatke.
+        </p>
+      </LegalSection>
 
-        <section>
-          <h2 className="font-bold text-base mb-2" style={{ color: "var(--glow)" }}>4. Deljene konfiguracije</h2>
-          <p>
-            Kada sačuvate konfiguraciju, komponente se čuvaju u bazi podataka kao anonimni JSON zapis
-            povezan sa kratkim hash ID-jem. Ovi podaci su javno dostupni putem linka.
-          </p>
-        </section>
+      <LegalSection n={5} title="Kolačići">
+        <p>
+          Koristimo isključivo <strong>tehnički neophodne</strong> kolačiće i slične zapise radi rada
+          sajta. Ne koristimo kolačiće za profilisanje, retargeting niti reklamne mreže.
+          Detalji su u <Link href="/politika-kolacica" className="hover-link" style={{ color: "var(--glow)" }}>Politici kolačića</Link>.
+        </p>
+      </LegalSection>
 
-        <section>
-          <h2 className="font-bold text-base mb-2" style={{ color: "var(--glow)" }}>5. Analitika</h2>
-          <p>
-            Možemo koristiti anonimizovanu analitiku poseta (broj pregleda, popularne komponente)
-            za poboljšanje usluge. Ovi podaci ne sadrže lične identifikatore.
-          </p>
-        </section>
+      <LegalSection n={6} title="Analitika">
+        <p>
+          Možemo koristiti <strong>anonimizovanu</strong> analitiku poseta (broj otvaranja stranica,
+          popularne kategorije, greške) radi poboljšanja usluge. Ako uvedemo alat treće strane,
+          trudićemo se da onemogućimo opcije koje omogućavaju ličnu identifikaciju.
+        </p>
+      </LegalSection>
 
-        <section>
-          <h2 className="font-bold text-base mb-2" style={{ color: "var(--glow)" }}>6. Treće strane</h2>
-          <p>
-            Klikom na linkove ka prodavnicama prelazite na sajte trećih lica koji imaju svoju politiku privatnosti.
-            skockaj.rs ne kontroliše niti odgovara za prakse privatnosti tih sajtova.
-          </p>
-        </section>
+      <LegalSection n={7} title="Server i evidencije pristupa">
+        <p>
+          Radi bezbednosti i stabilnosti (zaštita od zloupotrebe, otklanjanje grešaka) serveri mogu
+          privremeno čuvati standardne evidencije pristupa. Ove evidencije se ne koriste za
+          profilisanje korisnika niti se prodaju trećim licima.
+        </p>
+      </LegalSection>
 
-        <section>
-          <h2 className="font-bold text-base mb-2" style={{ color: "var(--glow)" }}>7. Bezbednost</h2>
-          <p>
-            Domen skockaj.rs je registrovan na fizičko lice, čime su lični podaci vlasnika automatski skriveni
-            u javnoj WHOIS bazi u skladu sa zakonom o zaštiti podataka o ličnosti.
-          </p>
-        </section>
+      <LegalSection n={8} title="Treće strane (prodavnice)">
+        <p>
+          Linkovi vode na sajte prodavnica. Tamo važe <strong>njihove</strong> politike privatnosti
+          i uslovi prodaje. Ako neka prodavnica koristi kolačiće ili affiliate parametre u URL-u,
+          <Brand /> time ne upravlja niti prima sadržaj tih kolačića.
+        </p>
+      </LegalSection>
 
-        <section>
-          <h2 className="font-bold text-base mb-2" style={{ color: "var(--glow)" }}>8. Kontakt</h2>
-          <p>
-            Za pitanja o privatnosti, kontaktirajte nas putem kontakt forme na sajtu.
-          </p>
-        </section>
-      </div>
-    </div>
+      <LegalSection n={9} title="Prava korisnika">
+        <p>
+          U skladu sa Zakonom o zaštiti podataka o ličnosti („Sl. glasnik RS“, br. 87/2018) možete
+          tražiti pristup, ispravku ili brisanje podataka koje eventualno obrađujemo o vama
+          (npr. tehničkih evidencija, ako vas je moguće identifikovati), kao i prigovor na obradu.
+        </p>
+        <p>
+          Pošto ne vodimo naloge i deljene konfiguracije nisu vezane za identitet, za većinu
+          korisnika ne postoji set ličnih podataka koji bismo mogli „preuzeti“ ili obrisati —
+          osim lokalnog skladišta u vašem pretraživaču (brišete ga sami).
+        </p>
+      </LegalSection>
+
+      <LegalSection n={10} title="Bezbednost i čuvanje">
+        <p>
+          Tehničke evidencije čuvamo samo onoliko dugo koliko je potrebno za rad i bezbednost servisa.
+          Deljene konfiguracije mogu se obrisati radi održavanja baze. Ne prodajemo lične podatke
+          trećim licima.
+        </p>
+      </LegalSection>
+
+      <LegalSection n={11} title="Deca">
+        <p>
+          Sajt nije usmeren na decu mlađu od 13 godina i svesno ne prikupljamo njihove lične podatke.
+        </p>
+      </LegalSection>
+
+      <LegalSection n={12} title="Izmene i kontakt">
+        <p>
+          Izmene pravila objavljujemo na ovoj stranici sa datumom ažuriranja. Za zahteve u vezi sa
+          privatnošću koristite kontakt formu na sajtu (ili kontakt naveden u podnožju).
+        </p>
+      </LegalSection>
+    </LegalShell>
   );
 }

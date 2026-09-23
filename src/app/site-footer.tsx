@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { CATEGORIES } from "@/lib/types";
+import { Brand } from "./brand";
 
 const LEGAL_LINKS = [
   { href: "/uslovi-koriscenja", label: "Uslovi korišćenja" },
@@ -30,11 +31,8 @@ export default function SiteFooter() {
         <div className="grid gap-10 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
           <div>
-            <div
-              className="font-black text-lg tracking-tight mb-3"
-              style={{ color: "var(--glow)", fontFamily: "var(--font-geist-sans)" }}
-            >
-              skockaj<span style={{ color: "var(--text-muted)" }}>.rs</span>
+            <div className="mb-3">
+              <Brand size={20} />
             </div>
             <p className="text-xs leading-relaxed mb-4">
               Upoređivač cena računarskih komponenti u Srbiji.
@@ -135,7 +133,6 @@ export default function SiteFooter() {
           <span>
             © {new Date().getFullYear()} skockaj.rs — upoređivanje cena komponenti u Srbiji
           </span>
-          <span style={{ color: "var(--glow)" }}>v0.1.0</span>
         </div>
       </div>
     </footer>

@@ -1,81 +1,168 @@
+import type { Metadata } from "next";
+import { Brand, LegalShell, LegalSection, LegalList } from "../legal-shell";
+
+export const metadata: Metadata = {
+  title: "Uslovi korišćenja",
+  description:
+    "Uslovi korišćenja sajta skockaj.rs — upoređivač cena računarskih komponenti u Srbiji. Sajt nije prodavnica.",
+};
+
 export default function UsloviKoriscenja() {
   return (
-    <div className="fade-in max-w-3xl mx-auto">
-      <h1 className="text-3xl font-black tracking-tight mb-2" style={{ fontFamily: "var(--font-geist-sans)" }}>
-        Uslovi korišćenja
-      </h1>
-      <p className="text-xs mb-8" style={{ color: "var(--text-muted)", fontFamily: "var(--font-geist-mono)" }}>
-        Poslednje ažuriranje: septembar 2026.
-      </p>
+    <LegalShell
+      title="Uslovi korišćenja"
+      intro={
+        <p>
+          Ovi uslovi uređuju korišćenje sajta <strong><Brand /></strong> (u daljem tekstu: Sajt).
+          Korišćenjem Sajta potvrđujete da ste pročitali, razumeli i prihvatili ove uslove.
+        </p>
+      }
+    >
+      <LegalSection n={1} title="Prihvatanje uslova">
+        <p>
+          Ako se ne slažete sa bilo kojim delom ovih uslova, molimo vas da ne koristite Sajt.
+          Nastavak korišćenja nakon objave izmena znači da prihvatate ažurirane uslove.
+        </p>
+      </LegalSection>
 
-      <div className="space-y-6 text-sm leading-relaxed" style={{ color: "var(--text)" }}>
-        <section>
-          <h2 className="font-bold text-base mb-2" style={{ color: "var(--glow)" }}>1. Prihvatanje uslova</h2>
-          <p>
-            Korišćenjem sajta skockaj.rs prihvatate ove uslove korišćenja. Ako se ne slažete sa bilo kojim delom uslova,
-            molimo vas da ne koristite sajt.
-          </p>
-        </section>
+      <LegalSection n={2} title="Priroda usluge">
+        <p>
+          <Brand /> je <strong>nezavisni agregator (upoređivač) informacija</strong> o računarskim
+          komponentama i njihovim cenama na tržištu Srbije.
+        </p>
+        <LegalList
+          items={[
+            <>
+              <strong>Sajt nije prodavnica</strong> i ne prodaje, ne isporučuje i ne naplaćuje proizvode.
+            </>,
+            <>
+              Kupovinu obavljate <strong>direktno kod treće prodavnice</strong> čiji je link prikazan uz cenu.
+              Ugovorni odnos kupac–prodavac nastaje isključivo među vama i tom prodavnicom.
+            </>,
+            <>
+              Prikaz cena, naziva, slika i specifikacija je informativnog karaktera i ne predstavlja
+              ponudu u pravnom smislu.
+            </>,
+          ]}
+        />
+      </LegalSection>
 
-        <section>
-          <h2 className="font-bold text-base mb-2" style={{ color: "var(--glow)" }}>2. Priroda usluge</h2>
-          <p>
-            skockaj.rs je <strong>nezavisni agregator informacija</strong> o cenama računarskih komponenti na tržištu Srbije.
-            Sajt <strong>nije prodavnica</strong> i ne vrši prodaju, isporuku niti naplatu proizvoda.
-            Sve kupovine se obavljaju direktno kod navedenih prodavnica.
-          </p>
-        </section>
+      <LegalSection n={3} title="Nalog i registracija">
+        <p>
+          Sajt ne zahteva registraciju niti nalog. Konfigurator računara radi bez naloga;
+          podešavanja se čuvaju lokalno u vašem pretraživaču, osim kada sami zatražite javni link
+          za deljenje konfiguracije.
+        </p>
+      </LegalSection>
 
-        <section>
-          <h2 className="font-bold text-base mb-2" style={{ color: "var(--glow)" }}>3. Tačnost informacija</h2>
-          <p>
-            Cene, dostupnost i specifikacije proizvoda se automatski prikupljaju sa sajtova trećih lica.
-            Iako težimo tačnosti, ne garantujemo da su sve informacije uvek ispravne ili ažurne.
-            Pre kupovine uvek proverite konačnu cenu i dostupnost direktno kod prodavca.
-          </p>
-        </section>
+      <LegalSection n={4} title="Cene, zalihe i tačnost podataka">
+        <p>
+          Cene i dostupnost prikupljaju se automatski sa sajtova prodavnica i mogu se razlikovati od
+          trenutnog stanja kod prodavca (greške prikupljanja, zastareli podaci, akcije, greške na
+          sajtu prodavca, različiti načini plaćanja).
+        </p>
+        <p>
+          <strong>Pre svake kupovine obavezno proverite</strong> konačnu cenu, dostupnost, uslove
+          plaćanja i isporuke direktno na sajtu prodavca. <Brand /> ne garantuje da je prikazana
+          cena najpovoljnija u svakom trenutku niti da je proizvod zaista na stanju.
+        </p>
+      </LegalSection>
 
-        <section>
-          <h2 className="font-bold text-base mb-2" style={{ color: "var(--glow)" }}>4. Kompatibilnost</h2>
-          <p>
-            Alat za proveru kompatibilnosti pruža orijentacionu procenu zasnovanu na poznatim specifikacijama.
-            Ne garantujemo kompatibilnost svih komponenti. Pre sastavljanja konfiguracije, proverite
-            specifikacije kod proizvođača.
-          </p>
-        </section>
+      <LegalSection n={5} title="Konfigurator i kompatibilnost">
+        <p>
+          Provera kompatibilnosti daje <strong>orijentacionu ocenu</strong> na osnovu poznatih
+          specifikacija (npr. socket, tip memorije, TDP). Ne zamenjuje stručni savet, uputstvo
+          proizvođača niti proveru BIOS-a / verzija ploče.
+        </p>
+        <p>
+          Ne garantujemo da je svaka kombinacija komponenti tehnički ispravna. Korisnik je odgovoran
+          za konačan izbor delova.
+        </p>
+      </LegalSection>
 
-        <section>
-          <h2 className="font-bold text-base mb-2" style={{ color: "var(--glow)" }}>5. Linkovi ka trećim stranama</h2>
-          <p>
-            Sajt sadrži linkove ka spoljnim prodavnicama. skockaj.rs nije odgovoran za sadržaj,
-            politiku privatnosti niti praksu tih sajtova.
-          </p>
-        </section>
+      <LegalSection n={6} title="Deljene konfiguracije">
+        <LegalList
+          items={[
+            <>
+              Sačuvana konfiguracija se čuva kao anonimni zapis sa kratkim hash identifikatorom
+              (npr. <code>skockaj.rs/k/abc123</code>).
+            </>,
+            "Svako ko ima link može videti spisak komponenti i okvirne cene.",
+            "Zapis ne sadrži ime, e-poštu niti druge lične podatke autora.",
+            "Ne garantujemo trajno čuvanje deljenih konfiguracija; mogu biti obrisane radi održavanja baze.",
+          ]}
+        />
+      </LegalSection>
 
-        <section>
-          <h2 className="font-bold text-base mb-2" style={{ color: "var(--glow)" }}>6. Affiliate partnerstvo</h2>
-          <p>
-            Neke veze ka prodavnicama mogu sadržati affiliate parametre. To ne utiče na prikazanu cenu
-            niti na redosled ponuda.
-          </p>
-        </section>
+      <LegalSection n={7} title="Prihvatljivo korišćenje">
+        <p>Zabranjeno je:</p>
+        <LegalList
+          items={[
+            "ometanje rada Sajta (napadi, automatsko preopterećenje, zaobilaženje mera zaštite)",
+            "pokušaj neovlašćenog pristupa serverima, bazi podataka ili tuđim nalozima (ako se uvedu)",
+            "objavljivanje nezakonitog, uvredljivog ili obmanjujućeg sadržaja putem deljenih konfiguracija",
+            "korišćenje Sajta u svrhe koje krše zakon Republike Srbije",
+          ]}
+        />
+      </LegalSection>
 
-        <section>
-          <h2 className="font-bold text-base mb-2" style={{ color: "var(--glow)" }}>7. Intelektualna svojina</h2>
-          <p>
-            Sav sadržaj sajta (dizajn, kod, baza podataka) je vlasništvo skockaj.rs osim ako nije drugačije naznačeno.
-            Podaci o proizvodima i slikama pripadaju njihovim vlasnicima.
-          </p>
-        </section>
+      <LegalSection n={8} title="Linkovi ka trećim stranama i affiliate">
+        <p>
+          Sajt sadrži linkove ka spoljnim prodavnicama. Ti sajtovi imaju sopstvene uslove i politike
+          privatnosti. <Brand /> <strong>ne kontroliše</strong> njihov sadržaj, cene, zalihu,
+          isporuku, reklamacije niti praksu privatnosti i ne odgovara za njih.
+        </p>
+        <p>
+          Neke veze mogu sadržavati <strong>affiliate (partnerske) parametre</strong>. To može
+          značiti da Sajt može dobiti proviziju ako kupite preko tog linka.
+          <strong> To ne utiče na prikazanu cenu niti na redosled ponuda</strong> — uvek se prikazuje
+          najniža pronađena cena.
+        </p>
+      </LegalSection>
 
-        <section>
-          <h2 className="font-bold text-base mb-2" style={{ color: "var(--glow)" }}>8. Izmene uslova</h2>
-          <p>
-            Zadržavamo pravo izmene ovih uslova u bilo kom trenutku. Nastavak korišćenja sajta nakon izmena
-            predstavlja prihvatanje novih uslova.
-          </p>
-        </section>
-      </div>
-    </div>
+      <LegalSection n={9} title="Intelektualna svojina">
+        <LegalList
+          items={[
+            <>
+              Dizajn, kod, baza podataka i originalan sadržaj Sajta pripadaju <Brand />, osim ako
+              nije drugačije naznačeno.
+            </>,
+            "Nazivi proizvoda, zaštitni znakovi, logotipi i slike pripadaju njihovim vlasnicima i koriste se radi identifikacije proizvoda.",
+            "Zabranjeno je neovlašćeno kopiranje, preprodaja ili javno prenošenje baze proizvoda i cena u komercijalne svrhe bez pisanog odobrenja.",
+          ]}
+        />
+      </LegalSection>
+
+      <LegalSection n={10} title="Odricanje odgovornosti i ograničenje">
+        <p>
+          Sajt se pruža <strong>„kako jeste“ (as is)</strong>. U najvećoj meri dozvoljenoj zakonom,
+          <Brand /> ne daje garancije u pogledu tačnosti, potpunosti, dostupnosti ili pogodnosti
+          za određenu svrhu.
+        </p>
+        <p>
+          <Brand /> ne odgovara za posrednu, slučajnu ili posledičnu štetu, niti za štetu nastalu
+          kupovinom zasnovanom na prikazanim informacijama (pogrešna cena, nekompatibilnost,
+          neisporučen proizvod kod trećeg prodavca i sl.).
+        </p>
+      </LegalSection>
+
+      <LegalSection n={11} title="Izmene uslova i dostupnost">
+        <p>
+          Zadržavamo pravo izmene, privremenog ili trajnog prestanka rada Sajta ili njegovih delova
+          bez prethodne najave. Važeća verzija uslova uvek je objavljena na ovoj stranici.
+        </p>
+      </LegalSection>
+
+      <LegalSection n={12} title="Merodavno pravo i kontakt">
+        <p>
+          Na ove uslove primenjuje se pravo <strong>Republike Srbije</strong>. Za sporove je nadležan
+          stvarno nadležni sud u Beogradu, osim ako imperativni propisi ne nalažu drugačije.
+        </p>
+        <p>
+          Za pitanja u vezi sa uslovima korišćenja obratite se putem kontakt forme na sajtu ili na
+          kontakt objavljen u podnožju stranice.
+        </p>
+      </LegalSection>
+    </LegalShell>
   );
 }

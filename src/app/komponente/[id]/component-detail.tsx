@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import type { Component, ScrapedPrice } from "@/lib/types";
 import { CATEGORIES, STORE_NAMES, categoryToSlug } from "@/lib/types";
@@ -87,6 +88,7 @@ export default function ComponentDetail({ component }: { component: Component })
   const validPrices = scrapedPrices.filter((p) => p.price > 0);
   const cheapest = validPrices.length > 0 ? Math.min(...validPrices.map((p) => p.price)) : null;
 
+  const router = useRouter();
   const addToBuilder = () => {
     const stored: number[] = JSON.parse(localStorage.getItem("builder") || "[]");
     if (!stored.includes(c.id)) {
@@ -94,6 +96,7 @@ export default function ComponentDetail({ component }: { component: Component })
       localStorage.setItem("builder", JSON.stringify(stored));
     }
     setAdded(true);
+    router.push("/konfigurator");
   };
 
   // Deduplicate: best price per store (ignore unparsed 0 RSD)

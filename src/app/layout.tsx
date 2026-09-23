@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
 import SiteFooter from "./site-footer";
+import { Brand } from "./brand";
 import "./globals.css";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
@@ -42,8 +43,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <header className="header-glow" style={{ background: "var(--panel)", borderBottom: "1px solid var(--edge)", position: "relative" }}>
           <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "1px", background: "var(--glow)", opacity: 0.4 }} />
           <nav className="mx-auto flex items-center justify-between px-6 py-4" style={{ maxWidth: 1100 }}>
-            <Link href="/" className="font-black text-lg tracking-tight logo-link" style={{ color: "var(--glow)", fontFamily: "var(--font-geist-sans)" }}>
-              skockaj<span style={{ color: "var(--text-muted)" }}>.rs</span>
+            <Link href="/" className="logo-link" aria-label="skockaj.rs početna">
+              <Brand size={20} />
             </Link>
             <div className="flex gap-8 text-sm font-medium nav-links" style={{ fontFamily: "var(--font-geist-mono)" }}>
               <Link href="/komponente" style={{ color: "var(--text-muted)" }}>

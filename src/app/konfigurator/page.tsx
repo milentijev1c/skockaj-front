@@ -1,9 +1,41 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { apiFetch } from "@/lib/api";
 import type { Component, CompatibilityResult, Build } from "@/lib/types";
-import { CATEGORIES, CATEGORY_ICONS, srKomponente } from "@/lib/types";
+import { CATEGORIES, CATEGORY_ICONS, categoryToSlug, srKomponente } from "@/lib/types";
+
+function CategoryIcon({
+  value,
+  size = 36,
+  color,
+}: {
+  value: string;
+  size?: number;
+  color: string;
+}) {
+  const url = CATEGORY_ICONS[value];
+  return (
+    <div
+      aria-hidden="true"
+      className="mb-3"
+      style={{
+        width: size,
+        height: size,
+        backgroundColor: color,
+        WebkitMaskImage: `url(${url})`,
+        maskImage: `url(${url})`,
+        WebkitMaskSize: "contain",
+        maskSize: "contain",
+        WebkitMaskRepeat: "no-repeat",
+        maskRepeat: "no-repeat",
+        WebkitMaskPosition: "center",
+        maskPosition: "center",
+      }}
+    />
+  );
+}
 
 export default function BuilderPage() {
   const [selected, setSelected] = useState<number[]>([]);
@@ -79,71 +111,150 @@ export default function BuilderPage() {
         </p>
       </div>
 
-      {components.length === 0 ? (
-        <EmptyState />
-      ) : (
-        <>
-          {/* Slot grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
-            {CATEGORIES.map((cat) => {
-              const items = byCategory[cat.value] || [];
-              const filled = items.length > 0;
+      {components.length === 0 && (
+        <p className="text-sm mb-6" style={{ color: "var(--text-muted)", fontFamily: "var(--font-geist-mono)" }}>
+          Izaberi kategoriju ispod da dodaš deo — ili idi na komponente.
+        </p>
+      )}
 
-              return (
-                <div
-                  key={cat.value}
-                  className="p-4 relative overflow-hidden slot-hover"
+      {/* Slot grid — whole card is clickable */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        {CATEGORIES.map((cat) => {
+          const items = byCategory[cat.value] || [];
+          const filled = items.length > 0;
+          const href = filled
+            ? `/komponente/${items[0].id}`
+            : `/komponente?kategorija=${categoryToSlug(cat.value) ?? cat.value}`;
+
+          return (
+            <Link
+              key={cat.value}
+              href={href}
+              className="p-5 relative overflow-hidden slot-hover"
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                textAlign: "center",
+                gap: 6,
+                background: filled ? "var(--panel)" : "transparent",
+                border: `1px dashed ${filled ? "var(--glow)" : "var(--edge)"}`,
+                boxShadow: filled ? "0 0 15px var(--glow-dim)" : "none",
+                minHeight: 150,
+                cursor: "pointer",
+                color: "inherit",
+                textDecoration: "none",
+              }}
+            >
+              <CategoryIcon
+                value={cat.value}
+                size={40}
+                color={filled ? "var(--glow)" : "var(--text-muted)"}
+              />
+              <div
+                style={{
+                  color: filled ? "var(--glow)" : "var(--text-muted)",
+                  fontFamily: "var(--font-geist-mono)",
+                  fontSize: 10,
+                  fontWeight: 700,
+                  letterSpacing: "0.12em",
+                  textTransform: "uppercase",
+                  textAlign: "center",
+                  width: "100%",
+                }}
+              >
+                {cat.label}
+              </div>
+
+              {filled ? (
+                items.map((c) => (
+                  <div
+                    key={c.id}
+                    style={{
+                      width: "100%",
+                      textAlign: "center",
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      gap: 6,
+                    }}
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <div
+                      style={{
+                        color: "var(--text)",
+                        fontSize: 12,
+                        lineHeight: 1.35,
+                        fontWeight: 500,
+                        textAlign: "center",
+                        width: "100%",
+                      }}
+                    >
+                      {c.name}
+                    </div>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        gap: 12,
+                        width: "100%",
+                      }}
+                    >
+                      {c.prices.length > 0 ? (
+                        <span
+                          style={{
+                            color: "var(--amber)",
+                            fontFamily: "var(--font-geist-mono)",
+                            fontSize: 12,
+                            fontWeight: 700,
+                          }}
+                        >
+                          {Math.min(...c.prices.map((p) => p.price_rsd)).toLocaleString("sr")}
+                        </span>
+                      ) : (
+                        <span style={{ color: "var(--text-muted)", fontSize: 10 }}>—</span>
+                      )}
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          removeComponent(c.id);
+                        }}
+                        style={{
+                          color: "var(--coral)",
+                          fontFamily: "var(--font-geist-mono)",
+                          fontSize: 10,
+                          textTransform: "uppercase",
+                          letterSpacing: "0.08em",
+                          transition: "color 0.15s ease",
+                        }}
+                      >
+                        ukloni
+                      </button>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <span
                   style={{
-                    background: filled ? "var(--panel)" : "transparent",
-                    border: `1px dashed ${filled ? "var(--glow)" : "var(--edge)"}`,
-                    boxShadow: filled ? "0 0 15px var(--glow-dim)" : "none",
-                    minHeight: 100,
+                    color: "var(--glow)",
+                    fontFamily: "var(--font-geist-mono)",
+                    fontSize: 10,
+                    letterSpacing: "0.08em",
                   }}
                 >
-                  {/* Slot icon */}
-                  <img
-                    src={CATEGORY_ICONS[cat.value]}
-                    alt={cat.label}
-                    width={20}
-                    height={20}
-                    className="mb-3"
-                    style={{ color: filled ? "var(--glow)" : "var(--text-muted)" }}
-                  />
+                  + Dodaj
+                </span>
+              )}
+            </Link>
+          );
+        })}
+      </div>
 
-                  {filled ? (
-                    items.map((c) => (
-                      <div key={c.id}>
-                        <div className="text-xs font-medium leading-tight mb-1" style={{ color: "var(--text)" }}>
-                          {c.name}
-                        </div>
-                        <div className="flex items-center justify-between">
-                          {c.prices.length > 0 ? (
-                            <span className="text-xs font-bold" style={{ color: "var(--amber)", fontFamily: "var(--font-geist-mono)" }}>
-                              {Math.min(...c.prices.map((p) => p.price_rsd)).toLocaleString("sr")}
-                            </span>
-                          ) : (
-                            <span className="text-[10px]" style={{ color: "var(--text-muted)" }}>—</span>
-                          )}
-                          <button
-                            onClick={() => removeComponent(c.id)}
-                            className="text-[10px] uppercase tracking-wider"
-                            style={{ color: "var(--coral)", fontFamily: "var(--font-geist-mono)", transition: "color 0.15s ease" }}
-                          >
-                            ukloni
-                          </button>
-                        </div>
-                      </div>
-                    ))
-                  ) : (
-                    <a href="/komponente" className="text-[10px] tracking-wider" style={{ color: "var(--text-muted)", fontFamily: "var(--font-geist-mono)" }}>
-                      + Dodaj
-                    </a>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-
+      {components.length > 0 && (
+        <>
           {/* Summary strip */}
           <div
             className="flex items-center justify-between p-5 mb-6 flex-wrap gap-4"
@@ -171,7 +282,7 @@ export default function BuilderPage() {
                 className="btn-ghost px-5 py-2.5 text-xs font-bold tracking-widest uppercase"
                 style={{ border: "1px solid var(--glow)", color: "var(--glow)", background: "transparent", fontFamily: "var(--font-geist-mono)" }}
               >
-                Proveri
+                Proveri kompatibilnost
               </button>
               <button
                 onClick={saveBuild}
@@ -239,29 +350,6 @@ export default function BuilderPage() {
           )}
         </>
       )}
-    </div>
-  );
-}
-
-function EmptyState() {
-  return (
-    <div className="text-center py-24">
-      <div className="inline-flex items-center justify-center w-16 h-16 mb-6" style={{ border: "1px dashed var(--edge)" }}>
-        <svg width="24" height="24" viewBox="0 0 16 16" fill="none">
-          <rect x="1" y="1" width="6" height="6" stroke="var(--text-muted)" strokeWidth="1"/>
-          <rect x="9" y="1" width="6" height="6" stroke="var(--text-muted)" strokeWidth="1"/>
-          <rect x="1" y="9" width="6" height="6" stroke="var(--text-muted)" strokeWidth="1"/>
-          <rect x="9" y="9" width="6" height="6" stroke="var(--text-muted)" strokeWidth="1"/>
-        </svg>
-      </div>
-      <p className="text-sm mb-4" style={{ color: "var(--text-muted)" }}>Konfigurator je prazan</p>
-      <a
-        href="/komponente"
-        className="btn-ghost inline-block px-6 py-2.5 text-xs font-bold tracking-widest uppercase"
-        style={{ border: "1px solid var(--glow)", color: "var(--glow)", fontFamily: "var(--font-geist-mono)" }}
-      >
-        Dodaj komponente
-      </a>
     </div>
   );
 }

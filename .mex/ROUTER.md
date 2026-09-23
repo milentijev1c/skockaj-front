@@ -25,19 +25,22 @@ Then read this file fully before doing anything else in this session.
 
 ## Current Project State
 **Working:**
-- Dark gaming-PC UI (teal LED), Serbian Latin copy (ekavica), category cards + collapsible filter lists
-- Shareable URL state (category, sort, q, stanje, cena_od/do, attribute filters)
-- Typewriter hero (two-line, accent word green), SEO footer + `/prodavnice` shop logos, cookies policy
-- Shop logos on product rows and offer deals; skeletons + empty states; AA contrast palette
-- Proof: `npm run test:unit` (sr plurals), `npm run test:e2e` (Playwright smoke), pre-push gate
+- Dark gaming-PC UI (teal LED), Serbian Latin (ekavica), shared `Brand` wordmark (header/footer/legal)
+- Collapsible filter lists + sort/stock/price; shareable URL state
+- Typewriter hero; `/prodavnice` with local shop logos; shop logos on offer deals
+- Konfigurator: whole-slot click, centered cards, CSS-mask icons, redirect after Dodaj
+- Saved build `/k/[hash]`: edge category/price, centered name, cheapest shop deep-link
+- Legal pages finalized (Uslovi / Privatnost / Kolačići) + `LegalShell`/`Brand`
+- Skeletons, empty states, AA contrast palette; Playwright + `sr` unit smoke on pre-push
 
 **Not yet built:**
-- Dedicated SEO landing pages per category (footer links use query URLs)
+- Dedicated SEO landing pages per category
 - Admin match-queue UI
 
 **Known issues:**
-- Tailwind v4 can bury global CSS hover; prefer `btn-*` / `card-hover` / `chip-btn` classes
-- Next.js `router.replace` URL updates can lag ~1s in dev (tests should poll)
+- Tailwind v4 can bury global CSS hover — use `btn-*` / `card-hover` / `chip-btn` / `slot-hover`
+- Next.js `router.replace` URL updates can lag ~1s in dev (poll in e2e)
+- Footer no longer shows app version (keep version in git tags only)
 
 ## Routing Table
 

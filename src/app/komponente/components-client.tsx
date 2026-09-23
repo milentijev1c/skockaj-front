@@ -7,7 +7,6 @@ import type { Component } from "@/lib/types";
 import { CATEGORIES, slugToCategory, categoryToSlug, CATEGORY_ICONS, srArtikli, srProdavnice, srRezultati } from "@/lib/types";
 import { apiFetch } from "@/lib/api";
 import { EmptyState, SkeletonList } from "../ui-states";
-import { ShopLogoStack, STORE_ID_TO_SLUG } from "../shop-logo";
 
 // ── Per-category attribute extraction (specs first, then name) ──
 
@@ -564,10 +563,15 @@ export default function ComponentsClient({ initial }: { initial: Component[] }) 
   const addToBuilder = (id: number, e: React.MouseEvent) => {
     e.preventDefault(); e.stopPropagation();
     const stored: number[] = JSON.parse(localStorage.getItem("builder") || "[]");
-    if (!stored.includes(id)) { stored.push(id); localStorage.setItem("builder", JSON.stringify(stored)); }
+    if (!stored.includes(id)) {
+      stored.push(id);
+      localStorage.setItem("builder", JSON.stringify(stored));
+      setAddedIds((prev) => new Set(prev).add(id));
+      // first (or next) part — continue in Konfigurator
+      router.push("/konfigurator");
+      return;
+    }
     setAddedIds((prev) => new Set(prev).add(id));
-    setJustAddedIds((prev) => new Set(prev).add(id));
-    setTimeout(() => setJustAddedIds((prev) => { const n = new Set(prev); n.delete(id); return n; }), 1500);
   };
 
   const removeFromBuilder = (id: number, e: React.MouseEvent) => {
@@ -858,18 +862,19 @@ export default function ComponentsClient({ initial }: { initial: Component[] }) 
                       </div>
                       <div className="w-28 text-right">
                         {inStock > 0 ? (
-                          <ShopLogoStack
-                            slugs={priced.filter((p) => p.in_stock).map((p) => STORE_ID_TO_SLUG[p.store_id]).filter(Boolean)}
-                            size={16}
-                          />
+                          <span className="text-[11px]" style={{ color: "var(--glow)", fontFamily: "var(--font-geist-mono)" }}>
+                            {inStock} {srProdavnice(inStock)}
+                          </span>
                         ) : (
                           <span className="text-[11px]" style={{ color: "var(--text-muted)" }}>/</span>
                         )}
                       </div>
                       <div className="w-32 text-right">
-                        {added && justAddedIds.has(c.id) ? <span className="text-[10px] font-bold tracking-wider uppercase px-3 py-1.5 fade-in" style={{ color: "var(--glow)", fontFamily: "var(--font-geist-mono)" }}>Dodato ✓</span>
-                        : added ? <button onClick={(e) => removeFromBuilder(c.id, e)} className="text-[10px] font-bold tracking-wider uppercase px-3 py-1.5" style={{ background: "transparent", color: "var(--coral)", border: "1px solid var(--coral)", fontFamily: "var(--font-geist-mono)", cursor: "pointer", transition: "all 0.2s ease" }}>Ukloni</button>
-                        : <button onClick={(e) => addToBuilder(c.id, e)} className="text-[10px] font-bold tracking-wider uppercase px-3 py-1.5" style={{ background: "transparent", color: "var(--glow)", border: "1px solid var(--glow)", fontFamily: "var(--font-geist-mono)", cursor: "pointer", transition: "all 0.2s ease" }}>Dodaj</button>}
+                        {added ? (
+                          <button onClick={(e) => removeFromBuilder(c.id, e)} className="text-[10px] font-bold tracking-wider uppercase px-3 py-1.5 btn-danger" style={{ background: "transparent", color: "var(--coral)", border: "1px solid var(--coral)", fontFamily: "var(--font-geist-mono)", cursor: "pointer", transition: "all 0.2s ease" }}>Ukloni</button>
+                        ) : (
+                          <button onClick={(e) => addToBuilder(c.id, e)} className="text-[10px] font-bold tracking-wider uppercase px-3 py-1.5" style={{ background: "transparent", color: "var(--glow)", border: "1px solid var(--glow)", fontFamily: "var(--font-geist-mono)", cursor: "pointer", transition: "all 0.2s ease" }}>Dodaj</button>
+                        )}
                       </div>
                     </div>
                   );
