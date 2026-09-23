@@ -3,7 +3,7 @@ import { expect, test } from "@playwright/test";
 test.describe("catalog UI smoke", () => {
   test("category cards render", async ({ page }) => {
     await page.goto("/komponente");
-    await expect(page.getByRole("heading", { name: "Komponente" })).toBeVisible();
+    await expect(page.locator("h1").filter({ hasText: "Komponente" })).toBeVisible();
     await expect(page.getByText("Procesor", { exact: true })).toBeVisible();
     await expect(page.getByText("Grafička kartica", { exact: true })).toBeVisible();
     await expect(page.getByText("Napajanje", { exact: true })).toBeVisible();
