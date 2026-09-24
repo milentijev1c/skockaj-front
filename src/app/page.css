@@ -1,36 +1,33 @@
 .home-ghost-btn {
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: color 0.2s ease, border-color 0.2s ease, box-shadow 0.25s ease;
 }
 .home-ghost-btn:hover {
   border-color: var(--glow) !important;
   color: var(--glow) !important;
   box-shadow: 0 0 20px var(--glow-dim);
-  transform: translateY(-1px);
 }
 
 .hero-primary-btn {
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: box-shadow 0.25s ease, opacity 0.15s ease;
 }
 .hero-primary-btn:hover {
-  box-shadow: 0 0 30px var(--glow-dim), 0 4px 15px rgba(0,0,0,0.3);
-  transform: translateY(-2px);
-  filter: brightness(1.1);
+  box-shadow: 0 0 30px var(--glow-dim), 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 .hero-primary-btn:active {
-  transform: translateY(0) scale(0.98);
+  opacity: 0.9;
 }
 
 .fade-up {
-  animation: fadeUp 0.6s ease-out both;
+  animation: fadeUp 0.35s ease-out both;
 }
 .fade-up-delay {
-  animation: fadeUp 0.6s ease-out 0.3s both;
+  animation: fadeUp 0.35s ease-out 0.15s both;
 }
 .stat-item {
-  transition: transform 0.2s ease;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
 }
 .stat-item:hover {
-  transform: translateY(-3px);
+  box-shadow: 0 0 16px var(--glow-dim);
 }
 
 .glow-pulse {
@@ -38,8 +35,8 @@
 }
 
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
 @keyframes glowPulse {

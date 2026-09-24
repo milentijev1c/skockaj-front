@@ -87,10 +87,10 @@ select:hover {
     linear-gradient(135deg, var(--glow) 50%, transparent 50%);
 }
 
-/* Generic press feedback */
+/* Generic press feedback — never `all` / layout props (avoids jank) */
 :where(button:not(:disabled), a[href], [role="button"]) {
-  transition: color 0.15s ease, background 0.2s ease, border-color 0.2s ease,
-    box-shadow 0.25s ease, transform 0.15s ease, opacity 0.15s ease;
+  transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease,
+    box-shadow 0.2s ease, opacity 0.15s ease;
 }
 :where(button:not(:disabled), a[href], [role="button"]):active {
   transform: translateY(1px) scale(0.98);
@@ -122,16 +122,12 @@ select:hover {
 /* ── Card hover utility (used by components & builder) ── */
 
 .card-hover {
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: border-color 0.2s ease, box-shadow 0.25s ease, opacity 0.2s ease;
 }
 .card-hover:hover {
   border-color: var(--glow) !important;
   box-shadow: 0 0 20px var(--glow-dim);
-  transform: translateY(-2px);
-}
-.card-hover:hover .category-icon,
-.card-hover:hover span {
-  filter: brightness(1.15);
+  /* no translateY / filter — they force extra paint on hover */
 }
 
 /* ── Table row / list hover ─────────────────────── */
@@ -187,7 +183,7 @@ select:hover {
 /* ── Action buttons ─────────────────────────────── */
 
 .btn-glow {
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: box-shadow 0.2s ease, filter 0.2s ease, opacity 0.15s ease, transform 0.15s ease;
   /* Solid accent fill always takes dark ink (AA+) */
   background: var(--glow);
   color: var(--on-glow);
@@ -237,12 +233,12 @@ select:hover {
 /* ── Entrance animation ─────────────────────────── */
 
 .fade-in {
-  animation: fadeIn 0.4s ease-out both;
+  animation: fadeIn 0.25s ease-out both;
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(12px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
 /* ── Skeletons ─────────────────────────────────── */
