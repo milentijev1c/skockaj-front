@@ -507,7 +507,8 @@ export default function ComponentsClient({ initial }: { initial: Component[] }) 
       setLoading(true);
       apiFetch<Component[]>(`/components/?category=${boot.category}`).then((data) => { setComponents(data); setLoading(false); });
     } else {
-      setComponents(initial); setLoading(false);
+      setComponents([]);
+      setLoading(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -529,7 +530,8 @@ export default function ComponentsClient({ initial }: { initial: Component[] }) 
       setLoading(true);
       apiFetch<Component[]>(`/components/?category=${state.category}`).then((data) => { setComponents(data); setLoading(false); });
     } else {
-      setComponents(initial); setLoading(false);
+      setComponents([]);
+      setLoading(false);
     }
   }, [searchParams, initial, lastWrittenQs]);
 
@@ -550,7 +552,7 @@ export default function ComponentsClient({ initial }: { initial: Component[] }) 
 
   function clearCategory() {
     setCategory("");
-    setComponents(initial);
+    setComponents([]);
     setLoading(false);
     setFilters({});
     setSearch("");

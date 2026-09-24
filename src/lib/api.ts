@@ -2,6 +2,8 @@ const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api/v
 
 export async function apiFetch<T>(path: string, init?: RequestInit): Promise<T> {
   const res = await fetch(`${API_BASE}${path}`, {
+    // category lists change after nightly scrape — 2 min in shared cache is enough
+    next: { revalidate: 120 },
     ...init,
     headers: { "Content-Type": "application/json", ...init?.headers },
   });

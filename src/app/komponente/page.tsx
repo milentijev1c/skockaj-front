@@ -1,23 +1,15 @@
 import { Suspense } from "react";
-import { apiFetch } from "@/lib/api";
-import type { Component } from "@/lib/types";
 import ComponentsClient from "./components-client";
 
-// Catalog is live data — never prerender against the API at build time
-// (Vercel build used to ENOTFOUND api.skockaj.rs).
-export const dynamic = "force-dynamic";
-
-export default async function ComponentsPage() {
-  let components: Component[] = [];
-  try {
-    components = await apiFetch<Component[]>("/components/");
-  } catch {
-    // API down / DNS not ready — client fetches again in the browser
-    components = [];
-  }
+/**
+ * Static shell — no server fetch.
+ * Embedding the full catalog in RSC payload made this page ~3MB / ~2s TTFB.
+ * Parts load per category in the browser.
+ */
+export default function ComponentsPage() {
   return (
     <Suspense>
-      <ComponentsClient initial={components} />
+      <ComponentsClient initial={[]} />
     </Suspense>
   );
 }
