@@ -41,7 +41,8 @@ test.describe("catalog UI smoke", () => {
     const names = await page.locator('a[href^="/komponente/"]').allTextContents();
     expect(names.length).toBeGreaterThan(0);
     for (const n of names) {
-      expect(n.toLowerCase()).toContain("ryzen 5");
+      // scrape polish sometimes spells Ryzen as "Rizen"
+      expect(n.toLowerCase()).toMatch(/ryzen 5|rizen 5/);
     }
   });
 
