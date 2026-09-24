@@ -48,6 +48,28 @@ export interface ScrapedPrice {
   matched_at: string;
 }
 
+export interface ScrapedOffer {
+  id: number;
+  source: string;
+  raw_name: string;
+  raw_price: number;
+  url: string;
+  ean: string | null;
+  mpn: string | null;
+  scraped_at: string;
+}
+
+export interface MatchQueueItem {
+  id: number;
+  offer_id: number;
+  component_id: number | null;
+  match_layer: number;
+  confidence: number;
+  status: string;
+  created_at: string;
+  offer: ScrapedOffer | null;
+}
+
 export const STORE_NAMES: Record<string, string> = {
   gigatron: "Gigatron",
   monitor: "Monitor",

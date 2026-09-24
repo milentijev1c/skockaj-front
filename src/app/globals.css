@@ -10,6 +10,7 @@
   /* Accents */
   --glow: #00D4AA;
   --glow-dim: #00D4AA33;
+  --on-glow: #0B0E14;       /* dark ink on solid --glow fills — never white */
   --amber: #FFAA00;
   --coral: #FF6B6B;
 
@@ -154,6 +155,14 @@ select:hover {
 .chip-btn:active {
   transform: scale(0.97);
 }
+/* Selected chip: accent border + tint — keeps text light on dark */
+.chip-btn[aria-pressed="true"],
+.chip-btn.is-active {
+  background: var(--glow-dim);
+  border-color: var(--glow) !important;
+  color: var(--glow) !important;
+  box-shadow: 0 0 12px var(--glow-dim);
+}
 
 /* ── Slot hover ─────────────────────────────────── */
 
@@ -179,6 +188,11 @@ select:hover {
 
 .btn-glow {
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  /* Solid accent fill always takes dark ink (AA+) */
+  background: var(--glow);
+  color: var(--on-glow);
+  border: 1px solid var(--glow);
+  font-weight: 700;
 }
 .btn-glow:hover {
   box-shadow: 0 0 25px var(--glow-dim);

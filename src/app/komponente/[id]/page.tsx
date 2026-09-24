@@ -3,6 +3,8 @@ import type { Component } from "@/lib/types";
 import ComponentDetail from "./component-detail";
 import { notFound } from "next/navigation";
 
+export const dynamic = "force-dynamic";
+
 export default async function ComponentPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
 

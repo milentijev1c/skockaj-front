@@ -3,6 +3,8 @@ import type { Build, Component } from "@/lib/types";
 import BuildView from "./build-view";
 import { notFound } from "next/navigation";
 
+export const dynamic = "force-dynamic";
+
 export default async function BuildPage({ params }: { params: Promise<{ hash: string }> }) {
   const { hash } = await params;
 
@@ -13,7 +15,12 @@ export default async function BuildPage({ params }: { params: Promise<{ hash: st
     notFound();
   }
 
-  const allComponents = await apiFetch<Component[]>("/components/");
+  let allComponents: Component[] = [];
+  try {
+    allComponents = await apiFetch<Component[]>("/components/");
+  } catch {
+    allComponents = [];
+  }
   const buildComponents = allComponents.filter((c) => build.components_json.includes(c.id));
 
   return <BuildView build={build} components={buildComponents} />;
