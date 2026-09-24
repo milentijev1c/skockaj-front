@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
+import { Analytics } from "@vercel/analytics/next";
 import SiteFooter from "./site-footer";
 import { Brand } from "./brand";
 import CookieBanner from "./cookie-banner";
@@ -65,6 +66,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         {/* Footer */}
         <SiteFooter />
         <CookieBanner />
+        <Analytics />
       </body>
     </html>
   );
