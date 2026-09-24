@@ -615,7 +615,12 @@ export default function ComponentsClient({ initial }: { initial: Component[] }) 
       {!category && (
         <div className="grid gap-4 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
           {CATEGORIES.map((cat) => (
-            <button key={cat.value} onClick={() => selectCategory(cat.value)} className="p-8 card-hover text-center" style={{ background: "var(--panel)", border: "1px solid var(--edge)", cursor: "pointer", minHeight: 140 }}>
+            <button key={cat.value} onClick={() => selectCategory(cat.value)} onPointerEnter={() => {
+              // warm cache before click
+              void apiFetch<Component[]>(`/components/?category=${cat.value}`).then((d) => {
+                setComponents((cur) => (cur.length ? cur : d));
+              }).catch(() => {});
+            }} className="p-8 card-hover text-center" style={{ background: "var(--panel)", border: "1px solid var(--edge)", cursor: "pointer", minHeight: 140 }}>
               <div className="mx-auto mb-4" style={{ width: 40, height: 40, backgroundColor: "var(--glow)", WebkitMaskImage: `url(${CATEGORY_ICONS[cat.value]})`, maskImage: `url(${CATEGORY_ICONS[cat.value]})`, WebkitMaskSize: "contain", maskSize: "contain", WebkitMaskRepeat: "no-repeat", maskRepeat: "no-repeat", WebkitMaskPosition: "center", maskPosition: "center" }} />
               <span className="text-sm font-bold tracking-wide" style={{ color: "var(--text)", fontFamily: "var(--font-geist-mono)" }}>{cat.label}</span>
             </button>
