@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { STORE_NAMES, STORE_URLS, STORE_LOGOS, ACTIVE_STORES } from "@/lib/types";
+import { apiFetch } from "@/lib/api";
 import { SkeletonCards, EmptyState } from "../ui-states";
 
 type ShopStats = {
@@ -22,21 +23,10 @@ export default function ProdavnicePage() {
     let cancelled = false;
     (async () => {
       try {
-        // Aggregate live shop coverage from priced components
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api/v1"}/components/?category=cpu`,
+        // CPU slice is enough to show which shops carry parts (avoids 2.7MB full catalog)
+        const all = await apiFetch<{ prices?: { store_id: number; price_rsd: number }[] }[]>(
+          "/components/?category=cpu",
         );
-        if (!res.ok) throw new Error("api");
-        const data = (await res.json()) as {
-          prices?: { store_id: number; price_rsd: number }[];
-        }[];
-        // Aggregate live shop coverage from the full catalog sample.
-        const allRes = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api/v1"}/components/`,
-        );
-        const all = allRes.ok
-          ? ((await allRes.json()) as { prices?: { store_id: number; price_rsd: number }[] }[])
-          : data;
 
         const storeIdToSlug: Record<number, string> = {
           1: "gigatron",

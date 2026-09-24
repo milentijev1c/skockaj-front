@@ -505,7 +505,10 @@ export default function ComponentsClient({ initial }: { initial: Component[] }) 
   useEffect(() => {
     if (boot.category) {
       setLoading(true);
-      apiFetch<Component[]>(`/components/?category=${boot.category}`).then((data) => { setComponents(data); setLoading(false); });
+      apiFetch<Component[]>(`/components/?category=${boot.category}`)
+        .then((data) => setComponents(data))
+        .catch(() => setComponents([]))
+        .finally(() => setLoading(false));
     } else {
       setComponents([]);
       setLoading(false);
@@ -528,7 +531,10 @@ export default function ComponentsClient({ initial }: { initial: Component[] }) 
     setPriceMax(state.priceMax);
     if (state.category) {
       setLoading(true);
-      apiFetch<Component[]>(`/components/?category=${state.category}`).then((data) => { setComponents(data); setLoading(false); });
+      apiFetch<Component[]>(`/components/?category=${state.category}`)
+        .then((data) => setComponents(data))
+        .catch(() => setComponents([]))
+        .finally(() => setLoading(false));
     } else {
       setComponents([]);
       setLoading(false);
@@ -547,7 +553,10 @@ export default function ComponentsClient({ initial }: { initial: Component[] }) 
       { category: cat, filters: {}, search: "", inStockOnly: false, priceMin: "", priceMax: "" },
       "push",
     );
-    apiFetch<Component[]>(`/components/?category=${cat}`).then((data) => { setComponents(data); setLoading(false); });
+    apiFetch<Component[]>(`/components/?category=${cat}`)
+      .then((data) => setComponents(data))
+      .catch(() => setComponents([]))
+      .finally(() => setLoading(false));
   }
 
   function clearCategory() {
