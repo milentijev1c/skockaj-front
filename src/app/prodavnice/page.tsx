@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { STORE_NAMES, STORE_URLS, STORE_LOGOS, ACTIVE_STORES } from "@/lib/types";
 import { apiFetch } from "@/lib/api";
+import { STORE_ID_TO_SLUG } from "../shop-logo";
 import { SkeletonCards, EmptyState } from "../ui-states";
 
 type ShopStats = {
@@ -28,14 +29,6 @@ export default function ProdavnicePage() {
           "/components/?category=cpu",
         );
 
-        const storeIdToSlug: Record<number, string> = {
-          1: "gigatron",
-          2: "monitor",
-          3: "exceed",
-          4: "winwin",
-          6: "bigbang",
-          8: "ananas",
-        };
         const counts: Record<string, number> = {};
         for (const c of all) {
           const seen = new Set<number>();
@@ -43,7 +36,7 @@ export default function ProdavnicePage() {
             if (p.price_rsd <= 0) continue;
             if (seen.has(p.store_id)) continue;
             seen.add(p.store_id);
-            const slug = storeIdToSlug[p.store_id];
+            const slug = STORE_ID_TO_SLUG[p.store_id];
             if (slug) counts[slug] = (counts[slug] || 0) + 1;
           }
         }

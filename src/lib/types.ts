@@ -78,6 +78,10 @@ export const STORE_NAMES: Record<string, string> = {
   bigbang: "BigBang",
   ananas: "Ananas",
   bazzar: "Bazzar",
+  lirs: "Lirs",
+  pcpractic: "PC Practic",
+  drtechno: "Dr Techno",
+  jakov: "Jakov",
 };
 
 export const STORE_URLS: Record<string, string> = {
@@ -88,6 +92,10 @@ export const STORE_URLS: Record<string, string> = {
   bigbang: "https://bigbang.rs",
   ananas: "https://ananas.rs",
   bazzar: "https://bazzar.rs",
+  lirs: "https://lirsshop.rs",
+  pcpractic: "https://pcpractic.rs",
+  drtechno: "https://drtechno.rs",
+  jakov: "https://jakov.rs",
 };
 
 /** Local brand assets in /public/logos */
@@ -98,6 +106,11 @@ export const STORE_LOGOS: Record<string, string> = {
   winwin: "/logos/winwin.png",
   bigbang: "/logos/bigbang.svg",
   ananas: "/logos/ananas.svg",
+  bazzar: "/logos/bazzar.svg",
+  lirs: "/logos/lirs.webp",
+  pcpractic: "/logos/pcpractic.png",
+  drtechno: "/logos/drtechno.png",
+  jakov: "/logos/jakov.png",
 };
 
 export const ACTIVE_STORES = Object.keys(STORE_NAMES);

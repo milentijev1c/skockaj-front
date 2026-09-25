@@ -88,4 +88,9 @@ export const STORE_ID_TO_SLUG: Record<number, string> = {
   4: "winwin",
   6: "bigbang",
   8: "ananas",
+  9: "bazzar",
+  10: "lirs",
+  11: "pcpractic",
+  12: "drtechno",
+  13: "jakov",
 };

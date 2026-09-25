@@ -7,6 +7,9 @@ import { Brand } from "./brand";
 import CookieBanner from "./cookie-banner";
 import "./globals.css";
 
+// Nonce CSP in proxy.ts requires dynamic rendering (fresh nonce per request)
+export const dynamic = "force-dynamic";
+
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
