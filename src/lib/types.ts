@@ -77,6 +77,7 @@ export const STORE_NAMES: Record<string, string> = {
   winwin: "WinWin",
   bigbang: "BigBang",
   ananas: "Ananas",
+  bazzar: "Bazzar",
 };
 
 export const STORE_URLS: Record<string, string> = {
@@ -86,6 +87,7 @@ export const STORE_URLS: Record<string, string> = {
   winwin: "https://winwin.rs",
   bigbang: "https://bigbang.rs",
   ananas: "https://ananas.rs",
+  bazzar: "https://bazzar.rs",
 };
 
 /** Local brand assets in /public/logos */

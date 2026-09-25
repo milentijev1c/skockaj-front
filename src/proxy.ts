@@ -24,7 +24,7 @@ function withSecurityHeaders(res: NextResponse): NextResponse {
 }
 
 /** Page gate for /admin + baseline security headers on every response. */
-export function middleware(req: NextRequest) {
+export function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
   if (pathname.startsWith("/admin")) {
