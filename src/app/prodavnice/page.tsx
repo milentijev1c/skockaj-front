@@ -1,69 +1,25 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Link from "next/link";
-import { STORE_NAMES, STORE_URLS, STORE_LOGOS, ACTIVE_STORES } from "@/lib/types";
-import { apiFetch } from "@/lib/api";
-import { STORE_ID_TO_SLUG } from "../shop-logo";
-import { SkeletonCards, EmptyState } from "../ui-states";
+import { STORE_NAMES, STORE_URLS, STORE_LOGOS, STORE_BLURBS, ACTIVE_STORES } from "@/lib/types";
+import { EmptyState } from "../ui-states";
 
-type ShopStats = {
+type ShopCard = {
   slug: string;
   name: string;
   url: string;
   logo: string;
-  offers: number;
+  blurb: string;
 };
 
 export default function ProdavnicePage() {
-  const [shops, setShops] = useState<ShopStats[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
-
-  useEffect(() => {
-    let cancelled = false;
-    (async () => {
-      try {
-        // CPU slice is enough to show which shops carry parts (avoids 2.7MB full catalog)
-        const all = await apiFetch<{ prices?: { store_id: number; price_rsd: number }[] }[]>(
-          "/components/?category=cpu",
-        );
-
-        const counts: Record<string, number> = {};
-        for (const c of all) {
-          const seen = new Set<number>();
-          for (const p of c.prices || []) {
-            if (p.price_rsd <= 0) continue;
-            if (seen.has(p.store_id)) continue;
-            seen.add(p.store_id);
-            const slug = STORE_ID_TO_SLUG[p.store_id];
-            if (slug) counts[slug] = (counts[slug] || 0) + 1;
-          }
-        }
-
-        const list: ShopStats[] = ACTIVE_STORES.map((slug) => ({
-          slug,
-          name: STORE_NAMES[slug],
-          url: STORE_URLS[slug],
-          logo: STORE_LOGOS[slug],
-          offers: counts[slug] || 0,
-        })).sort((a, b) => b.offers - a.offers || a.name.localeCompare(b.name, "sr"));
-
-        if (!cancelled) {
-          setShops(list);
-          setLoading(false);
-        }
-      } catch {
-        if (!cancelled) {
-          setError(true);
-          setLoading(false);
-        }
-      }
-    })();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+  const shops: ShopCard[] = ACTIVE_STORES.map((slug) => ({
+    slug,
+    name: STORE_NAMES[slug],
+    url: STORE_URLS[slug],
+    logo: STORE_LOGOS[slug],
+    blurb: STORE_BLURBS[slug] ?? "",
+  })).sort((a, b) => a.name.localeCompare(b.name, "sr"));
 
   return (
     <div className="fade-in">
@@ -75,13 +31,11 @@ export default function ProdavnicePage() {
           Prodavnice
         </h1>
         <p className="text-sm mt-1" style={{ color: "var(--text-muted)", fontFamily: "var(--font-geist-mono)" }}>
-          {loading ? "Učitavanje…" : `${shops.length} ${shops.length === 1 ? "prodavnica" : "prodavnice"} u poređenju cena`}
+          {`${shops.length} ${shops.length === 1 ? "prodavnica" : "prodavnice"} u poređenju cena`}
         </p>
       </div>
 
-      {loading && <SkeletonCards count={6} />}
-
-      {!loading && (error || shops.length === 0) && (
+      {shops.length === 0 && (
         <EmptyState
           title="Nema prodavnica za prikaz"
           description="Trenutno nemamo aktivne prodavnice u poređenju. Pokušajte ponovo kasnije ili pregledajte komponente."
@@ -97,7 +51,7 @@ export default function ProdavnicePage() {
         />
       )}
 
-      {!loading && shops.length > 0 && (
+      {shops.length > 0 && (
         <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           {shops.map((s) => (
             <article
@@ -142,16 +96,16 @@ export default function ProdavnicePage() {
                 </div>
               </div>
               <h2
-                className="text-lg font-bold mb-2"
+                className="text-lg font-bold mb-1"
                 style={{ fontFamily: "var(--font-geist-sans)", color: "var(--text)" }}
               >
                 {s.name}
               </h2>
-              <p className="text-xs mb-4" style={{ color: "var(--text-muted)", fontFamily: "var(--font-geist-mono)" }}>
-                {s.offers > 0
-                  ? `Cene dostupne za ${s.offers} proizvoda`
-                  : "Nema u ponudi trenutno"}
-              </p>
+              {s.blurb && (
+                <p className="text-xs mb-4" style={{ color: "var(--text-muted)", fontFamily: "var(--font-geist-mono)" }}>
+                  {s.blurb}
+                </p>
+              )}
               <div className="flex items-center gap-3">
                 <a
                   href={s.url}

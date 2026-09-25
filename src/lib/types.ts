@@ -113,6 +113,21 @@ export const STORE_LOGOS: Record<string, string> = {
   jakov: "/logos/jakov.png",
 };
 
+/** One-line shop blurb for /prodavnice cards. */
+export const STORE_BLURBS: Record<string, string> = {
+  gigatron: "IT i tehnika — širok asortiman komponenti i laptopova.",
+  monitor: "Računari, komponente i gaming oprema.",
+  exceed: "PC komponente po akcijskim cenama.",
+  winwin: "Tehnika, računari i bela tehnika.",
+  bigbang: "Gaming, komponente i potrošačka elektronika.",
+  ananas: "Marketplace sa velikim izborom IT delova.",
+  bazzar: "Marketplace — komponente od više prodavaca.",
+  lirs: "Tehnika i kućni aparati uz česte akcije.",
+  pcpractic: "Prodaja tehnike preko 15 godina.",
+  drtechno: "Računari, komponente i kućni aparati.",
+  jakov: "Jakov Sistem — širok IT i kućni asortiman.",
+};
+
 export const ACTIVE_STORES = Object.keys(STORE_NAMES);
 
 export const CATEGORIES = [
