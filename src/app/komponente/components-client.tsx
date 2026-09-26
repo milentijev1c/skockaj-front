@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import type { Component } from "@/lib/types";
@@ -396,13 +396,12 @@ export default function ComponentsClient({ initial }: { initial: Component[] }) 
   const router = useRouter();
   const searchParams = useSearchParams();
   const boot = parseViewState(new URLSearchParams(searchParams.toString()));
-  const lastWrittenQs = useState({ current: "" })[0];
+  const lastWrittenQsRef = useRef("");
 
   const [components, setComponents] = useState<Component[]>([]);
   const [category, setCategory] = useState(boot.category);
   const [loading, setLoading] = useState(!boot.category);
   const [addedIds, setAddedIds] = useState<Set<number>>(new Set());
-  const [justAddedIds, setJustAddedIds] = useState<Set<number>>(new Set());
   const [search, setSearch] = useState(boot.search);
   const [filters, setFilters] = useState<Record<string, string>>(boot.filters);
   const [sort, setSort] = useState<SortKey>(boot.sort);
@@ -446,7 +445,7 @@ export default function ComponentsClient({ initial }: { initial: Component[] }) 
       ...next,
     };
     const qs = buildQueryString(merged);
-    lastWrittenQs.current = qs;
+    lastWrittenQsRef.current = qs;
     const url = qs ? `/komponente?${qs}` : "/komponente";
     if (mode === "push") router.push(url, { scroll: false });
     else router.replace(url, { scroll: false });
@@ -454,13 +453,11 @@ export default function ComponentsClient({ initial }: { initial: Component[] }) 
   }
 
   function setFilter(key: string, val: string) {
-    setFilters((prev) => {
-      const nextFilters = { ...prev };
-      if (val) nextFilters[key] = val;
-      else delete nextFilters[key];
-      writeUrl({ filters: nextFilters });
-      return nextFilters;
-    });
+    const nextFilters = { ...filters };
+    if (val) nextFilters[key] = val;
+    else delete nextFilters[key];
+    setFilters(nextFilters);
+    writeUrl({ filters: nextFilters });
   }
 
   function changeSort(next: SortKey) {
@@ -498,48 +495,62 @@ export default function ComponentsClient({ initial }: { initial: Component[] }) 
   }
 
   useEffect(() => {
-    const stored: number[] = JSON.parse(localStorage.getItem("builder") || "[]");
-    if (stored.length > 0) setAddedIds(new Set(stored));
+    const t = window.setTimeout(() => {
+      let stored: number[] = [];
+      try {
+        stored = JSON.parse(localStorage.getItem("builder") || "[]");
+      } catch {
+        stored = [];
+      }
+      if (stored.length > 0) setAddedIds(new Set(stored));
+    }, 0);
+    return () => window.clearTimeout(t);
   }, []);
 
   useEffect(() => {
-    if (boot.category) {
-      setLoading(true);
-      apiFetch<Component[]>(`/components/?category=${boot.category}`)
-        .then((data) => setComponents(data))
-        .catch(() => setComponents([]))
-        .finally(() => setLoading(false));
-    } else {
-      setComponents([]);
-      setLoading(false);
-    }
+    const t = window.setTimeout(() => {
+      if (boot.category) {
+        setLoading(true);
+        apiFetch<Component[]>(`/components/?category=${boot.category}`)
+          .then((data) => setComponents(data))
+          .catch(() => setComponents([]))
+          .finally(() => setLoading(false));
+      } else {
+        setComponents([]);
+        setLoading(false);
+      }
+    }, 0);
+    return () => window.clearTimeout(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // URL → state only for external navigations (shared link, back/forward)
   useEffect(() => {
-    const qs = new URLSearchParams(searchParams.toString()).toString();
-    const written = new URLSearchParams(lastWrittenQs.current).toString();
-    if (qs && qs === written) return;
-    const state = parseViewState(new URLSearchParams(qs));
-    setCategory(state.category);
-    setSearch(state.search);
-    setFilters(state.filters);
-    setSort(state.sort);
-    setInStockOnly(state.inStockOnly);
-    setPriceMin(state.priceMin);
-    setPriceMax(state.priceMax);
-    if (state.category) {
-      setLoading(true);
-      apiFetch<Component[]>(`/components/?category=${state.category}`)
-        .then((data) => setComponents(data))
-        .catch(() => setComponents([]))
-        .finally(() => setLoading(false));
-    } else {
-      setComponents([]);
-      setLoading(false);
-    }
-  }, [searchParams, initial, lastWrittenQs]);
+    const t = window.setTimeout(() => {
+      const qs = new URLSearchParams(searchParams.toString()).toString();
+      const written = new URLSearchParams(lastWrittenQsRef.current).toString();
+      if (qs && qs === written) return;
+      const state = parseViewState(new URLSearchParams(qs));
+      setCategory(state.category);
+      setSearch(state.search);
+      setFilters(state.filters);
+      setSort(state.sort);
+      setInStockOnly(state.inStockOnly);
+      setPriceMin(state.priceMin);
+      setPriceMax(state.priceMax);
+      if (state.category) {
+        setLoading(true);
+        apiFetch<Component[]>(`/components/?category=${state.category}`)
+          .then((data) => setComponents(data))
+          .catch(() => setComponents([]))
+          .finally(() => setLoading(false));
+      } else {
+        setComponents([]);
+        setLoading(false);
+      }
+    }, 0);
+    return () => window.clearTimeout(t);
+  }, [searchParams, initial]);
 
   function selectCategory(cat: string) {
     setCategory(cat);

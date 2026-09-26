@@ -219,8 +219,11 @@ export default function Home() {
       </section>
 
       {/* ── How it works ─────────────────────────────── */}
-      <section className="py-16" style={{ background: "var(--panel)", borderTop: "1px solid var(--edge)", borderBottom: "1px solid var(--edge)" }}>
-        <div className="text-center mb-12">
+      <section
+        className="px-6 md:px-10 py-12"
+        style={{ background: "var(--panel)", borderTop: "1px solid var(--edge)", borderBottom: "1px solid var(--edge)" }}
+      >
+        <div className="text-center mb-8">
           <p className="text-xs tracking-widest uppercase mb-2" style={{ color: "var(--glow)", fontFamily: "var(--font-geist-mono)" }}>
             Kako radi
           </p>
@@ -228,11 +231,11 @@ export default function Home() {
             Tri koraka do bolje cene
           </h2>
         </div>
-        <div className="grid gap-8 md:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-3">
           {STEPS.map((step) => (
             <div key={step.n} className="text-center md:text-left">
               <div
-                className="text-xs font-bold tracking-widest mb-3"
+                className="text-xs font-bold tracking-widest mb-2"
                 style={{ color: "var(--glow)", fontFamily: "var(--font-geist-mono)" }}
               >
                 {step.n}

@@ -44,18 +44,29 @@ export default function BuilderPage() {
   const [build, setBuild] = useState<Build | null>(null);
   const [saving, setSaving] = useState(false);
 
-  useEffect(() => {
-    const stored: number[] = JSON.parse(localStorage.getItem("builder") || "[]");
-    if (stored.length > 0) {
-      setSelected(stored);
-      loadComponents(stored);
-    }
-  }, []);
-
   async function loadComponents(ids: number[]) {
     const all = await apiFetch<Component[]>("/components/");
     setComponents(all.filter((c) => ids.includes(c.id)));
   }
+
+  useEffect(() => {
+    let cancelled = false;
+    const t = window.setTimeout(() => {
+      let stored: number[] = [];
+      try {
+        stored = JSON.parse(localStorage.getItem("builder") || "[]");
+      } catch {
+        stored = [];
+      }
+      if (cancelled || stored.length === 0) return;
+      setSelected(stored);
+      void loadComponents(stored);
+    }, 0);
+    return () => {
+      cancelled = true;
+      window.clearTimeout(t);
+    };
+  }, []);
 
   async function checkCompatibility() {
     const result = await apiFetch<CompatibilityResult>("/compatibility/check", {

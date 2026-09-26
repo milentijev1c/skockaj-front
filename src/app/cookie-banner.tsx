@@ -1,30 +1,38 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useSyncExternalStore } from "react";
 import Link from "next/link";
 
 const KEY = "cookie_consent";
 
+function subscribe(listener: () => void) {
+  window.addEventListener("cookie-consent", listener);
+  return () => window.removeEventListener("cookie-consent", listener);
+}
+
+function readConsentOpen() {
+  try {
+    return !localStorage.getItem(KEY);
+  } catch {
+    return false;
+  }
+}
+
+function readConsentOpenServer() {
+  return false;
+}
+
 export default function CookieBanner() {
-  const [open, setOpen] = useState(false);
+  const open = useSyncExternalStore(subscribe, readConsentOpen, readConsentOpenServer);
 
-  useEffect(() => {
-    try {
-      if (!localStorage.getItem(KEY)) setOpen(true);
-    } catch {
-      /* ignore */
-    }
-  }, []);
-
-  function accept(value: "all" | "essential") {
+  const accept = useCallback((value: "all" | "essential") => {
     try {
       localStorage.setItem(KEY, JSON.stringify({ value, at: new Date().toISOString() }));
     } catch {
       /* ignore */
     }
-    setOpen(false);
     window.dispatchEvent(new CustomEvent("cookie-consent", { detail: value }));
-  }
+  }, []);
 
   if (!open) return null;
 
@@ -42,14 +50,11 @@ export default function CookieBanner() {
         background: "var(--panel)",
         border: "1px solid var(--edge)",
         boxShadow: "var(--shadow-float)",
-        padding: "14px 16px",
+        padding: "16px 18px",
         fontFamily: "var(--font-geist-mono)",
       }}
     >
-      <p
-        className="text-[11px] mb-3"
-        style={{ color: "var(--text-muted)", lineHeight: 1.5 }}
-      >
+      <p className="text-[11px] mb-3" style={{ color: "var(--text-muted)", lineHeight: 1.5 }}>
         Koristimo samo neophodne kolačiće (npr. vaša konfiguracija). Bez reklamnog praćenja.{" "}
         <Link href="/politika-kolacica" className="hover-link" style={{ color: "var(--glow)" }}>
           Više

@@ -30,17 +30,16 @@ export default function AdminQueue() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [busyId, setBusyId] = useState<number | null>(null);
-
   const [openId, setOpenId] = useState<number | null>(null);
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<Component[]>([]);
   const [searching, setSearching] = useState(false);
 
   const load = useCallback(async () => {
-    setLoading(true);
     setError(null);
     try {
-      setItems(await fetchQueue(status, 50));
+      const rows = await fetchQueue(status, 50);
+      setItems(rows);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Greška pri učitavanju reda");
     } finally {
@@ -49,23 +48,32 @@ export default function AdminQueue() {
   }, [status]);
 
   useEffect(() => {
-    void load();
+    const t = window.setTimeout(() => {
+      setLoading(true);
+      void load();
+    }, 0);
+    return () => window.clearTimeout(t);
   }, [load]);
 
   useEffect(() => {
-    if (!openId) {
+    if (openId) return;
+    const t = window.setTimeout(() => {
       setQuery("");
       setResults([]);
-      return;
-    }
+    }, 0);
+    return () => window.clearTimeout(t);
+  }, [openId]);
+
+  useEffect(() => {
+    if (!openId) return;
     const q = query.trim();
     if (q.length < 2) {
-      setResults([]);
-      return;
+      const t = window.setTimeout(() => setResults([]), 0);
+      return () => window.clearTimeout(t);
     }
     let cancelled = false;
-    setSearching(true);
     const t = setTimeout(() => {
+      setSearching(true);
       searchComponents(q, 20)
         .then((rows) => {
           if (!cancelled) setResults(rows);
@@ -80,7 +88,6 @@ export default function AdminQueue() {
     return () => {
       cancelled = true;
       clearTimeout(t);
-      setSearching(false);
     };
   }, [query, openId]);
 

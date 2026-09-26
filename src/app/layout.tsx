@@ -69,8 +69,8 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
       <head>
         <script nonce={nonce} dangerouslySetInnerHTML={{ __html: THEME_BOOTSTRAP_SCRIPT }} />
       </head>
-      <JsonLd data={websiteJsonLd()} />
       <body className="min-h-full flex flex-col" style={{ background: "var(--void)", color: "var(--text)" }}>
+        <JsonLd data={websiteJsonLd()} />
         {/* LED-strip header */}
         <header className="header-glow" style={{ background: "var(--panel)", borderBottom: "1px solid var(--edge)", position: "relative" }}>
           <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "1px", background: "var(--glow)", opacity: 0.4 }} />

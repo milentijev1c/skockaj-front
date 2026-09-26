@@ -367,6 +367,7 @@ select:hover {
 
 /* ── Shop logo tiles (brand green so white/dark marks stay visible) ── */
 
+/* Brand-green opacity plate behind shop logos */
 .shop-logo-tile {
   background: rgba(0, 212, 170, 0.28);
   border: 1px solid rgba(0, 212, 170, 0.35);
