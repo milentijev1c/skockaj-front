@@ -5,6 +5,7 @@ export const metadata: Metadata = {
   title: "Uslovi korišćenja",
   description:
     "Uslovi korišćenja sajta skockaj.rs — upoređivač cena računarskih komponenti u Srbiji. Sajt nije prodavnica.",
+  alternates: { canonical: "/uslovi-koriscenja" },
 };
 
 export default function UsloviKoriscenja() {

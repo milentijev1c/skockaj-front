@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Politika kolačića",
   description:
     "Politika kolačića skockaj.rs — tehnički kolačići i localStorage za konfigurator, bez reklamnog praćenja.",
+  alternates: { canonical: "/politika-kolacica" },
 };
 
 export default function PolitikaKolacica() {

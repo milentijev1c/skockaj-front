@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Politika privatnosti",
   description:
     "Politika privatnosti skockaj.rs — bez naloga, bez ličnih podataka. Kako čuvamo konfiguracije i šta prikupljamo.",
+  alternates: { canonical: "/politika-privatnosti" },
 };
 
 export default function PolitikaPrivatnosti() {

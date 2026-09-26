@@ -14,7 +14,7 @@ edges:
     condition: when setting up the dev environment or running the project for the first time
   - target: patterns/INDEX.md
     condition: when starting a task — check the pattern index for a matching pattern file
-last_updated: 2026-09-23
+last_updated: 2026-09-26
 ---
 
 # Session Bootstrap
@@ -25,23 +25,30 @@ Then read this file fully before doing anything else in this session.
 
 ## Current Project State
 **Working:**
-- Dark UI + shared `Brand` wordmark (header/footer/legal); AA contrast palette
-- Filters: collapsible lists + sort/stock/price in URL (shareable)
-- Konfigurator: whole-slot click, centered cards, mask icons, redirect after Dodaj
-- `/k/[hash]`: unique views + public analytics panel; shop deep-links on cheapest prices
-- `/prodavnice` + local logos; skeletons/empty states; typewriter hero
-- Cookie toast (U redu / Odbij) + `cookie_consent` localStorage
-- Legal: Uslovi · **Politika privatnosti** (`/pravila-privatnosti` 308 redirect) · Politika kolačića
+- Dark + light theme (`data-theme`, `skockaj-theme`); sun/moon toggle; FOUC-safe bootstrap (CSP nonce)
+- Branded error pages: `not-found`, `error` (`retry()`), `global-error`, product `not-found`
+- `/kontakt` form + honeypot + `POST /api/v1/contact/`
+- Homepage landing: hero, metrics, categories, how-it-works, benefits, shops (teal logo tiles), FAQ accordion, final CTA
+- SEO: per-route metadata + canonicals, `sitemap.ts` + `robots.ts`, JSON-LD (Organization/WebSite, FAQ, Breadcrumb, Product/Offer), admin noindex
+- Shared `Brand` + AA palette (`--glow-fill` / `--on-glow`)
+- Filters in URL; Konfigurator; `/k/[hash]`; `/prodavnice`; cookie toast; legal pages
 - Pre-push: typecheck + sr unit + Playwright smoke
 
 **Not yet built:**
-- Category SEO landing pages
+- Category SEO landing pages (separate content pages)
 - Owner-only stats
+- Optional homepage leftovers: live "istaknute ponude", konfigurator teaser
+- og:image brand card asset; GSC verification (post-ship)
 
 **Known issues:**
 - Tailwind v4 may bury global hover CSS — use `btn-*` / `card-hover` / `chip-btn` / `slot-hover`
 - Next `router.replace` can lag ~1s in dev (poll in e2e)
-- Footer has no app version (git tags only)
+- Inline theme script needs request `x-nonce` (proxy CSP)
+- Next 16 `error.tsx` recovery prop is `retry()`
+- Contact `subject` empty → default "Poruka sa kontakt forme"
+- FAQ accordion uses `grid-template-rows` animation
+- `npm run lint` pre-existing `react-hooks/set-state-in-effect` errors in admin/catalog/cookie
+- Product metadata falls back to "Proizvod nije pronađen" if API down/missing
 
 ## Routing Table
 
