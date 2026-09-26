@@ -76,7 +76,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
           <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "1px", background: "var(--glow)", opacity: 0.4 }} />
           <nav className="mx-auto flex items-center justify-between gap-4 px-6 py-4" style={{ maxWidth: 1100 }}>
             <Link href="/" className="logo-link" aria-label="skockaj.rs početna">
-              <Brand size={20} />
+              <Brand size={20} withMark />
             </Link>
             <div className="flex items-center gap-6">
               <div className="flex gap-8 text-sm font-medium nav-links" style={{ fontFamily: "var(--font-geist-mono)" }}>

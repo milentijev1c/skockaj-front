@@ -33,7 +33,7 @@ export default function SiteFooter() {
           {/* Brand */}
           <div>
             <div className="mb-3">
-              <Brand size={20} />
+              <Brand size={20} withMark />
             </div>
             <p className="text-xs leading-relaxed mb-4">
               Upoređivač cena računarskih komponenti u Srbiji.

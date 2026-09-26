@@ -81,7 +81,7 @@ export function websiteJsonLd() {
         "@id": `${SITE_URL}/#organization`,
         name: SITE_NAME,
         url: SITE_URL,
-        logo: absoluteUrl("/favicon.ico"),
+        logo: absoluteUrl("/brand/skockaj-mark-dark.png"),
         sameAs: [
           // fill as social profiles go live
         ],

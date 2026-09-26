@@ -165,6 +165,16 @@ select:hover {
   text-shadow: 0 0 15px var(--glow-dim);
 }
 
+/* Theme-aware brand mark (CPU+RAM). Dark mark is the SSR default. */
+.brand-mark {
+  display: block;
+  flex-shrink: 0;
+  background: url("/brand/mark-dark-128.png") center / contain no-repeat;
+}
+[data-theme="light"] .brand-mark {
+  background-image: url("/brand/mark-light-128.png");
+}
+
 /* ── Card hover utility (used by components & builder) ── */
 
 .card-hover {
@@ -367,16 +377,16 @@ select:hover {
 
 /* ── Shop logo tiles (brand green so white/dark marks stay visible) ── */
 
-/* Brand-green opacity plate behind shop logos */
+/* Brand-green plate behind shop logos (same hues as brand mark, softened) */
 .shop-logo-tile {
-  background: rgba(0, 212, 170, 0.28);
-  border: 1px solid rgba(0, 212, 170, 0.35);
+  background: rgba(0, 212, 170, 0.4);
+  border: 1px solid rgba(0, 212, 170, 0.45);
   border-radius: 6px;
 }
 
 [data-theme="light"] .shop-logo-tile {
-  background: rgba(0, 184, 148, 0.32);
-  border-color: rgba(15, 118, 110, 0.28);
+  background: rgba(15, 118, 110, 0.35);
+  border-color: rgba(15, 118, 110, 0.35);
 }
 
 /* ── Theme toggle ───────────────────────────────── */
