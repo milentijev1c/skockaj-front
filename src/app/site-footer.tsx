@@ -12,6 +12,7 @@ const NAV_LINKS = [
   { href: "/", label: "Početna" },
   { href: "/prodavnice", label: "Prodavnice" },
   { href: "/konfigurator", label: "Konfigurator računara" },
+  { href: "/kontakt", label: "Kontakt" },
 ];
 
 export default function SiteFooter() {
