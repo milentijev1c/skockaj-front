@@ -16,8 +16,9 @@ export default function PolitikaPrivatnosti() {
       intro={
         <p>
           Ova politika objašnjava šta <Brand /> radi sa podacima kada koristite sajt.
-          Kratko: <strong>ne tražimo nalog i ne prikupljamo tipične lične podatke</strong> (ime,
-          e-pošta, adresa, telefon, broj kartice).
+          Kratko: <strong>ne tražimo nalog</strong>. Lične podatke prikupljamo{" "}
+          <strong>samo ako nam ih sami pošaljete</strong> kroz kontakt formu (ime, e-pošta, poruka).
+          Ne prikupljamo adresu, telefon niti podatke o platnim karticama.
         </p>
       }
     >
@@ -30,9 +31,20 @@ export default function PolitikaPrivatnosti() {
 
       <LegalSection n={2} title="Šta prikupljamo — i šta ne">
         <p>
-          <strong>Ne prikupljamo:</strong> ime i prezime, e-poštu, adresu, telefon, podatke o
-          platnim karticama, niti naloge korisnika.
+          <strong>Ne prikupljamo:</strong> adresu, telefon, podatke o platnim karticama, niti
+          naloge korisnika.
         </p>
+        <p>
+          <strong>Prikupljamo samo ako nam pošaljete poruku</strong> (kontakt forma):
+        </p>
+        <LegalList
+          items={[
+            "ime, e-poštu i sadržaj poruke (obavezna polja)",
+            "naziv kompanije, ako ste izabrali tip „Poslovna saradnja“",
+            "opciono: predmet i link stranice na kojoj ste prijavili problem",
+            "tehnički trag potreban za zaštitu od zloupotrebe (npr. hash IP adrese, ne sirova IP adresa u izvozu)",
+          ]}
+        />
         <p>
           <strong>Možemo tehnički obraditi:</strong>
         </p>
@@ -45,7 +57,23 @@ export default function PolitikaPrivatnosti() {
         />
       </LegalSection>
 
-      <LegalSection n={3} title="Lokalno skladištenje (localStorage)">
+      <LegalSection n={3} title="Kontakt forma">
+        <p>
+          Kada popunite <Link href="/kontakt" className="hover-link" style={{ color: "var(--glow)" }}>kontakt formu</Link>,
+          obrađujemo <strong>ime, e-poštu i poruku</strong> isključivo radi odgovora na vaš upit
+          (povratna informacija, prijava greške, predlog ili poslovna saradnja).
+        </p>
+        <LegalList
+          items={[
+            "Poruke čuvamo dok je potrebno za odgovor i eventualni nastavak korespondencije; zatim ih brišemo ili anonimizujemo.",
+            "Ne koristimo vašu e-poštu za newsletter niti je delimo sa trećim radi marketinga.",
+            "Možete zatražiti uvid ili brisanje poruke (vidi odeljak o pravima korisnika).",
+            "Za slanje se koristi forma na sajtu; sadržaj poruke ne objavljujemo javno.",
+          ]}
+        />
+      </LegalSection>
+
+      <LegalSection n={4} title="Lokalno skladištenje (localStorage)">
         <p>
           Konfigurator čuva spisak izabranih komponenti u <strong>lokalnom skladištu pretraživača</strong>{" "}
           (npr. ključ <code>builder</code>). Ti podaci ostaju na vašem uređaju i ne šalju se na naše
@@ -61,7 +89,7 @@ export default function PolitikaPrivatnosti() {
         </p>
       </LegalSection>
 
-      <LegalSection n={4} title="Deljene konfiguracije">
+      <LegalSection n={5} title="Deljene konfiguracije">
         <p>
           Kada izaberete čuvanje konfiguracije, na server se šalje samo spisak identifikatora
           komponenti. Čuva se anoniman zapis povezan sa kratkim hash identifikatorom (link oblika{" "}
@@ -75,7 +103,7 @@ export default function PolitikaPrivatnosti() {
         </p>
       </LegalSection>
 
-      <LegalSection n={5} title="Kolačići">
+      <LegalSection n={6} title="Kolačići">
         <p>
           Koristimo isključivo <strong>tehnički neophodne</strong> kolačiće i slične zapise radi rada
           sajta. Ne koristimo kolačiće za profilisanje, retargeting niti reklamne mreže.
@@ -83,15 +111,17 @@ export default function PolitikaPrivatnosti() {
         </p>
       </LegalSection>
 
-      <LegalSection n={6} title="Analitika">
+      <LegalSection n={7} title="Analitika">
         <p>
-          Možemo koristiti <strong>anonimizovanu</strong> analitiku poseta (broj otvaranja stranica,
-          popularne kategorije, greške) radi poboljšanja usluge. Ako uvedemo alat treće strane,
-          trudićemo se da onemogućimo opcije koje omogućavaju ličnu identifikaciju.
+          Koristimo <strong>anonimizovanu</strong> analitiku poseta (Vercel Analytics) radi
+          poboljšanja usluge — npr. broj otvaranja stranica, popularne kategorije i greške.
+          Podaci se koriste u agregatu; ne pravimo marketinške profile niti lične identifikatore.
+          Ako uvedemo dodatni alat treće strane, trudićemo se da onemogućimo opcije lične
+          identifikacije.
         </p>
       </LegalSection>
 
-      <LegalSection n={7} title="Server i evidencije pristupa">
+      <LegalSection n={8} title="Server i evidencije pristupa">
         <p>
           Radi bezbednosti i stabilnosti (zaštita od zloupotrebe, otklanjanje grešaka) serveri mogu
           privremeno čuvati standardne evidencije pristupa. Ove evidencije se ne koriste za
@@ -99,7 +129,7 @@ export default function PolitikaPrivatnosti() {
         </p>
       </LegalSection>
 
-      <LegalSection n={8} title="Treće strane (prodavnice)">
+      <LegalSection n={9} title="Treće strane (prodavnice)">
         <p>
           Linkovi vode na sajte prodavnica. Tamo važe <strong>njihove</strong> politike privatnosti
           i uslovi prodaje. Ako neka prodavnica koristi kolačiće ili affiliate parametre u URL-u,
@@ -107,34 +137,35 @@ export default function PolitikaPrivatnosti() {
         </p>
       </LegalSection>
 
-      <LegalSection n={9} title="Prava korisnika">
+      <LegalSection n={10} title="Prava korisnika">
         <p>
           U skladu sa Zakonom o zaštiti podataka o ličnosti („Sl. glasnik RS“, br. 87/2018) možete
           tražiti pristup, ispravku ili brisanje podataka koje eventualno obrađujemo o vama
-          (npr. tehničkih evidencija, ako vas je moguće identifikovati), kao i prigovor na obradu.
+          (uključujući poruke poslate kontakt formom), kao i prigovor na obradu.
         </p>
         <p>
-          Pošto ne vodimo naloge i deljene konfiguracije nisu vezane za identitet, za većinu
-          korisnika ne postoji set ličnih podataka koji bismo mogli „preuzeti“ ili obrisati —
-          osim lokalnog skladišta u vašem pretraživaču (brišete ga sami).
+          Pošto ne vodimo naloge, za većinu korisnika ne postoji set ličnih podataka koji bismo
+          mogli „preuzeti“ ili obrisati — osim lokalnog skladišta u vašem pretraživaču (brišete ga
+          sami) i eventualne poruke poslate preko kontakt forme.
         </p>
       </LegalSection>
 
-      <LegalSection n={10} title="Bezbednost i čuvanje">
+      <LegalSection n={11} title="Bezbednost i čuvanje">
         <p>
           Tehničke evidencije čuvamo samo onoliko dugo koliko je potrebno za rad i bezbednost servisa.
+          Poruke sa kontakt forme čuvamo dok je potrebno za odgovor i evidenciju korespondencije.
           Deljene konfiguracije mogu se obrisati radi održavanja baze. Ne prodajemo lične podatke
           trećim licima.
         </p>
       </LegalSection>
 
-      <LegalSection n={11} title="Deca">
+      <LegalSection n={12} title="Deca">
         <p>
           Sajt nije usmeren na decu mlađu od 13 godina i svesno ne prikupljamo njihove lične podatke.
         </p>
       </LegalSection>
 
-      <LegalSection n={12} title="Izmene i kontakt">
+      <LegalSection n={13} title="Izmene i kontakt">
         <p>
           Izmene pravila objavljujemo na ovoj stranici sa datumom ažuriranja. Za zahteve u vezi sa
           privatnošću koristite kontakt formu na sajtu (ili kontakt naveden u podnožju).

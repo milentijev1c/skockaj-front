@@ -24,7 +24,7 @@ export function LegalShell({
         {title}
       </h1>
       <p className="text-xs mb-8" style={{ color: "var(--text-muted)", fontFamily: "var(--font-geist-mono)" }}>
-        Poslednje ažuriranje: 23. septembar 2026.
+        Poslednje ažuriranje: 26. septembar 2026.
       </p>
       {intro && (
         <div className="mb-8 text-sm leading-relaxed" style={{ color: "var(--text-muted)" }}>
