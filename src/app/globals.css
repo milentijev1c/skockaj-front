@@ -1,6 +1,10 @@
 @import "tailwindcss";
 
-:root {
+/* Default is dark (product look). Light overrides live on [data-theme="light"]. */
+:root,
+[data-theme="dark"] {
+  color-scheme: dark;
+
   /* Surfaces */
   --void: #0B0E14;
   --panel: #141820;
@@ -10,6 +14,7 @@
   /* Accents */
   --glow: #00D4AA;
   --glow-dim: #00D4AA33;
+  --glow-fill: #00D4AA;     /* solid brand fills */
   --on-glow: #0B0E14;       /* dark ink on solid --glow fills — never white */
   --amber: #FFAA00;
   --coral: #FF6B6B;
@@ -18,6 +23,48 @@
   --text: #E4E8EF;
   --text-muted: #A7B0C0;    /* secondary copy, readable at 11px+ */
   --text-dim: #8B94A6;      /* decorative labels only */
+
+  /* Elevation / tints */
+  --shadow-float: 0 8px 28px rgba(0, 0, 0, 0.4);
+  --shadow-btn: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --tint-row: rgba(0, 212, 170, 0.04);
+  --tint-header: rgba(0, 212, 170, 0.03);
+  --tint-danger: rgba(255, 107, 107, 0.12);
+  --shadow-danger: 0 0 12px rgba(255, 107, 107, 0.2);
+
+  --background: var(--void);
+  --foreground: var(--text);
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+
+  /* Surfaces — near-white / soft gray */
+  --void: #FAFAF8;
+  --panel: #FFFFFF;
+  --edge: #E4E4E7;
+  --edge-soft: #F4F4F5;
+
+  /* Accents — brand teal on fills; darker teal for text/borders on light */
+  --glow: #0F766E;
+  --glow-dim: rgba(15, 118, 110, 0.12);
+  --glow-fill: #00D4AA;
+  --on-glow: #0B0E14;       /* dark ink on solid fills (AA+) */
+  --amber: #B45309;
+  --coral: #DC2626;
+
+  /* Text */
+  --text: #18181B;
+  --text-muted: #52525B;
+  --text-dim: #71717A;
+
+  /* Shadows instead of heavy glows */
+  --shadow-float: 0 8px 24px rgba(24, 24, 27, 0.1);
+  --shadow-btn: 0 2px 8px rgba(24, 24, 27, 0.08);
+  --tint-row: rgba(15, 118, 110, 0.06);
+  --tint-header: rgba(15, 118, 110, 0.05);
+  --tint-danger: rgba(220, 38, 38, 0.1);
+  --shadow-danger: 0 0 12px rgba(220, 38, 38, 0.15);
 
   --background: var(--void);
   --foreground: var(--text);
@@ -37,8 +84,8 @@ body {
 }
 
 ::selection {
-  background: var(--glow);
-  color: var(--void);
+  background: var(--glow-fill);
+  color: var(--on-glow);
 }
 
 /* ── Clickable affordance (site-wide) ────────────── */
@@ -71,9 +118,8 @@ body {
   outline: none;
 }
 
-/* Native select arrow visibility on dark UI */
+/* Native select arrow visibility (color-scheme comes from :root / data-theme) */
 select {
-  color-scheme: dark;
   appearance: none;
   background-image: linear-gradient(45deg, transparent 50%, var(--text-muted) 50%),
     linear-gradient(135deg, var(--text-muted) 50%, transparent 50%);
@@ -136,7 +182,7 @@ select:hover {
   transition: background 0.15s ease, box-shadow 0.2s ease;
 }
 .row-hover:hover {
-  background: rgba(0, 212, 170, 0.04) !important;
+  background: var(--tint-row) !important;
 }
 
 /* ── Filter chip / sort pill ────────────────────── */
@@ -177,7 +223,7 @@ select:hover {
 }
 .filter-btn:hover {
   transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  box-shadow: var(--shadow-btn);
 }
 
 /* ── Action buttons ─────────────────────────────── */
@@ -185,9 +231,9 @@ select:hover {
 .btn-glow {
   transition: box-shadow 0.2s ease, filter 0.2s ease, opacity 0.15s ease, transform 0.15s ease;
   /* Solid accent fill always takes dark ink (AA+) */
-  background: var(--glow);
+  background: var(--glow-fill);
   color: var(--on-glow);
-  border: 1px solid var(--glow);
+  border: 1px solid var(--glow-fill);
   font-weight: 700;
 }
 .btn-glow:hover {
@@ -213,8 +259,8 @@ select:hover {
   transition: all 0.2s ease;
 }
 .btn-danger:hover {
-  background: rgba(255, 107, 107, 0.12) !important;
-  box-shadow: 0 0 12px rgba(255, 107, 107, 0.2);
+  background: var(--tint-danger) !important;
+  box-shadow: var(--shadow-danger);
 }
 
 /* ── Back button / inline link ────────────────────── */
@@ -262,7 +308,7 @@ select:hover {
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(0, 212, 170, 0.06),
+    var(--tint-row),
     transparent
   );
   animation: shimmer 1.4s ease-in-out infinite;
@@ -317,6 +363,30 @@ select:hover {
 }
 .hover-underline:hover {
   color: var(--glow) !important;
+}
+
+/* ── Shop logo tiles (brand green so white/dark marks stay visible) ── */
+
+.shop-logo-tile {
+  background: rgba(0, 212, 170, 0.28);
+  border: 1px solid rgba(0, 212, 170, 0.35);
+  border-radius: 6px;
+}
+
+[data-theme="light"] .shop-logo-tile {
+  background: rgba(0, 184, 148, 0.32);
+  border-color: rgba(15, 118, 110, 0.28);
+}
+
+/* ── Theme toggle ───────────────────────────────── */
+
+.theme-toggle {
+  transition: color 0.15s ease, border-color 0.15s ease, background-color 0.15s ease, box-shadow 0.2s ease;
+}
+.theme-toggle:hover {
+  color: var(--glow) !important;
+  border-color: var(--glow) !important;
+  background: var(--glow-dim) !important;
 }
 
 /* ── Reduced motion ─────────────────────────────── */

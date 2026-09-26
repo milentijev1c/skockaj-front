@@ -288,7 +288,7 @@ export default function BuilderPage() {
                 onClick={saveBuild}
                 disabled={saving}
                 className="btn-glow px-5 py-2.5 text-xs font-bold tracking-widest uppercase disabled:opacity-50"
-                style={{ background: "var(--glow)", color: "var(--void)", fontFamily: "var(--font-geist-mono)" }}
+                style={{ background: "var(--glow-fill)", color: "var(--on-glow)", fontFamily: "var(--font-geist-mono)" }}
               >
                 {saving ? "Čuvam..." : "Sačuvaj"}
               </button>
@@ -302,7 +302,7 @@ export default function BuilderPage() {
               style={{
                 background: "var(--panel)",
                 border: `1px solid ${compat.compatible ? "var(--glow)" : "var(--coral)"}`,
-                boxShadow: `0 0 20px ${compat.compatible ? "var(--glow-dim)" : "rgba(255,92,92,0.15)"}`,
+                boxShadow: `0 0 20px ${compat.compatible ? "var(--glow-dim)" : "var(--shadow-danger)"}`,
               }}
             >
               {compat.compatible ? (

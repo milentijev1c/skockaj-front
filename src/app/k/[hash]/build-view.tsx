@@ -255,7 +255,7 @@ export default function BuildView({ build, components }: { build: Build; compone
         <Link
           href="/konfigurator"
           className="btn-glow inline-flex items-center px-8 py-3 text-xs font-bold tracking-widest uppercase"
-          style={{ background: "var(--glow)", color: "var(--void)", fontFamily: "var(--font-geist-mono)" }}
+          style={{ background: "var(--glow-fill)", color: "var(--on-glow)", fontFamily: "var(--font-geist-mono)" }}
         >
           Skockaj svoju konfiguraciju
         </Link>
@@ -329,7 +329,7 @@ export default function BuildView({ build, components }: { build: Build; compone
                           display: "block",
                           height: 8,
                           width: `${Math.max(8, Math.round((d.count / max) * 120))}px`,
-                          background: "var(--glow)",
+                          background: "var(--glow-fill)",
                           opacity: 0.75,
                           borderRadius: 2,
                         }}

@@ -41,7 +41,7 @@ export default function CookieBanner() {
         width: "min(360px, calc(100vw - 32px))",
         background: "var(--panel)",
         border: "1px solid var(--edge)",
-        boxShadow: "0 8px 28px rgba(0,0,0,0.4)",
+        boxShadow: "var(--shadow-float)",
         padding: "14px 16px",
         fontFamily: "var(--font-geist-mono)",
       }}
@@ -61,8 +61,8 @@ export default function CookieBanner() {
           onClick={() => accept("all")}
           className="px-3 py-1.5 text-[10px] font-bold tracking-wider uppercase"
           style={{
-            background: "var(--glow)",
-            color: "var(--void)",
+            background: "var(--glow-fill)",
+            color: "var(--on-glow)",
             border: "none",
             borderRadius: 2,
             cursor: "pointer",

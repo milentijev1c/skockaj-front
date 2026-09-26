@@ -154,9 +154,9 @@ export default function ComponentDetail({ component }: { component: Component })
             onClick={addToBuilder}
             className="btn-glow px-5 py-3 text-xs font-bold tracking-widest uppercase"
             style={{
-              background: added ? "var(--glow)" : "transparent",
-              color: added ? "var(--void)" : "var(--glow)",
-              border: "1px solid var(--glow)",
+              background: added ? "var(--glow-fill)" : "transparent",
+              color: added ? "var(--on-glow)" : "var(--glow)",
+              border: "1px solid var(--glow-fill)",
               fontFamily: "var(--font-geist-mono)",
             }}
           >
@@ -193,11 +193,11 @@ export default function ComponentDetail({ component }: { component: Component })
               <div
                 key={offer.source}
                 className="flex items-center justify-between px-5 py-4"
-                style={{ borderBottom: i < storeOffers.length - 1 ? "1px solid var(--edge)" : "none", background: i === 0 ? "rgba(0,212,170,0.03)" : "transparent" }}
+                style={{ borderBottom: i < storeOffers.length - 1 ? "1px solid var(--edge)" : "none", background: i === 0 ? "var(--tint-header)" : "transparent" }}
               >
                 <div className="flex items-center gap-3">
                   {i === 0 && (
-                    <span className="text-[9px] font-bold uppercase tracking-widest px-1.5 py-0.5" style={{ background: "var(--glow)", color: "var(--void)", fontFamily: "var(--font-geist-mono)" }}>
+                    <span className="text-[9px] font-bold uppercase tracking-widest px-1.5 py-0.5" style={{ background: "var(--glow-fill)", color: "var(--on-glow)", fontFamily: "var(--font-geist-mono)" }}>
                       Najpovoljnije
                     </span>
                   )}

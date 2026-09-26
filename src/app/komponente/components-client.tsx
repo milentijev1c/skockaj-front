@@ -621,7 +621,7 @@ export default function ComponentsClient({ initial }: { initial: Component[] }) 
                 setComponents((cur) => (cur.length ? cur : d));
               }).catch(() => {});
             }} className="p-8 card-hover text-center" style={{ background: "var(--panel)", border: "1px solid var(--edge)", cursor: "pointer", minHeight: 140 }}>
-              <div className="mx-auto mb-4" style={{ width: 40, height: 40, backgroundColor: "var(--glow)", WebkitMaskImage: `url(${CATEGORY_ICONS[cat.value]})`, maskImage: `url(${CATEGORY_ICONS[cat.value]})`, WebkitMaskSize: "contain", maskSize: "contain", WebkitMaskRepeat: "no-repeat", maskRepeat: "no-repeat", WebkitMaskPosition: "center", maskPosition: "center" }} />
+              <div className="mx-auto mb-4" style={{ width: 40, height: 40, backgroundColor: "var(--glow-fill)", WebkitMaskImage: `url(${CATEGORY_ICONS[cat.value]})`, maskImage: `url(${CATEGORY_ICONS[cat.value]})`, WebkitMaskSize: "contain", maskSize: "contain", WebkitMaskRepeat: "no-repeat", maskRepeat: "no-repeat", WebkitMaskPosition: "center", maskPosition: "center" }} />
               <span className="text-sm font-bold tracking-wide" style={{ color: "var(--text)", fontFamily: "var(--font-geist-mono)" }}>{cat.label}</span>
             </button>
           ))}
@@ -848,7 +848,7 @@ export default function ComponentsClient({ initial }: { initial: Component[] }) 
 
             {filtered.length > 0 && (
               <div style={{ background: "var(--panel)", border: "1px solid var(--edge)" }}>
-                <div className="flex items-center px-5 py-3 text-[10px] font-bold tracking-widest uppercase" style={{ background: "rgba(0,212,170,0.03)", borderBottom: "1px solid var(--edge)", color: "var(--text-muted)", fontFamily: "var(--font-geist-mono)" }}>
+                <div className="flex items-center px-5 py-3 text-[10px] font-bold tracking-widest uppercase" style={{ background: "var(--tint-header)", borderBottom: "1px solid var(--edge)", color: "var(--text-muted)", fontFamily: "var(--font-geist-mono)" }}>
                   <div className="flex-1">Proizvod</div>
                   <div className="w-32 text-center hidden sm:block">Socket / Tip</div>
                   <div className="w-32 text-right">Najniža cena</div>
@@ -862,7 +862,7 @@ export default function ComponentsClient({ initial }: { initial: Component[] }) 
                   const added = addedIds.has(c.id);
                   return (
                     <div key={c.id} className="flex items-center px-5 py-4 fade-in row-hover" style={{ borderBottom: "1px solid var(--edge)", transition: "background 0.15s ease" }}
-                      onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(0,212,170,0.03)"; }}
+                      onMouseEnter={(e) => { e.currentTarget.style.background = "var(--tint-header)"; }}
                       onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; }}>
                       <div className="flex-1 min-w-0">
                         <Link href={`/komponente/${c.id}`} className="text-sm font-bold truncate block" style={{ color: "var(--text)", textDecoration: "none" }}

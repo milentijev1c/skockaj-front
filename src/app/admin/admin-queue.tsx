@@ -208,7 +208,7 @@ export default function AdminQueue() {
           className="text-xs mb-4 px-4 py-3"
           style={{
             border: "1px solid var(--coral)",
-            background: "rgba(255,107,107,0.08)",
+            background: "var(--tint-danger)",
             color: "var(--text)",
           }}
           role="alert"
