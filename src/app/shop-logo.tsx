@@ -32,22 +32,33 @@ export function ShopLogo({
     );
   }
   return (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
-      src={src}
-      alt={name}
+    <span
       title={name}
-      width={size}
-      height={size}
+      aria-label={name}
+      className="shop-logo-tile"
       style={{
-        width: size * 1.8,
-        height: size,
-        objectFit: "contain",
-        objectPosition: "center",
-        display: "inline-block",
-        verticalAlign: "middle",
+        display: "inline-flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: `${Math.max(4, Math.round(size * 0.12))}px ${Math.max(6, Math.round(size * 0.22))}px`,
+        lineHeight: 0,
       }}
-    />
+    >
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={src}
+        alt={name}
+        width={size}
+        height={size}
+        style={{
+          width: size * 1.8,
+          height: size,
+          objectFit: "contain",
+          objectPosition: "center",
+          display: "block",
+        }}
+      />
+    </span>
   );
 }
 

@@ -11,7 +11,7 @@
   transition: box-shadow 0.25s ease, opacity 0.15s ease;
 }
 .hero-primary-btn:hover {
-  box-shadow: 0 0 30px var(--glow-dim), 0 4px 15px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 30px var(--glow-dim), var(--shadow-btn);
 }
 .hero-primary-btn:active {
   opacity: 0.9;
@@ -41,7 +41,7 @@
 
 @keyframes glowPulse {
   0%, 100% { text-shadow: 0 0 20px var(--glow-dim); }
-  50%      { text-shadow: 0 0 40px var(--glow-dim), 0 0 60px rgba(0,212,170,0.1); }
+  50%      { text-shadow: 0 0 40px var(--glow-dim), 0 0 60px var(--glow-dim); }
 }
 
 @keyframes cursorBlink {
@@ -49,10 +49,19 @@
   50%, 100% { opacity: 0; }
 }
 
+/* FAQ accordion — smooth open/close without layout jank */
+.faq-panel {
+  transition: grid-template-rows 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .fade-up,
   .fade-up-delay,
   .glow-pulse {
     animation: none !important;
+  }
+  .faq-panel,
+  .faq-plus {
+    transition: none !important;
   }
 }

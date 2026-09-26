@@ -60,11 +60,9 @@ export default function ProdavnicePage() {
               style={{ background: "var(--panel)", border: "1px solid var(--edge)" }}
             >
               <div
-                className="mb-4 flex items-center justify-center"
+                className="mb-4 flex items-center justify-center shop-logo-tile"
                 style={{
                   height: 64,
-                  background: "rgba(0,0,0,0.25)",
-                  border: "1px solid var(--edge-soft)",
                   padding: "12px 16px",
                 }}
               >
