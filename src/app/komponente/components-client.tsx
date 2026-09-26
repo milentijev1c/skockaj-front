@@ -447,8 +447,10 @@ export default function ComponentsClient({ initial }: { initial: Component[] }) 
     const qs = buildQueryString(merged);
     lastWrittenQsRef.current = qs;
     const url = qs ? `/komponente?${qs}` : "/komponente";
-    if (mode === "push") router.push(url, { scroll: false });
-    else router.replace(url, { scroll: false });
+    // History API keeps the URL shareable without a Next RSC round-trip
+    // (router.replace would re-run generateMetadata on every keystroke).
+    if (mode === "push") window.history.pushState(null, "", url);
+    else window.history.replaceState(null, "", url);
     return merged;
   }
 
@@ -480,9 +482,14 @@ export default function ComponentsClient({ initial }: { initial: Component[] }) 
     writeUrl({ priceMax: v });
   }
 
+  const searchUrlTimer = useRef<number | null>(null);
   function changeSearch(v: string) {
     setSearch(v);
-    writeUrl({ search: v });
+    // Debounce URL sync so typing never hits the network
+    if (searchUrlTimer.current) window.clearTimeout(searchUrlTimer.current);
+    searchUrlTimer.current = window.setTimeout(() => {
+      writeUrl({ search: v });
+    }, 250);
   }
 
   function clearAllFilters() {
@@ -529,28 +536,31 @@ export default function ComponentsClient({ initial }: { initial: Component[] }) 
     const t = window.setTimeout(() => {
       const qs = new URLSearchParams(searchParams.toString()).toString();
       const written = new URLSearchParams(lastWrittenQsRef.current).toString();
-      if (qs && qs === written) return;
+      // Same view we just wrote — skip (avoids reload flicker while typing)
+      if (qs === written) return;
       const state = parseViewState(new URLSearchParams(qs));
-      setCategory(state.category);
+      const nextCategory = state.category;
+      setCategory(nextCategory);
       setSearch(state.search);
       setFilters(state.filters);
       setSort(state.sort);
       setInStockOnly(state.inStockOnly);
       setPriceMin(state.priceMin);
       setPriceMax(state.priceMax);
-      if (state.category) {
+      // Only refetch when the category actually changed
+      if (nextCategory && nextCategory !== category) {
         setLoading(true);
-        apiFetch<Component[]>(`/components/?category=${state.category}`)
+        apiFetch<Component[]>(`/components/?category=${nextCategory}`)
           .then((data) => setComponents(data))
           .catch(() => setComponents([]))
           .finally(() => setLoading(false));
-      } else {
+      } else if (!nextCategory) {
         setComponents([]);
         setLoading(false);
       }
     }, 0);
     return () => window.clearTimeout(t);
-  }, [searchParams, initial]);
+  }, [searchParams, initial, category]);
 
   function selectCategory(cat: string) {
     setCategory(cat);
