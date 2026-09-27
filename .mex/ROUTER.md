@@ -14,7 +14,7 @@ edges:
     condition: when setting up the dev environment or running the project for the first time
   - target: patterns/INDEX.md
     condition: when starting a task — check the pattern index for a matching pattern file
-last_updated: 2026-09-26
+last_updated: 2026-09-27
 ---
 
 # Session Bootstrap
@@ -32,11 +32,13 @@ Then read this file fully before doing anything else in this session.
 - SEO: per-route metadata + canonicals, `sitemap.ts` + `robots.ts`, JSON-LD (Organization/WebSite, FAQ, Breadcrumb, Product/Offer), admin noindex
 - Shared `Brand` + AA palette (`--glow-fill` / `--on-glow`)
 - Filters in URL; Konfigurator; `/k/[hash]`; `/prodavnice`; cookie toast; legal pages
+- **15 stores** in `src/lib/types.ts` (`STORE_NAMES` / `STORE_URLS` / `STORE_LOGOS` / `STORE_BLURBS`) + `public/logos/`
+- Admin `/admin`: match queue (approve/reject + component search) **and** pending-components panel (`pending-components.tsx`, one-click approve)
 - Pre-push: typecheck + sr unit + Playwright smoke
 
 **Not yet built:**
 - Category SEO landing pages (separate content pages)
-- Owner-only stats
+- Owner-only stats / scrape-history panel
 - Optional homepage leftovers: live "istaknute ponude", konfigurator teaser
 - og:image brand card asset; GSC verification (post-ship)
 
@@ -49,6 +51,7 @@ Then read this file fully before doing anything else in this session.
 - FAQ accordion uses `grid-template-rows` animation
 - `npm run lint` pre-existing `react-hooks/set-state-in-effect` errors in admin/catalog/cookie
 - Product metadata falls back to "Proizvod nije pronađen" if API down/missing
+- Public catalog only shows `approved` components — pending ones stay in `/admin`
 
 ## Routing Table
 
