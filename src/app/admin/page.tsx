@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import AdminQueue from "./admin-queue";
+import PendingComponents from "./pending-components";
 
 export const metadata: Metadata = {
   title: "Admin — red usklađivanja",
@@ -7,5 +8,10 @@ export const metadata: Metadata = {
 };
 
 export default function AdminPage() {
-  return <AdminQueue />;
+  return (
+    <div>
+      <AdminQueue />
+      <PendingComponents />
+    </div>
+  );
 }

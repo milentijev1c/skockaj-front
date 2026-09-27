@@ -37,6 +37,14 @@ export function rejectMatch(matchId: number): Promise<void> {
   return adminFetch(`queue/${matchId}/reject`, { method: "POST" });
 }
 
+export function fetchPendingComponents(limit = 50): Promise<Component[]> {
+  return adminFetch(`components?status=pending&limit=${limit}`);
+}
+
+export function approveComponent(componentId: number): Promise<Component> {
+  return adminFetch(`components/${componentId}/approve`, { method: "POST" });
+}
+
 export function searchComponents(q: string, limit = 20): Promise<Component[]> {
   const params = new URLSearchParams({ q, limit: String(limit) });
   // public catalog — same-origin Next proxy not required

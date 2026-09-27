@@ -15,6 +15,7 @@ export interface Component {
   socket: string | null;
   ram_type: string | null;
   tdp_w: number;
+  status: "pending" | "approved" | string;
   specifications: Record<string, unknown> | null;
   prices: Price[];
 }
