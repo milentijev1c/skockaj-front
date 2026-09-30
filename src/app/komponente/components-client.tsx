@@ -409,6 +409,14 @@ export default function ComponentsClient({ initial }: { initial: Component[] }) 
   const [priceMin, setPriceMin] = useState(boot.priceMin);
   const [priceMax, setPriceMax] = useState(boot.priceMax);
 
+  // history.pushState skips generateMetadata — keep the tab title in sync
+  // (matches layout title.template `"%s | skockaj.rs"`)
+  useEffect(() => {
+    const cat = category ? CATEGORIES.find((c) => c.value === category) : undefined;
+    const base = cat ? `${cat.title} — uporedi cene u Srbiji` : "Komponente — uporedi cene";
+    document.title = `${base} | skockaj.rs`;
+  }, [category]);
+
   const filterDefs = CATEGORY_FILTERS[category] ?? [];
   const hasActiveFilters =
     search ||
