@@ -227,7 +227,7 @@ function FilterGroups({ filterDefs, components, filters, setFilter }: {
             <button
               type="button"
               onClick={() => setCollapsed((p) => ({ ...p, [f.key]: !p[f.key] }))}
-              className="w-full flex items-center justify-between text-[10px] font-bold tracking-widest uppercase mb-2"
+              className="w-full flex items-center justify-between text-[11px] font-bold tracking-widest uppercase mb-2"
               style={{ color: active ? "var(--glow)" : "var(--text-muted)", fontFamily: "var(--font-geist-mono)", background: "none", border: "none", cursor: "pointer", padding: 0 }}
             >
               <span>
@@ -869,9 +869,9 @@ export default function ComponentsClient({ initial }: { initial: Component[] }) 
 
             {filtered.length > 0 && (
               <div style={{ background: "var(--panel)", border: "1px solid var(--edge)" }}>
-                <div className="flex items-center px-5 py-3 text-[10px] font-bold tracking-widest uppercase" style={{ background: "var(--tint-header)", borderBottom: "1px solid var(--edge)", color: "var(--text-muted)", fontFamily: "var(--font-geist-mono)" }}>
+                <div className="hidden sm:flex items-center px-5 py-3 text-[10px] font-bold tracking-widest uppercase" style={{ background: "var(--tint-header)", borderBottom: "1px solid var(--edge)", color: "var(--text-muted)", fontFamily: "var(--font-geist-mono)" }}>
                   <div className="flex-1">Proizvod</div>
-                  <div className="w-32 text-center hidden sm:block">Socket / Tip</div>
+                  <div className="w-32 text-center">Socket / Tip</div>
                   <div className="w-32 text-right">Najniža cena</div>
                   <div className="w-28 text-right">Prodavnice</div>
                   <div className="w-32 text-right"></div>
@@ -882,22 +882,37 @@ export default function ComponentsClient({ initial }: { initial: Component[] }) 
                   const inStock = priced.filter((p) => p.in_stock).length;
                   const added = addedIds.has(c.id);
                   return (
-                    <div key={c.id} className="flex items-center px-5 py-4 fade-in row-hover" style={{ borderBottom: "1px solid var(--edge)", transition: "background 0.15s ease" }}
+                    <div key={c.id} className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-0 px-4 sm:px-5 py-3 sm:py-4 fade-in row-hover" style={{ borderBottom: "1px solid var(--edge)", transition: "background 0.15s ease" }}
                       onMouseEnter={(e) => { e.currentTarget.style.background = "var(--tint-header)"; }}
                       onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; }}>
-                      <div className="flex-1 min-w-0">
-                        <Link href={`/komponente/${c.id}`} className="text-sm font-bold truncate block" style={{ color: "var(--text)", textDecoration: "none" }}
+                      <div className="min-w-0 sm:flex-1">
+                        <Link href={`/komponente/${c.id}`} className="text-sm font-bold" style={{ color: "var(--text)", textDecoration: "none" }}
                           onMouseEnter={(e) => { e.currentTarget.style.color = "var(--glow)"; }}
                           onMouseLeave={(e) => { e.currentTarget.style.color = "var(--text)"; }}>{c.name}</Link>
-                        <span className="text-[11px]" style={{ color: "var(--text-muted)", fontFamily: "var(--font-geist-mono)" }}>{c.manufacturer}</span>
+                        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-1 sm:mt-0">
+                          <span className="text-[11px]" style={{ color: "var(--text-muted)", fontFamily: "var(--font-geist-mono)" }}>{c.manufacturer}</span>
+                          <span className="text-[11px] sm:hidden" style={{ color: "var(--glow)", fontFamily: "var(--font-geist-mono)" }}>
+                            {category === "ram" ? (c.ram_type || "—") : (c.socket || c.ram_type || "—")}
+                          </span>
+                          {cheapest !== null ? (
+                            <span className="text-sm font-bold" style={{ color: "var(--amber)", fontFamily: "var(--font-geist-mono)" }}>
+                              {cheapest.toLocaleString("sr")}<span className="text-[11px] font-normal ml-1" style={{ color: "var(--text-muted)" }}>RSD</span>
+                            </span>
+                          ) : (
+                            <span className="text-[11px]" style={{ color: "var(--text-muted)" }}>Nema u ponudi</span>
+                          )}
+                          <span className="text-[11px]" style={{ color: inStock > 0 ? "var(--glow)" : "var(--text-muted)", fontFamily: "var(--font-geist-mono)" }}>
+                            {inStock > 0 ? `${inStock} ${srProdavnice(inStock)}` : "/"}
+                          </span>
+                        </div>
                       </div>
-                      <div className="w-32 text-center text-xs hidden sm:block" style={{ color: "var(--glow)", fontFamily: "var(--font-geist-mono)" }}>
+                      <div className="hidden sm:block w-32 text-center text-xs" style={{ color: "var(--glow)", fontFamily: "var(--font-geist-mono)" }}>
                         {category === "ram" ? (c.ram_type || "—") : (c.socket || c.ram_type || "—")}
                       </div>
-                      <div className="w-32 text-right">
+                      <div className="hidden sm:block w-32 text-right">
                         {cheapest !== null ? <span className="text-sm font-bold" style={{ color: "var(--amber)", fontFamily: "var(--font-geist-mono)" }}>{cheapest.toLocaleString("sr")}<span className="text-[10px] font-normal ml-1" style={{ color: "var(--text-muted)" }}>RSD</span></span> : <span className="text-[11px]" style={{ color: "var(--text-muted)" }}>Nema u ponudi</span>}
                       </div>
-                      <div className="w-28 text-right">
+                      <div className="hidden sm:block w-28 text-right">
                         {inStock > 0 ? (
                           <span className="text-[11px]" style={{ color: "var(--glow)", fontFamily: "var(--font-geist-mono)" }}>
                             {inStock} {srProdavnice(inStock)}
@@ -906,11 +921,11 @@ export default function ComponentsClient({ initial }: { initial: Component[] }) 
                           <span className="text-[11px]" style={{ color: "var(--text-muted)" }}>/</span>
                         )}
                       </div>
-                      <div className="w-32 text-right">
+                      <div className="sm:w-32 sm:text-right">
                         {added ? (
-                          <button onClick={(e) => removeFromBuilder(c.id, e)} className="text-[10px] font-bold tracking-wider uppercase px-3 py-1.5 btn-danger" style={{ background: "transparent", color: "var(--coral)", border: "1px solid var(--coral)", fontFamily: "var(--font-geist-mono)", cursor: "pointer", transition: "all 0.2s ease" }}>Ukloni</button>
+                          <button onClick={(e) => removeFromBuilder(c.id, e)} className="text-[11px] font-bold tracking-wider uppercase px-3 py-2 btn-danger w-full sm:w-auto" style={{ background: "transparent", color: "var(--coral)", border: "1px solid var(--coral)", fontFamily: "var(--font-geist-mono)", cursor: "pointer", transition: "all 0.2s ease" }}>Ukloni</button>
                         ) : (
-                          <button onClick={(e) => addToBuilder(c.id, e)} className="text-[10px] font-bold tracking-wider uppercase px-3 py-1.5" style={{ background: "transparent", color: "var(--glow)", border: "1px solid var(--glow)", fontFamily: "var(--font-geist-mono)", cursor: "pointer", transition: "all 0.2s ease" }}>Dodaj</button>
+                          <button onClick={(e) => addToBuilder(c.id, e)} className="text-[11px] font-bold tracking-wider uppercase px-3 py-2 w-full sm:w-auto" style={{ background: "transparent", color: "var(--glow)", border: "1px solid var(--glow)", fontFamily: "var(--font-geist-mono)", cursor: "pointer", transition: "all 0.2s ease" }}>Dodaj</button>
                         )}
                       </div>
                     </div>

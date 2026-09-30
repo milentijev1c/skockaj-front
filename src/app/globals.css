@@ -81,6 +81,12 @@ body {
   background: var(--void);
   color: var(--text);
   font-family: var(--font-geist-sans), system-ui, sans-serif;
+  /* stop iOS rubber-band from looking like infinite void at top/bottom */
+  overscroll-behavior-y: contain;
+}
+
+html {
+  overscroll-behavior-y: contain;
 }
 
 ::selection {
@@ -151,8 +157,89 @@ select:hover {
   color: var(--glow) !important;
 }
 
+/* ── Mobile nav ─────────────────────────────────── */
+
+.mobile-nav {
+  display: none;
+  position: relative;
+  align-items: center;
+  line-height: 0;
+}
+
+.mobile-nav-toggle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  width: 36px;
+  height: 36px;
+  padding: 8px;
+  border-radius: 8px;
+  background: transparent;
+  border: 1px solid var(--edge);
+  cursor: pointer;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.mobile-nav-bar {
+  display: block;
+  height: 1.5px;
+  width: 100%;
+  background: currentColor;
+  border-radius: 1px;
+}
+
+.theme-toggle {
+  flex-shrink: 0;
+}
+
+.mobile-nav-panel {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  min-width: 180px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px;
+  background: var(--panel);
+  border: 1px solid var(--edge);
+  box-shadow: var(--shadow-float);
+  z-index: 60;
+  font-family: var(--font-geist-mono);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.mobile-nav-panel a {
+  padding: 10px 12px;
+  border-radius: 4px;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.mobile-nav-panel a:hover {
+  color: var(--glow) !important;
+  background: color-mix(in srgb, var(--glow) 8%, transparent);
+}
+
+@media (max-width: 767px) {
+  .nav-links {
+    display: none !important;
+  }
+  .mobile-nav {
+    display: flex;
+  }
+  .category-tile {
+    padding: 1.25rem !important;
+    min-height: 110px !important;
+  }
+}
+
 .footer-link {
   transition: color 0.15s ease;
+  display: inline-block;
+  padding: 6px 0;
 }
 .footer-link:hover {
   color: var(--glow) !important;
@@ -199,6 +286,7 @@ select:hover {
 
 .chip-btn {
   transition: color 0.15s ease, background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+  min-height: 36px;
 }
 .chip-btn:hover {
   color: var(--text) !important;

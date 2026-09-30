@@ -7,6 +7,7 @@ import SiteFooter from "./site-footer";
 import { Brand } from "./brand";
 import CookieBanner from "./cookie-banner";
 import ThemeToggle from "./theme-toggle";
+import MobileNav from "./mobile-nav";
 import { THEME_BOOTSTRAP_SCRIPT } from "@/lib/theme";
 import { SITE_URL, SITE_NAME, websiteJsonLd } from "@/lib/seo";
 import { JsonLd } from "@/lib/json-ld";
@@ -69,7 +70,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
       <head>
         <script nonce={nonce} dangerouslySetInnerHTML={{ __html: THEME_BOOTSTRAP_SCRIPT }} />
       </head>
-      <body className="min-h-full flex flex-col" style={{ background: "var(--void)", color: "var(--text)" }}>
+      <body className="min-h-dvh flex flex-col" style={{ background: "var(--void)", color: "var(--text)" }}>
         <JsonLd data={websiteJsonLd()} />
         {/* LED-strip header */}
         <header className="header-glow" style={{ background: "var(--panel)", borderBottom: "1px solid var(--edge)", position: "relative" }}>
@@ -78,8 +79,8 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
             <Link href="/" className="logo-link" aria-label="skockaj.rs početna">
               <Brand size={20} withMark />
             </Link>
-            <div className="flex items-center gap-6">
-              <div className="flex gap-8 text-sm font-medium nav-links" style={{ fontFamily: "var(--font-geist-mono)" }}>
+            <div className="flex items-center gap-3 sm:gap-6">
+              <div className="nav-links flex gap-8 text-sm font-medium" style={{ fontFamily: "var(--font-geist-mono)" }}>
                 <Link href="/komponente" style={{ color: "var(--text-muted)" }}>
                   komponente
                 </Link>
@@ -90,6 +91,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
                   kontakt
                 </Link>
               </div>
+              <MobileNav />
               <ThemeToggle />
             </div>
           </nav>

@@ -74,7 +74,7 @@ export default function Home() {
     <div>
       <JsonLd data={faqJsonLd(FAQ)} />
       {/* ── Hero ─────────────────────────────────────── */}
-      <section className="relative text-center" style={{ paddingTop: 48, paddingBottom: 56 }}>
+      <section className="relative text-center pt-8 pb-10 sm:pt-12 sm:pb-14">
         <div className="absolute inset-0 overflow-hidden pointer-events-none" style={{ opacity: 0.04 }}>
           <svg width="100%" height="100%" viewBox="0 0 800 600">
             <defs>
@@ -89,28 +89,28 @@ export default function Home() {
         </div>
 
         <div className="relative z-10 fade-up">
-          <div className="mb-6 text-xs tracking-widest uppercase" style={{ color: "var(--text-muted)", fontFamily: "var(--font-geist-mono)" }}>
+          <div className="mb-4 text-xs tracking-widest uppercase" style={{ color: "var(--text-muted)", fontFamily: "var(--font-geist-mono)" }}>
             Skockaj &bull; Uporedi &bull; Uštedi
           </div>
 
           <h1
-            className="text-5xl md:text-7xl font-black tracking-tight mb-6 leading-none min-h-[2.4em]"
+            className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tight mb-4 sm:mb-6 leading-none"
             style={{ fontFamily: "var(--font-geist-sans)" }}
           >
             <Typewriter />
           </h1>
 
-          <p className="text-lg mb-4 max-w-xl mx-auto leading-relaxed" style={{ color: "var(--text-muted)" }}>
+          <p className="text-base sm:text-lg mb-3 sm:mb-4 max-w-xl mx-auto leading-relaxed" style={{ color: "var(--text-muted)" }}>
             Uporedi cene komponenti iz domaćih prodavnica — bez registracije.
           </p>
-          <p className="text-sm mb-10 max-w-md mx-auto" style={{ color: "var(--text-dim)" }}>
+          <p className="text-sm mb-8 sm:mb-10 max-w-md mx-auto" style={{ color: "var(--text-dim)" }}>
             Procesori, grafičke kartice, RAM, matične ploče i ostalo. Cene se ažuriraju dnevno.
           </p>
 
-          <div className="flex gap-4 justify-center flex-wrap">
+          <div className="flex gap-3 sm:gap-4 justify-center flex-wrap">
             <Link
               href="/konfigurator"
-              className="hero-primary-btn inline-flex items-center gap-2 px-8 py-3.5 text-sm font-bold tracking-wide uppercase"
+              className="hero-primary-btn inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-3.5 text-sm font-bold tracking-wide uppercase"
               style={{ background: "var(--glow-fill)", color: "var(--on-glow)", fontFamily: "var(--font-geist-mono)" }}
             >
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
@@ -123,7 +123,7 @@ export default function Home() {
             </Link>
             <Link
               href="/komponente"
-              className="home-ghost-btn inline-flex items-center gap-2 px-8 py-3.5 text-sm font-medium tracking-wide"
+              className="home-ghost-btn inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-3.5 text-sm font-medium tracking-wide"
               style={{ border: "1px solid var(--edge)", color: "var(--text-muted)", fontFamily: "var(--font-geist-mono)" }}
             >
               Pregledaj komponente
@@ -131,7 +131,7 @@ export default function Home() {
           </div>
 
           {/* Live-ish chips (static counts — no catalog fetch) */}
-          <div className="mt-10 flex flex-wrap gap-3 justify-center" style={{ fontFamily: "var(--font-geist-mono)" }}>
+          <div className="mt-6 sm:mt-10 flex flex-wrap gap-2 sm:gap-3 justify-center" style={{ fontFamily: "var(--font-geist-mono)" }}>
             {[
               `${ACTIVE_STORES.length} prodavnica`,
               "cene se ažuriraju dnevno",
@@ -191,7 +191,7 @@ export default function Home() {
             <Link
               key={cat.value}
               href={`/komponente?kategorija=${cat.slug}`}
-              className="card-hover p-6 text-center"
+              className="card-hover category-tile p-6 text-center"
               style={{ background: "var(--panel)", border: "1px solid var(--edge)", minHeight: 130 }}
             >
               <div

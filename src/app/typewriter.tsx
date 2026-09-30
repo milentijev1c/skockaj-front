@@ -83,7 +83,7 @@ export default function Typewriter() {
     <span
       aria-label={`${top} ${accent}`}
       style={{
-        display: "inline-flex",
+        display: "flex",
         flexDirection: "column",
         alignItems: "flex-start",
         gap: 0,

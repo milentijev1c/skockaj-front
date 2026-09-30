@@ -130,7 +130,7 @@ export default function ComponentDetail({ component }: { component: Component })
           <h1 className="text-2xl md:text-3xl font-black tracking-tight mb-2" style={{ fontFamily: "var(--font-geist-sans)" }}>
             {c.name}
           </h1>
-          <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs" style={{ color: "var(--text-muted)", fontFamily: "var(--font-geist-mono)" }}>
+          <div className="flex flex-wrap gap-x-3 gap-y-1 text-xs" style={{ color: "var(--text-muted)", fontFamily: "var(--font-geist-mono)" }}>
             <span>{c.manufacturer}</span>
             {c.socket && <span style={{ color: "var(--glow)" }}>Socket: {c.socket}</span>}
             {c.ram_type && <span style={{ color: "var(--glow)" }}>{c.ram_type}</span>}
@@ -138,9 +138,9 @@ export default function ComponentDetail({ component }: { component: Component })
           </div>
         </div>
 
-        <div className="flex items-center gap-4 shrink-0">
+        <div className="flex flex-wrap items-center gap-3 sm:gap-4 shrink-0">
           {cheapest !== null && (
-            <div className="text-right">
+            <div className="text-left sm:text-right">
               <div className="text-[10px] uppercase tracking-widest mb-1" style={{ color: "var(--text-muted)", fontFamily: "var(--font-geist-mono)" }}>
                 Najniža cena
               </div>
@@ -152,7 +152,7 @@ export default function ComponentDetail({ component }: { component: Component })
           )}
           <button
             onClick={addToBuilder}
-            className="btn-glow px-5 py-3 text-xs font-bold tracking-widest uppercase"
+            className="btn-glow flex-1 sm:flex-none px-5 py-3 text-xs font-bold tracking-widest uppercase"
             style={{
               background: added ? "var(--glow-fill)" : "transparent",
               color: added ? "var(--on-glow)" : "var(--glow)",
@@ -192,21 +192,23 @@ export default function ComponentDetail({ component }: { component: Component })
             {storeOffers.map((offer, i) => (
               <div
                 key={offer.source}
-                className="flex items-center justify-between px-5 py-4"
+                className="flex flex-col gap-3 px-4 sm:px-5 py-4 sm:flex-row sm:items-center sm:justify-between"
                 style={{ borderBottom: i < storeOffers.length - 1 ? "1px solid var(--edge)" : "none", background: i === 0 ? "var(--tint-header)" : "transparent" }}
               >
-                <div className="flex items-center gap-3">
+                <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
                   {i === 0 && (
                     <span className="text-[9px] font-bold uppercase tracking-widest px-1.5 py-0.5" style={{ background: "var(--glow-fill)", color: "var(--on-glow)", fontFamily: "var(--font-geist-mono)" }}>
                       Najpovoljnije
                     </span>
                   )}
-                  <ShopLogo slug={offer.source} size={22} />
-                  <span className="text-sm font-medium" style={{ color: "var(--text)" }}>
-                    {STORE_NAMES[offer.source] ?? offer.source}
-                  </span>
+                  <div className="flex items-center gap-3">
+                    <ShopLogo slug={offer.source} size={22} />
+                    <span className="text-sm font-medium" style={{ color: "var(--text)" }}>
+                      {STORE_NAMES[offer.source] ?? offer.source}
+                    </span>
+                  </div>
                 </div>
-                <div className="flex items-center gap-4">
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
                   <span className="text-lg font-bold" style={{ color: "var(--amber)", fontFamily: "var(--font-geist-mono)" }}>
                     {offer.price.toLocaleString("sr")}
                     <span className="text-xs font-normal ml-1" style={{ color: "var(--text-muted)" }}>RSD</span>
@@ -215,7 +217,7 @@ export default function ComponentDetail({ component }: { component: Component })
                     href={offer.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn-ghost px-3 py-1.5 text-[10px] font-bold tracking-widest uppercase"
+                    className="btn-ghost inline-flex items-center justify-center px-3 py-2 text-[10px] font-bold tracking-widest uppercase whitespace-nowrap"
                     style={{ border: "1px solid var(--edge)", color: "var(--text-muted)", fontFamily: "var(--font-geist-mono)" }}
                   >
                     Idi u prodavnicu
@@ -237,8 +239,8 @@ export default function ComponentDetail({ component }: { component: Component })
             {Object.entries(c.specifications)
               .filter(([key]) => !SPEC_HIDDEN.has(key))
               .map(([key, value]) => (
-              <div key={key} className="flex items-start px-4 py-2.5 text-sm" style={{ borderBottom: "1px solid var(--edge)" }}>
-                <span className="w-48 shrink-0 text-xs uppercase tracking-wider" style={{ color: "var(--text-muted)", fontFamily: "var(--font-geist-mono)" }}>
+              <div key={key} className="flex flex-col gap-1 px-4 py-2.5 text-sm sm:flex-row sm:items-start" style={{ borderBottom: "1px solid var(--edge)" }}>
+                <span className="sm:w-48 shrink-0 text-xs uppercase tracking-wider" style={{ color: "var(--text-muted)", fontFamily: "var(--font-geist-mono)" }}>
                   {specLabel(key)}
                 </span>
                 <span className="text-xs" style={{ color: "var(--text)", fontFamily: "var(--font-geist-mono)" }}>
