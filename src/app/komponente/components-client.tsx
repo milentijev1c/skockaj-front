@@ -889,21 +889,25 @@ export default function ComponentsClient({ initial }: { initial: Component[] }) 
                         <Link href={`/komponente/${c.id}`} className="text-sm font-bold" style={{ color: "var(--text)", textDecoration: "none" }}
                           onMouseEnter={(e) => { e.currentTarget.style.color = "var(--glow)"; }}
                           onMouseLeave={(e) => { e.currentTarget.style.color = "var(--text)"; }}>{c.name}</Link>
-                        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-1 sm:mt-0">
-                          <span className="text-[11px]" style={{ color: "var(--text-muted)", fontFamily: "var(--font-geist-mono)" }}>{c.manufacturer}</span>
-                          <span className="text-[11px] sm:hidden" style={{ color: "var(--glow)", fontFamily: "var(--font-geist-mono)" }}>
-                            {category === "ram" ? (c.ram_type || "—") : (c.socket || c.ram_type || "—")}
-                          </span>
-                          {cheapest !== null ? (
-                            <span className="text-sm font-bold" style={{ color: "var(--amber)", fontFamily: "var(--font-geist-mono)" }}>
-                              {cheapest.toLocaleString("sr")}<span className="text-[11px] font-normal ml-1" style={{ color: "var(--text-muted)" }}>RSD</span>
+                        <div className="mt-1.5 space-y-1 sm:mt-0 sm:space-y-0">
+                          <div className="flex flex-wrap items-center gap-x-3 text-[11px]" style={{ color: "var(--text-muted)", fontFamily: "var(--font-geist-mono)" }}>
+                            <span>{c.manufacturer}</span>
+                            <span className="sm:hidden" style={{ color: "var(--glow)" }}>
+                              {category === "ram" ? (c.ram_type || "—") : (c.socket || c.ram_type || "—")}
                             </span>
-                          ) : (
-                            <span className="text-[11px]" style={{ color: "var(--text-muted)" }}>Nema u ponudi</span>
-                          )}
-                          <span className="text-[11px]" style={{ color: inStock > 0 ? "var(--glow)" : "var(--text-muted)", fontFamily: "var(--font-geist-mono)" }}>
-                            {inStock > 0 ? `${inStock} ${srProdavnice(inStock)}` : "/"}
-                          </span>
+                          </div>
+                          <div className="flex flex-wrap items-center gap-x-3">
+                            {cheapest !== null ? (
+                              <span className="text-sm font-bold" style={{ color: "var(--amber)", fontFamily: "var(--font-geist-mono)" }}>
+                                {cheapest.toLocaleString("sr")}<span className="text-[11px] font-normal ml-1.5" style={{ color: "var(--text-muted)" }}>RSD</span>
+                              </span>
+                            ) : (
+                              <span className="text-[11px]" style={{ color: "var(--text-muted)" }}>Nema u ponudi</span>
+                            )}
+                            <span className="text-[11px]" style={{ color: inStock > 0 ? "var(--glow)" : "var(--text-muted)", fontFamily: "var(--font-geist-mono)" }}>
+                              {inStock > 0 ? `${inStock} ${srProdavnice(inStock)}` : "/"}
+                            </span>
+                          </div>
                         </div>
                       </div>
                       <div className="hidden sm:block w-32 text-center text-xs" style={{ color: "var(--glow)", fontFamily: "var(--font-geist-mono)" }}>

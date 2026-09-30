@@ -174,7 +174,7 @@ export default function ContactForm() {
                 type="button"
                 onClick={() => setTopic(t.value)}
                 aria-pressed={active}
-                className="chip-btn px-3 py-1.5 text-[11px] tracking-wide"
+                className="chip-btn px-3 py-2 text-[11px] tracking-wide"
                 style={{
                   background: active ? "var(--glow-dim)" : "transparent",
                   border: `1px solid ${active ? "var(--glow)" : "var(--edge)"}`,
@@ -202,7 +202,7 @@ export default function ContactForm() {
             onChange={(e) => setName(e.target.value)}
             required
             autoComplete="name"
-            className="w-full text-sm px-3 py-2"
+            className="w-full text-base px-3 py-2.5"
             style={fieldStyle}
             aria-invalid={Boolean(errors.name)}
           />
@@ -225,7 +225,7 @@ export default function ContactForm() {
             onChange={(e) => setEmail(e.target.value)}
             required
             autoComplete="email"
-            className="w-full text-sm px-3 py-2"
+            className="w-full text-base px-3 py-2.5"
             style={fieldStyle}
             aria-invalid={Boolean(errors.email)}
           />
@@ -248,7 +248,7 @@ export default function ContactForm() {
               onChange={(e) => setCompany(e.target.value)}
               required
               autoComplete="organization"
-              className="w-full text-sm px-3 py-2"
+              className="w-full text-base px-3 py-2.5"
               style={fieldStyle}
               aria-invalid={Boolean(errors.company)}
             />
@@ -270,7 +270,7 @@ export default function ContactForm() {
             value={subject}
             onChange={(e) => setSubject(e.target.value)}
             maxLength={200}
-            className="w-full text-sm px-3 py-2"
+            className="w-full text-base px-3 py-2.5"
             style={fieldStyle}
             aria-invalid={Boolean(errors.subject)}
           />
@@ -294,7 +294,7 @@ export default function ContactForm() {
             rows={6}
             minLength={10}
             maxLength={5000}
-            className="w-full text-sm px-3 py-2"
+            className="w-full text-base px-3 py-2.5"
             style={{ ...fieldStyle, resize: "vertical" }}
             aria-invalid={Boolean(errors.message)}
           />
@@ -315,7 +315,7 @@ export default function ContactForm() {
             ref={pageUrlRef}
             defaultValue=""
             maxLength={500}
-            className="w-full text-sm px-3 py-2"
+            className="w-full text-base px-3 py-2.5"
             style={fieldStyle}
           />
         </div>

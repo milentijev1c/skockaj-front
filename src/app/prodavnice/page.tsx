@@ -56,7 +56,7 @@ export default function ProdavnicePage() {
           {shops.map((s) => (
             <article
               key={s.slug}
-              className="p-6 card-hover"
+              className="p-5 sm:p-6 card-hover"
               style={{ background: "var(--panel)", border: "1px solid var(--edge)" }}
             >
               <div
@@ -104,19 +104,19 @@ export default function ProdavnicePage() {
                   {s.blurb}
                 </p>
               )}
-              <div className="flex items-center gap-3">
+              <div className="flex flex-wrap items-center gap-3">
                 <a
                   href={s.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn-ghost px-3 py-1.5 text-[10px] font-bold tracking-widest uppercase"
+                  className="btn-ghost inline-flex items-center justify-center px-3 py-2 text-[11px] font-bold tracking-widest uppercase flex-1 sm:flex-none"
                   style={{ border: "1px solid var(--edge)", color: "var(--text-muted)", fontFamily: "var(--font-geist-mono)" }}
                 >
                   Sajt prodavnice
                 </a>
                 <Link
                   href="/komponente"
-                  className="hover-link text-[10px] tracking-widest uppercase"
+                  className="hover-link inline-flex items-center text-[11px] tracking-widest uppercase py-2"
                   style={{ color: "var(--glow)", fontFamily: "var(--font-geist-mono)" }}
                 >
                   Uporedi cene
