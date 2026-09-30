@@ -896,7 +896,7 @@ export default function ComponentsClient({ initial }: { initial: Component[] }) 
                               {category === "ram" ? (c.ram_type || "—") : (c.socket || c.ram_type || "—")}
                             </span>
                           </div>
-                          <div className="flex flex-wrap items-center gap-x-3">
+                          <div className="flex flex-wrap items-center gap-x-3 sm:hidden">
                             {cheapest !== null ? (
                               <span className="text-sm font-bold" style={{ color: "var(--amber)", fontFamily: "var(--font-geist-mono)" }}>
                                 {cheapest.toLocaleString("sr")}<span className="text-[11px] font-normal ml-1.5" style={{ color: "var(--text-muted)" }}>RSD</span>
