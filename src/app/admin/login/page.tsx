@@ -20,6 +20,7 @@ export default function AdminLoginPage() {
     } catch (err) {
       const msg = err instanceof Error ? err.message : "";
       if (msg.includes("not configured")) setError("ADMIN_TOKEN nije podešen na serveru.");
+      else if (msg.includes("too many")) setError("Previše pokušaja prijave. Pokušaj ponovo sutra.");
       else if (msg.includes("invalid")) setError("Pogrešan token.");
       else setError("Greška pri prijavi.");
     } finally {
