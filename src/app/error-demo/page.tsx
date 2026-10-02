@@ -5,6 +5,9 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
+// Always throws — must not be prerendered at build time
+export const dynamic = "force-dynamic";
+
 /** Dev/QA helper: forces a runtime error to exercise app/error.tsx recovery. */
 export default function ErrorDemoPage() {
   throw new Error("error-demo: namerna greška za test error stranice");

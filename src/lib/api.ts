@@ -10,7 +10,11 @@ export async function apiFetch<T>(path: string, init?: RequestInit): Promise<T> 
     headers["Content-Type"] = "application/json";
   }
 
+  const isRead = method === "GET" || method === "HEAD";
   const res = await fetch(`${API_BASE}${path}`, {
+    // Server reads participate in ISR; client fetch ignores `next`.
+    // Mutations must never be cached.
+    ...(isRead ? { next: { revalidate: 3600 } } : { cache: "no-store" as const }),
     ...init,
     headers,
   });

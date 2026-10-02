@@ -5,7 +5,13 @@ import BuildView from "./build-view";
 import { notFound } from "next/navigation";
 import { formatRsd, pageMetadata } from "@/lib/seo";
 
-export const dynamic = "force-dynamic";
+// ISR: shared builds are stable; refresh hourly
+export const revalidate = 3600;
+
+// On-demand ISR — hashes are opaque and unbounded
+export async function generateStaticParams() {
+  return [];
+}
 
 export async function generateMetadata({
   params,

@@ -16,7 +16,7 @@ edges:
 #   - node: "function:<tier-1-id>"
 #     fingerprint: "mh:64:<hex>"
 grounds_to: []
-last_updated: [YYYY-MM-DD]
+last_updated: 2026-10-02
 ---
 
 # Conventions
@@ -65,14 +65,10 @@ last_updated: [YYYY-MM-DD]
      ``` -->
 
 ## Verify Checklist
-<!-- A short checklist the agent runs against any code it writes in this project.
-     These are the things most likely to go wrong based on this specific codebase.
-     The agent should explicitly check each item before presenting output.
-     Minimum 4 items. If you cannot find 4, write "[TO DETERMINE]".
-     Length: 4-8 items.
-     Example:
-     Before presenting any code:
-     - [ ] Business logic is not in route handlers
-     - [ ] All database access goes through the repository layer
-     - [ ] Error handling uses the Result type, not exceptions
-     - [ ] New files follow the naming convention above -->
+
+Before presenting any code:
+- [ ] Public layouts do not use `headers()`/`cookies()`/`force-dynamic` (keeps HTML cacheable)
+- [ ] CSP/security headers live in `next.config.ts`, not per-request nonce proxy
+- [ ] Server `fetch`/`apiFetch` reads that should cache set `next: { revalidate }` (defaults are no-store)
+- [ ] `/admin` auth stays in `src/proxy.ts` matcher
+- [ ] `npm run typecheck` and `npm run build` pass; homepage is `○` static in build output

@@ -15,7 +15,7 @@ edges:
 # Decisions usually ground sparsely; add only symbols that implement the decision.
 # Entry shape: { node: "function:<tier-1-id>", fingerprint: "mh:64:<hex>" }
 grounds_to: []
-last_updated: [YYYY-MM-DD]
+last_updated: 2026-10-02
 ---
 
 # Decisions
@@ -34,6 +34,14 @@ last_updated: [YYYY-MM-DD]
      The history must be preserved — this is the event clock. -->
 
 ## Decision Log
+
+### Prefer cacheable HTML over per-request CSP nonces
+**Date:** 2026-10-02
+**Status:** Active
+**Decision:** Use a static CSP (`script-src 'self' 'unsafe-inline'`) in `next.config.ts` and drop `force-dynamic`/nonce plumbing so public pages can be prerendered and CDN-cached. Pin Vercel functions to `fra1` via `vercel.json`.
+**Reasoning:** Nonce CSP requires dynamic rendering (Next.js docs), so every hit paid full SSR + transatlantic TTFB (`x-vercel-id: fra1::iad1`). Homepage is public marketing content; `s-maxage` + static prerender removes that cost. Measured local TTFB after fix: ~7ms cache HIT vs ~250–370ms SSR.
+**Alternatives considered:** Keep nonce + force-dynamic (status quo — slow); experimental SRI/hash CSP (still blocks Next inline flight scripts without hashes for every payload); ISR only without CSP change (still no-store if layout stays dynamic).
+**Consequences:** XSS surface for inline scripts is weaker than nonce CSP (accepted for this public site). `src/proxy.ts` only gates `/admin`. Data routes use ISR (`revalidate = 3600`) instead of SSR. `/komponente` remains dynamic because `generateMetadata` reads `searchParams` for category titles.
 
 <!-- Document key decisions using the format below.
      Include decisions that: are non-obvious, have important constraints,

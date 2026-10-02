@@ -14,7 +14,7 @@ edges:
     condition: when setting up the dev environment or running the project for the first time
   - target: patterns/INDEX.md
     condition: when starting a task — check the pattern index for a matching pattern file
-last_updated: 2026-09-27
+last_updated: 2026-10-02
 ---
 
 # Session Bootstrap
@@ -35,6 +35,7 @@ Then read this file fully before doing anything else in this session.
 - **15 stores** in `src/lib/types.ts` (`STORE_NAMES` / `STORE_URLS` / `STORE_LOGOS` / `STORE_BLURBS`) + `public/logos/`
 - Admin `/admin`: match queue (approve/reject + component search) **and** pending-components panel (`pending-components.tsx`, one-click approve)
 - Pre-push: typecheck + sr unit + Playwright smoke
+- **HTML caching**: public pages prerendered + CDN `s-maxage` (no more `force-dynamic`); static CSP in `next.config.ts`; `/admin` cookie gate stays in `src/proxy.ts`; Vercel `regions: ["fra1"]`
 
 **Not yet built:**
 - Category SEO landing pages (separate content pages)
@@ -45,8 +46,9 @@ Then read this file fully before doing anything else in this session.
 **Known issues:**
 - Tailwind v4 may bury global hover CSS — use `btn-*` / `card-hover` / `chip-btn` / `slot-hover`
 - Next `router.replace` can lag ~1s in dev (poll in e2e)
-- Inline theme script needs request `x-nonce` (proxy CSP)
 - Next 16 `error.tsx` recovery prop is `retry()`
+- `/komponente` stays dynamic (searchParams in `generateMetadata` for category titles); homepage + konfigurator are static
+- CSP uses `script-src 'unsafe-inline'` (no per-request nonce) so HTML can be cached — tradeoff documented in `context/decisions.md`
 - Contact `subject` empty → default "Poruka sa kontakt forme"
 - FAQ accordion uses `grid-template-rows` animation
 - `npm run lint` pre-existing `react-hooks/set-state-in-effect` errors in admin/catalog/cookie

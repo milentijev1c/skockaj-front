@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
-import { headers } from "next/headers";
 import { Analytics } from "@vercel/analytics/next";
 import SiteFooter from "./site-footer";
 import { Brand } from "./brand";
@@ -12,9 +11,6 @@ import { THEME_BOOTSTRAP_SCRIPT } from "@/lib/theme";
 import { SITE_URL, SITE_NAME, websiteJsonLd } from "@/lib/seo";
 import { JsonLd } from "@/lib/json-ld";
 import "./globals.css";
-
-// Nonce CSP in proxy.ts requires dynamic rendering (fresh nonce per request)
-export const dynamic = "force-dynamic";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
@@ -62,13 +58,11 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function RootLayout({ children }: LayoutProps<"/">) {
-  const nonce = (await headers()).get("x-nonce") ?? undefined;
-
+export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="sr" data-theme="dark" suppressHydrationWarning className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
       <head>
-        <script nonce={nonce} dangerouslySetInnerHTML={{ __html: THEME_BOOTSTRAP_SCRIPT }} />
+        <script dangerouslySetInnerHTML={{ __html: THEME_BOOTSTRAP_SCRIPT }} />
       </head>
       <body className="min-h-dvh flex flex-col" style={{ background: "var(--void)", color: "var(--text)" }}>
         <JsonLd data={websiteJsonLd()} />

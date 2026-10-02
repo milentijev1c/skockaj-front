@@ -13,7 +13,13 @@ import {
 } from "@/lib/seo";
 import { JsonLd } from "@/lib/json-ld";
 
-export const dynamic = "force-dynamic";
+// ISR: prices refresh hourly instead of SSR on every hit
+export const revalidate = 3600;
+
+// On-demand ISR for unknown ids (catalog is large; no build-time listing)
+export async function generateStaticParams() {
+  return [];
+}
 
 async function loadComponent(id: string): Promise<Component | null> {
   try {
