@@ -21,7 +21,7 @@ const STEPS = [
   },
   {
     n: "02",
-    title: "Složi konfiguraciju",
+    title: "Skockaj konfiguraciju",
     desc: "Ubaci delove u konfigurator — kompatibilnost se proverava u realnom vremenu.",
   },
   {
@@ -335,7 +335,7 @@ export default function Home() {
           Spremna konfiguracija?
         </h2>
         <p className="text-sm mb-8 max-w-md mx-auto" style={{ color: "var(--text-muted)" }}>
-          Uporedi cene delova ili složi ceo računar uz proveru kompatibilnosti.
+          Uporedi cene delova ili skockaj ceo računar uz proveru kompatibilnosti.
         </p>
         <div className="flex gap-4 justify-center flex-wrap">
           <Link

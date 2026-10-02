@@ -4,7 +4,7 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata: Metadata = pageMetadata({
   title: "Konfigurator računara",
   description:
-    "Složi PC konfiguraciju uz proveru kompatibilnosti u realnom vremenu. Socket, RAM tip i napajanje — bez registracije.",
+    "Skockaj PC konfiguraciju uz proveru kompatibilnosti u realnom vremenu. Socket, RAM tip i napajanje — bez registracije.",
   path: "/konfigurator",
 });
 

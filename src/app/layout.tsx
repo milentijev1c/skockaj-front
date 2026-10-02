@@ -68,7 +68,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <JsonLd data={websiteJsonLd()} />
         {/* LED-strip header */}
         <header className="header-glow" style={{ background: "var(--panel)", borderBottom: "1px solid var(--edge)", position: "relative" }}>
-          <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "1px", background: "var(--glow)", opacity: 0.4 }} />
+          <div className="header-led" aria-hidden="true">
+            <div className="header-led-line" />
+            <div className="header-led-flow" />
+          </div>
           <nav className="mx-auto flex items-center justify-between gap-4 px-6 py-4" style={{ maxWidth: 1100 }}>
             <Link href="/" className="logo-link" aria-label="skockaj.rs početna">
               <Brand size={20} withMark />
