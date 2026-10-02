@@ -14,8 +14,8 @@ const TOPICS: { value: Topic; label: string }[] = [
   { value: "other", label: "Ostalo" },
 ];
 
-const RATE_LIMIT_KEY = "skockaj-kontakt-last";
-const RATE_LIMIT_MS = 30_000;
+const RATE_LIMIT_KEY = "skockaj-kontakt-usage";
+const DAILY_LIMIT = 3;
 const RESET_MS = 5_000;
 
 const fieldStyle = {
@@ -60,6 +60,31 @@ function validateField(field: FieldName, value: string, topic: Topic, privacy: b
 
 function inputBorder(error: boolean) {
   return error ? "1px solid var(--coral)" : "1px solid var(--edge)";
+}
+
+function startOfToday(): number {
+  const d = new Date();
+  d.setHours(0, 0, 0, 0);
+  return d.getTime();
+}
+
+function readDailyUsage(): { day: number; count: number } {
+  try {
+    const raw = localStorage.getItem(RATE_LIMIT_KEY);
+    if (!raw) return { day: 0, count: 0 };
+    const parsed = JSON.parse(raw) as { day?: number; count?: number };
+    return { day: Number(parsed.day) || 0, count: Number(parsed.count) || 0 };
+  } catch {
+    return { day: 0, count: 0 };
+  }
+}
+
+function writeDailyUsage(day: number, count: number) {
+  try {
+    localStorage.setItem(RATE_LIMIT_KEY, JSON.stringify({ day, count }));
+  } catch {
+    /* ignore */
+  }
 }
 
 export default function ContactForm() {
@@ -150,16 +175,14 @@ export default function ContactForm() {
     e.preventDefault();
     if (status === "sending") return;
 
-    // Client-side rate limit (server also enforces)
-    try {
-      const last = Number(localStorage.getItem(RATE_LIMIT_KEY) || 0);
-      if (Date.now() - last < RATE_LIMIT_MS) {
-        setStatus("error");
-        setStatusNote("Sačekaj malo pre sledećeg slanja.");
-        return;
-      }
-    } catch {
-      /* ignore */
+    // Client-side daily cap (server also enforces 3/day per IP)
+    const today = startOfToday();
+    const usage = readDailyUsage();
+    const sentToday = usage.day === today ? usage.count : 0;
+    if (sentToday >= DAILY_LIMIT) {
+      setStatus("error");
+      setStatusNote("Dnevno možeš poslati najviše 3 poruke. Pokušaj sutra.");
+      return;
     }
 
     const next = validateAll();
@@ -189,11 +212,7 @@ export default function ContactForm() {
           website: "",
         }),
       });
-      try {
-        localStorage.setItem(RATE_LIMIT_KEY, String(Date.now()));
-      } catch {
-        /* ignore */
-      }
+      writeDailyUsage(today, sentToday + 1);
       setStatus("success");
     } catch {
       // Keep typed message on API failure

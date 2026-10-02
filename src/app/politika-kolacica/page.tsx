@@ -62,7 +62,7 @@ export default function PolitikaKolacica() {
             ["vid", "localStorage — anoniman id za jedinstvene preglede", "do brisanja u pretraživaču"],
             ["cookie_consent", "localStorage — saglasnost / zatvaranje bannera", "do brisanja u pretraživaču"],
             ["skockaj-theme", "localStorage — izbor svetle ili tamne teme", "do brisanja u pretraživaču"],
-            ["skockaj-kontakt-last", "localStorage — zaštita od ponovljenog slanja forme", "do brisanja u pretraživaču"],
+            ["skockaj-kontakt-usage", "localStorage — dnevno ograničenje od 3 slanja forme", "do brisanja u pretraživaču"],
             ["tehnička sesija", "kolačić sesije / bezbednost (ako postoji)", "sesija ili kraći rok"],
           ].map(([name, purpose, duration]) => (
             <div
