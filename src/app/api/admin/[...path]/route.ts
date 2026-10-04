@@ -38,6 +38,7 @@ async function proxy(req: NextRequest, path: string[]) {
   const url = `${API_BASE}/admin/${path.join("/")}${req.nextUrl.search}`;
   const headers: Record<string, string> = {
     "X-Admin-Token": token,
+    "X-Frontend-Secret": process.env.FRONTEND_SECRET || "",
   };
   if (req.headers.get("content-type")) {
     headers["content-type"] = req.headers.get("content-type")!;

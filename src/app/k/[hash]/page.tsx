@@ -52,13 +52,15 @@ export default async function BuildPage({ params }: { params: Promise<{ hash: st
     notFound();
   }
 
-  let allComponents: Component[] = [];
-  try {
-    allComponents = await apiFetch<Component[]>("/components/");
-  } catch {
-    allComponents = [];
+  let buildComponents: Component[] = [];
+  const ids = build.components_json ?? [];
+  if (ids.length > 0) {
+    try {
+      buildComponents = await apiFetch<Component[]>(`/components/?ids=${ids.join(",")}`);
+    } catch {
+      buildComponents = [];
+    }
   }
-  const buildComponents = allComponents.filter((c) => build.components_json.includes(c.id));
 
   return <BuildView build={build} components={buildComponents} />;
 }
