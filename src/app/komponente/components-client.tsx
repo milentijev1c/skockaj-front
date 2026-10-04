@@ -6,6 +6,7 @@ import Link from "next/link";
 import type { Component } from "@/lib/types";
 import { CATEGORIES, slugToCategory, categoryToSlug, CATEGORY_ICONS, srArtikli, srProdavnice, srRezultati } from "@/lib/types";
 import { apiFetch } from "@/lib/api";
+import { isCompatibleWithBuild } from "@/lib/compat";
 import { EmptyState, SkeletonList } from "../ui-states";
 
 // ── Per-category attribute extraction (specs first, then name) ──
@@ -403,6 +404,7 @@ export default function ComponentsClient({ initial }: { initial: Component[] }) 
   const [category, setCategory] = useState(boot.category);
   const [loading, setLoading] = useState(!boot.category);
   const [addedIds, setAddedIds] = useState<Set<number>>(new Set());
+  const [buildParts, setBuildParts] = useState<Component[]>([]);
   const [search, setSearch] = useState(boot.search);
   const [filters, setFilters] = useState<Record<string, string>>(boot.filters);
   const [sort, setSort] = useState<SortKey>(boot.sort);
@@ -437,6 +439,8 @@ export default function ComponentsClient({ initial }: { initial: Component[] }) 
       const price = cheapestOf(c);
       if (priceMin !== "" && (price == null || price < Number(priceMin))) return false;
       if (priceMax !== "" && (price == null || price > Number(priceMax))) return false;
+      // hide parts that cannot fit the current build (DDR4 on DDR5 board, etc.)
+      if (!isCompatibleWithBuild(c, buildParts)) return false;
       return true;
     }),
     sort,
@@ -518,7 +522,13 @@ export default function ComponentsClient({ initial }: { initial: Component[] }) 
       } catch {
         stored = [];
       }
-      if (stored.length > 0) setAddedIds(new Set(stored));
+      if (stored.length > 0) {
+        setAddedIds(new Set(stored));
+        // fetch selected parts so listings can hide incompatible options
+        void apiFetch<Component[]>(`/components/?ids=${stored.join(",")}`)
+          .then(setBuildParts)
+          .catch(() => setBuildParts([]));
+      }
     }, 0);
     return () => window.clearTimeout(t);
   }, []);
@@ -642,6 +652,11 @@ export default function ComponentsClient({ initial }: { initial: Component[] }) 
             {!loading && <span className="text-sm" style={{ color: "var(--text-muted)", fontFamily: "var(--font-geist-mono)" }}>{hasActiveFilters ? `${filtered.length} ${srRezultati(filtered.length)}` : `${components.length} ${srArtikli(components.length)}`}</span>}
           </div>
         ) : <p className="text-sm mt-1" style={{ color: "var(--text-muted)", fontFamily: "var(--font-geist-mono)" }}>Izaberi kategoriju</p>}
+        {category && buildParts.length > 0 && (
+          <p className="text-xs mt-2" style={{ color: "var(--amber)", fontFamily: "var(--font-geist-mono)" }}>
+            Prikazujem samo delove koji se uklapaju u tvoju konfiguraciju ({buildParts.length} izabranih)
+          </p>
+        )}
       </div>
 
       {/* Category cards */}

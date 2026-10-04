@@ -9,7 +9,7 @@
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
-    "test:unit": "node --experimental-strip-types --test src/lib/sr.test.ts",
+    "test:unit": "node --experimental-strip-types --test src/lib/sr.test.ts src/lib/compat.test.ts",
     "test:e2e": "playwright test",
     "test": "npm run test:unit && npm run test:e2e"
   },
