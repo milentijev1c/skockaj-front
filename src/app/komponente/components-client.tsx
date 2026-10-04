@@ -712,31 +712,6 @@ export default function ComponentsClient({ initial }: { initial: Component[] }) 
             />
 
             <div className="mb-4">
-              <div className="text-[10px] font-bold tracking-widest uppercase mb-2" style={{ color: "var(--text-muted)", fontFamily: "var(--font-geist-mono)" }}>Sortiranje</div>
-              <div className="flex flex-col gap-1">
-                {SORT_OPTIONS.map((o) => (
-                  <button
-                    key={o.key}
-                    onClick={() => changeSort(o.key)}
-                    className="text-xs text-left px-3 py-1.5 chip-btn"
-                    style={{
-                      background: sort === o.key ? "var(--glow-dim)" : "transparent",
-                      color: sort === o.key ? "var(--glow)" : "var(--text-muted)",
-                      border: "none",
-                      cursor: "pointer",
-                      fontFamily: "var(--font-geist-mono)",
-                      transition: "all 0.15s ease",
-                    }}
-                    onMouseEnter={(e) => { if (sort !== o.key) e.currentTarget.style.color = "var(--text)"; }}
-                    onMouseLeave={(e) => { if (sort !== o.key) e.currentTarget.style.color = "var(--text-muted)"; }}
-                  >
-                    {o.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="mb-4">
               <div className="text-[10px] font-bold tracking-widest uppercase mb-2" style={{ color: "var(--text-muted)", fontFamily: "var(--font-geist-mono)" }}>Cena (RSD)</div>
               <div className="flex gap-2">
                 <input
