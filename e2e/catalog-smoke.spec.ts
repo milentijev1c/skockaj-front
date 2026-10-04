@@ -23,9 +23,11 @@ test.describe("catalog UI smoke", () => {
     // no motherboard chipset in CPU filters
     await expect(page.getByText("Čipset")).toHaveCount(0);
 
-    // collapse Serija and options hide
+    // filters start collapsed — expand Serija, then collapse/expand
     const serija = page.getByRole("button", { name: /^Serija/ }).first();
     const ryzen5 = page.locator("aside button", { hasText: /^Ryzen 5$/ }).first();
+    await expect(ryzen5).toBeHidden();
+    await serija.click();
     await expect(ryzen5).toBeVisible();
     await serija.click();
     await expect(ryzen5).toBeHidden();
@@ -36,6 +38,8 @@ test.describe("catalog UI smoke", () => {
   test("filtering by series works", async ({ page }) => {
     await page.goto("/komponente?kategorija=procesor");
     await page.waitForLoadState("networkidle");
+    // expand Serija (collapsed by default)
+    await page.getByRole("button", { name: /^Serija/ }).first().click();
     await page.locator("aside button", { hasText: /^Ryzen 5$/ }).first().click();
     await page.waitForTimeout(400);
     const names = await page.locator('a[href^="/komponente/"]').allTextContents();
