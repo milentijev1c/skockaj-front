@@ -10,11 +10,19 @@ const apiOrigin = process.env.NEXT_PUBLIC_API_URL
 const csp = [
   "default-src 'self'",
   // Next.js emits inline RSC/flight scripts; without nonces, 'unsafe-inline' is required.
-  `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""}`,
+  // va.vercel-scripts.com / *.vercel-insights.com = @vercel/analytics
+  `script-src 'self' 'unsafe-inline' https://va.vercel-scripts.com${isDev ? " 'unsafe-eval'" : ""}`,
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' blob: data: https:",
   "font-src 'self' data:",
-  ["connect-src 'self'", "https://api.skockaj.rs", apiOrigin, isDev ? "http://localhost:8000" : ""]
+  [
+    "connect-src 'self'",
+    "https://api.skockaj.rs",
+    "https://va.vercel-scripts.com",
+    "https://*.vercel-insights.com",
+    apiOrigin,
+    isDev ? "http://localhost:8000" : "",
+  ]
     .filter(Boolean)
     .join(" "),
   "object-src 'none'",
