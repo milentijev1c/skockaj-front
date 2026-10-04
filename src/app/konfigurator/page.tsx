@@ -45,7 +45,11 @@ export default function BuilderPage() {
   const [saving, setSaving] = useState(false);
 
   async function loadComponents(ids: number[]) {
-    const all = await apiFetch<Component[]>("/components/");
+    if (ids.length === 0) {
+      setComponents([]);
+      return;
+    }
+    const all = await apiFetch<Component[]>(`/components/?ids=${ids.join(",")}`);
     setComponents(all.filter((c) => ids.includes(c.id)));
   }
 
@@ -312,11 +316,11 @@ export default function BuilderPage() {
               className="p-5 mb-6 fade-in"
               style={{
                 background: "var(--panel)",
-                border: `1px solid ${compat.compatible ? "var(--glow)" : "var(--coral)"}`,
-                boxShadow: `0 0 20px ${compat.compatible ? "var(--glow-dim)" : "var(--shadow-danger)"}`,
+                border: `1px solid ${!compat.compatible ? "var(--coral)" : compat.issues.length ? "var(--amber)" : "var(--glow)"}`,
+                boxShadow: `0 0 20px ${!compat.compatible ? "var(--shadow-danger)" : "var(--glow-dim)"}`,
               }}
             >
-              {compat.compatible ? (
+              {compat.compatible && compat.issues.length === 0 ? (
                 <div className="flex items-center gap-3">
                   <span style={{ color: "var(--glow)" }} className="text-lg">+</span>
                   <span className="text-sm font-bold" style={{ color: "var(--glow)", fontFamily: "var(--font-geist-mono)" }}>
@@ -326,9 +330,9 @@ export default function BuilderPage() {
               ) : (
                 <div>
                   <div className="flex items-center gap-3 mb-3">
-                    <span style={{ color: "var(--coral)" }} className="text-lg">!</span>
-                    <span className="text-sm font-bold" style={{ color: "var(--coral)", fontFamily: "var(--font-geist-mono)" }}>
-                      Problem sa kompatibilnošću
+                    <span style={{ color: compat.compatible ? "var(--amber)" : "var(--coral)" }} className="text-lg">!</span>
+                    <span className="text-sm font-bold" style={{ color: compat.compatible ? "var(--amber)" : "var(--coral)", fontFamily: "var(--font-geist-mono)" }}>
+                      {compat.compatible ? "Napomene za kompatibilnost" : "Problem sa kompatibilnošću"}
                     </span>
                   </div>
                   {compat.issues.map((issue, i) => (

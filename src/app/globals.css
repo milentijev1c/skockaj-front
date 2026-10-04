@@ -150,7 +150,7 @@ select:hover {
 
 /* ── Header LED line ────────────────────────────── */
 
-/* 1.5px line; traveling highlight lives inside it */
+/* Static brand hairline — not a loading bar */
 .header-led {
   position: absolute;
   left: 0;
@@ -165,44 +165,19 @@ select:hover {
 .header-led-line {
   position: absolute;
   inset: 0;
-  background: color-mix(in srgb, var(--glow) 55%, transparent);
-}
-
-.header-led-flow {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  width: 18%;
   background: linear-gradient(
     90deg,
     transparent 0%,
-    color-mix(in srgb, var(--glow) 55%, transparent) 35%,
-    var(--glow) 55%,
-    color-mix(in srgb, var(--glow) 85%, #e0fff8) 65%,
-    var(--glow) 75%,
-    color-mix(in srgb, var(--glow) 55%, transparent) 90%,
+    color-mix(in srgb, var(--glow) 45%, transparent) 20%,
+    color-mix(in srgb, var(--glow) 70%, transparent) 50%,
+    color-mix(in srgb, var(--glow) 45%, transparent) 80%,
     transparent 100%
   );
-  animation: ledFlow 4.2s linear infinite;
-  will-change: transform;
-}
-
-@keyframes ledFlow {
-  0%   { transform: translateX(-100%); }
-  100% { transform: translateX(560%); }
 }
 
 @keyframes formResetBar {
   0%   { transform: scaleX(0); }
   100% { transform: scaleX(1); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .header-led-flow {
-    animation: none;
-    opacity: 0.35;
-  }
 }
 
 /* ── Nav hover ──────────────────────────────────── */

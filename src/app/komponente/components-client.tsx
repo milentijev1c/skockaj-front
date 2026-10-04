@@ -213,7 +213,8 @@ function FilterGroups({ filterDefs, components, filters, setFilter }: {
   filters: Record<string, string>;
   setFilter: (key: string, val: string) => void;
 }) {
-  const [collapsed, setCollapsed] = useState<Record<string, boolean>>({});
+  // start collapsed — open only the group the user asks for
+  const [open, setOpen] = useState<Record<string, boolean>>({});
 
   return (
     <>
@@ -221,12 +222,12 @@ function FilterGroups({ filterDefs, components, filters, setFilter }: {
         const options = getFilterOptions(components, f);
         if (options.length < 1) return null;
         const active = filters[f.key] ?? "";
-        const isOpen = !collapsed[f.key];
+        const isOpen = !!open[f.key];
         return (
           <div key={f.key} className="mb-3">
             <button
               type="button"
-              onClick={() => setCollapsed((p) => ({ ...p, [f.key]: !p[f.key] }))}
+              onClick={() => setOpen((p) => ({ ...p, [f.key]: !p[f.key] }))}
               className="w-full flex items-center justify-between text-[11px] font-bold tracking-widest uppercase mb-2"
               style={{ color: active ? "var(--glow)" : "var(--text-muted)", fontFamily: "var(--font-geist-mono)", background: "none", border: "none", cursor: "pointer", padding: 0 }}
             >
@@ -582,6 +583,8 @@ export default function ComponentsClient({ initial }: { initial: Component[] }) 
       { category: cat, filters: {}, search: "", inStockOnly: false, priceMin: "", priceMax: "" },
       "push",
     );
+    // new view — always start at the top
+    window.scrollTo(0, 0);
     apiFetch<Component[]>(`/components/?category=${cat}`)
       .then((data) => setComponents(data))
       .catch(() => setComponents([]))
@@ -598,6 +601,7 @@ export default function ComponentsClient({ initial }: { initial: Component[] }) 
     setPriceMin("");
     setPriceMax("");
     writeUrl({ category: "", filters: {}, search: "", inStockOnly: false, priceMin: "", priceMax: "" }, "push");
+    window.scrollTo(0, 0);
   }
 
   const addToBuilder = (id: number, e: React.MouseEvent) => {
@@ -644,12 +648,7 @@ export default function ComponentsClient({ initial }: { initial: Component[] }) 
       {!category && (
         <div className="grid gap-4 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
           {CATEGORIES.map((cat) => (
-            <button key={cat.value} onClick={() => selectCategory(cat.value)} onPointerEnter={() => {
-              // warm cache before click
-              void apiFetch<Component[]>(`/components/?category=${cat.value}`).then((d) => {
-                setComponents((cur) => (cur.length ? cur : d));
-              }).catch(() => {});
-            }} className="p-8 card-hover text-center" style={{ background: "var(--panel)", border: "1px solid var(--edge)", cursor: "pointer", minHeight: 140 }}>
+            <button key={cat.value} onClick={() => selectCategory(cat.value)} className="p-8 card-hover text-center" style={{ background: "var(--panel)", border: "1px solid var(--edge)", cursor: "pointer", minHeight: 140 }}>
               <div className="mx-auto mb-4" style={{ width: 40, height: 40, backgroundColor: "var(--glow-fill)", WebkitMaskImage: `url(${CATEGORY_ICONS[cat.value]})`, maskImage: `url(${CATEGORY_ICONS[cat.value]})`, WebkitMaskSize: "contain", maskSize: "contain", WebkitMaskRepeat: "no-repeat", maskRepeat: "no-repeat", WebkitMaskPosition: "center", maskPosition: "center" }} />
               <span className="text-sm font-bold tracking-wide" style={{ color: "var(--text)", fontFamily: "var(--font-geist-mono)" }}>{cat.label}</span>
             </button>
