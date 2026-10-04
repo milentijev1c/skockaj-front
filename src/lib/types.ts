@@ -86,6 +86,7 @@ export const STORE_NAMES: Record<string, string> = {
   pcpractic: "PC Practic",
   drtechno: "Dr Techno",
   jakov: "Jakov",
+  atom: "Atom Computers",
 };
 
 export const STORE_URLS: Record<string, string> = {
@@ -103,6 +104,7 @@ export const STORE_URLS: Record<string, string> = {
   pcpractic: "https://pcpractic.rs",
   drtechno: "https://drtechno.rs",
   jakov: "https://jakov.rs",
+  atom: "https://atom.rs",
 };
 
 /** Local brand assets in /public/logos */
@@ -121,6 +123,7 @@ export const STORE_LOGOS: Record<string, string> = {
   pcpractic: "/logos/pcpractic.png",
   drtechno: "/logos/drtechno.png",
   jakov: "/logos/jakov.png",
+  atom: "/logos/atom.png",
 };
 
 /** One-line shop blurb for /prodavnice cards. */
@@ -139,6 +142,7 @@ export const STORE_BLURBS: Record<string, string> = {
   pcpractic: "Prodaja tehnike preko 15 godina.",
   drtechno: "Računari, komponente i kućni aparati.",
   jakov: "Jakov Sistem — širok IT i kućni asortiman.",
+  atom: "Atom Computers — komponente i konfiguracije, Novi Beograd.",
 };
 
 export const ACTIVE_STORES = Object.keys(STORE_NAMES);
