@@ -12,6 +12,15 @@ ROOT="$(git rev-parse --show-toplevel)"
 cd "$ROOT"
 echo "pre-push: frontend proof (typecheck + unit + e2e)"
 
+# e2e admin login needs the same secrets as the local API (never hardcoded)
+BACKEND_ENV="$(dirname "$ROOT")/skockaj/.env"
+if [[ -f "$BACKEND_ENV" ]]; then
+  set -a
+  # shellcheck disable=SC1090
+  source "$BACKEND_ENV"
+  set +a
+fi
+
 # Self-heal hook installation
 sh "$ROOT/scripts/install-hooks.sh" >/dev/null 2>&1 || true
 
