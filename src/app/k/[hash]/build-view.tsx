@@ -1,5 +1,7 @@
 "use client";
 
+import { safeHref } from "@/lib/safe-url";
+
 import { useEffect, useState } from "react";
 import type { Build, Component } from "@/lib/types";
 import { CATEGORIES, CATEGORY_ICONS, STORE_NAMES, srCount, srProdavnice } from "@/lib/types";
@@ -180,7 +182,7 @@ export default function BuildView({ build, components }: { build: Build; compone
                 <div style={{ flex: "0 0 auto", minWidth: 140, textAlign: "right" }}>
                   {offer ? (
                     <a
-                      href={offer.product_url}
+                      href={safeHref(offer.product_url)}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="hover-link"

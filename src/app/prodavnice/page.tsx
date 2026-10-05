@@ -1,5 +1,7 @@
 "use client";
 
+import { safeHref } from "@/lib/safe-url";
+
 import Link from "next/link";
 import { STORE_NAMES, STORE_URLS, STORE_LOGOS, STORE_BLURBS, ACTIVE_STORES } from "@/lib/types";
 import { EmptyState } from "../ui-states";
@@ -106,7 +108,7 @@ export default function ProdavnicePage() {
               )}
               <div className="flex flex-wrap items-center gap-3">
                 <a
-                  href={s.url}
+                  href={safeHref(s.url)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn-ghost inline-flex items-center justify-center px-3 py-2 text-[11px] font-bold tracking-widest uppercase flex-1 sm:flex-none"

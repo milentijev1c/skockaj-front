@@ -1,5 +1,7 @@
 "use client";
 
+import { safeHref } from "@/lib/safe-url";
+
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { Component, MatchQueueItem } from "@/lib/types";
@@ -320,7 +322,7 @@ export default function AdminQueue() {
                       )}
                       {offer?.url && (
                         <a
-                          href={offer.url}
+                          href={safeHref(offer.url)}
                           target="_blank"
                           rel="noreferrer"
                           style={{ color: "var(--text-muted)", textDecoration: "underline" }}

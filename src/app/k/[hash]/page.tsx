@@ -19,6 +19,14 @@ export async function generateMetadata({
   params: Promise<{ hash: string }>;
 }): Promise<Metadata> {
   const { hash } = await params;
+  if (!/^[A-Za-z0-9_-]{1,32}$/.test(hash)) {
+    return pageMetadata({
+      title: "Konfiguracija nije pronađena",
+      description: "Tražena konfiguracija ne postoji.",
+      path: `/k/${hash}`,
+      noIndex: true,
+    });
+  }
   try {
     const build = await apiFetch<Build>(`/builds/${hash}`);
     const priceBit =
@@ -44,6 +52,10 @@ export async function generateMetadata({
 
 export default async function BuildPage({ params }: { params: Promise<{ hash: string }> }) {
   const { hash } = await params;
+  // hash_id is a short opaque token — reject anything else before it hits the API
+  if (!/^[A-Za-z0-9_-]{1,32}$/.test(hash)) {
+    notFound();
+  }
 
   let build: Build;
   try {

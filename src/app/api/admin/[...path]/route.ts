@@ -8,6 +8,10 @@ const ALLOWED = new Set(["ping", "queue", "offers", "offers/batch", "catalog/ref
 
 function isAllowed(path: string[]): boolean {
   if (path.length === 0) return false;
+  for (const seg of path) {
+    if (seg === "" || seg === "." || seg === "..") return false;
+    if (seg.includes("/") || seg.includes("\\") || seg.includes("\0")) return false;
+  }
   const head = path[0];
   if (head === "queue") {
     // /queue

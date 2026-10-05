@@ -1,7 +1,7 @@
 import { expect, test, type Page } from "@playwright/test";
 
 const TOKEN =
-  process.env.ADMIN_TOKEN || "KRrgV4lonTITJw8YeU07A4fk0JMbtgTOTxK9rwIic2g";
+  process.env.ADMIN_TOKEN || "";
 
 /** Real login → server sets httpOnly cookie (same path as production). */
 async function login(page: Page) {

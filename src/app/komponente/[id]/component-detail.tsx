@@ -1,5 +1,7 @@
 "use client";
 
+import { safeHref } from "@/lib/safe-url";
+
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -218,7 +220,7 @@ export default function ComponentDetail({ component }: { component: Component })
                     <span className="text-xs font-normal ml-1" style={{ color: "var(--text-muted)" }}>RSD</span>
                   </span>
                   <a
-                    href={offer.url}
+                    href={safeHref(offer.url)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="btn-ghost inline-flex items-center justify-center px-3 py-2 text-[10px] font-bold tracking-widest uppercase whitespace-nowrap"

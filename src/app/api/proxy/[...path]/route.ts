@@ -7,7 +7,13 @@ const FRONTEND_SECRET = process.env.FRONTEND_SECRET || "";
 const ALLOWED_PREFIXES = ["builds", "contact", "compatibility", "components"];
 
 function isAllowed(path: string[]): boolean {
-  return path.length > 0 && ALLOWED_PREFIXES.includes(path[0]);
+  if (path.length === 0) return false;
+  // reject traversal segments before they reach the upstream URL
+  for (const seg of path) {
+    if (seg === "" || seg === "." || seg === "..") return false;
+    if (seg.includes("/") || seg.includes("\\") || seg.includes("\0")) return false;
+  }
+  return ALLOWED_PREFIXES.includes(path[0]);
 }
 
 /**

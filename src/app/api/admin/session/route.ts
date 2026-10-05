@@ -3,7 +3,11 @@ import { NextResponse, type NextRequest } from "next/server";
 const COOKIE = "skockaj_admin";
 const API_BASE =
   process.env.API_URL || process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api/v1";
-const COOKIE_SECURE = process.env.COOKIE_SECURE === "1";
+// Secure by default in production; COOKIE_SECURE=0 can override for local http
+const COOKIE_SECURE =
+  process.env.COOKIE_SECURE != null
+    ? process.env.COOKIE_SECURE === "1"
+    : process.env.NODE_ENV === "production";
 
 /** Failed logins per client IP per day (login page brute-force cap). */
 const LOGIN_MAX_FAILURES = 5;
@@ -11,8 +15,9 @@ const LOGIN_WINDOW_MS = 24 * 60 * 60 * 1000;
 const loginFailures = new Map<string, number[]>();
 
 function clientIp(req: NextRequest): string {
+  // last XFF hop is the one the trusted proxy appended
   const fwd = req.headers.get("x-forwarded-for");
-  if (fwd) return fwd.split(",")[0].trim();
+  if (fwd) return fwd.split(",").pop()!.trim();
   return req.headers.get("x-real-ip") || "unknown";
 }
 
