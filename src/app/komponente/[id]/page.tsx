@@ -13,8 +13,8 @@ import {
 } from "@/lib/seo";
 import { JsonLd } from "@/lib/json-ld";
 
-// ISR: prices refresh hourly instead of SSR on every hit
-export const revalidate = 3600;
+// ISR: prices refresh every 5 min (specs can change after re-cluster/repair)
+export const revalidate = 300;
 
 // On-demand ISR for unknown ids (catalog is large; no build-time listing)
 export async function generateStaticParams() {
